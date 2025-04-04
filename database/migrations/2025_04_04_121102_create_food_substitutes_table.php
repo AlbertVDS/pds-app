@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('food_substitutes', function (Blueprint $table) {
             $table->id();
+            $table->integer('food_id');
+            $table->integer('substitute_id');
             $table->timestamps();
         });
     }
