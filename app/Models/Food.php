@@ -21,28 +21,16 @@ class Food extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'name',
         'type',
-        'low',
-        'fructose_l',
-        'lactose_l',
-        'mannitol_l',
-        'sorbitol_l',
-        'gos_l',
-        'fructan_l',
-        'medium',
-        'fructose_m',
-        'lactose_m',
-        'mannitol_m',
-        'sorbitol_m',
-        'gos_m',
-        'fructan_m',
-        'high',
-        'fructose_h',
-        'lactose_h',
-        'mannitol_h',
-        'sorbitol_h',
-        'gos_h',
-        'fructan_h',
+        'level',
+        'weight',
+        'fructose',
+        'lactose',
+        'mannitol',
+        'sorbitol',
+        'GOS',
+        'fructan',
     ];
 
     /**
