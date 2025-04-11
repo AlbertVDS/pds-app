@@ -10,12 +10,12 @@
         </li>
         
         <li>
-            <a href="foods" class="nav-link px-0 align-middle">
+            <a href="/foods" class="nav-link px-0 align-middle">
                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline"><i class="fa-solid fa-carrot"></i> Food list</span></a>
         </li>
         
         <li>
-            <a href="recipes" class="nav-link px-0 align-middle">
+            <a href="/recipes" class="nav-link px-0 align-middle">
                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline"><i class="fa-solid fa-utensils"></i> Recipes</span></a>
         </li>
         
