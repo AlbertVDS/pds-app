@@ -12,9 +12,11 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods = Food::all();
-
-        return view('foods.index', ['foods' => $foods]);
+        $foods = Food::paginate(10);
+        return view('foods.index', [
+            'pageTitle' => 'Food list',
+            'foods' => $foods
+        ]);
     }
 
     /**
