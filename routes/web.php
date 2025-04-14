@@ -7,6 +7,7 @@ use App\Http\Controllers\MailDataController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RecipeIngredientController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,6 +16,7 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('autocomplete', action: [RecipeIngredientController::class, 'autocomplete'])->name('autocomplete');
 Route::resource('foods', FoodController::class);
 Route::resource('mailings', MailingController::class);
 Route::resource('recipes', RecipeController::class);
