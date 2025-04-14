@@ -3,34 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\RecipeApiService;
+use App\Models\Recipe;
 
 class RecipeController extends Controller
 {
-    private RecipeApiService $recipeApiService;
-
-    public function __construct(RecipeApiService $recipeApiService)
-    {
-        $this->recipeApiService = $recipeApiService;
-    }
 
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        if ($request->get('recipe-ingredients')) {
-            $recipes = $this->recipeApiService->getByIngredients($request->get('recipe-ingredients'));
-        } else {
-            $request->get('search') ? $this->recipeApiService->search($request->get('search')) : $this->recipeApiService->letter('a');
-            $recipes = $this->recipeApiService->get();
-        }
+        $recipes = Recipe::query();
+
+        $request->filled('search') ? $recipes->where('name', 'LIKE', '%' . $request->get('search') . '%') : null;
+        $request->filled('recipe-ingredients') ? $recipes->whereIn('ingredients', $request->get('recipe-ingredients')) : null;
 
         return view(
             'recipes.index',
             [
                 'pageTitle' => 'Recipes',
-                'recipes' => $recipes['meals'] ?? [],
+                'recipes' => $recipes->orderBy('name')->paginate(10) ?? '',
                 'search' => $request->get('search') ?? '',
             ]
         );
@@ -41,13 +33,13 @@ class RecipeController extends Controller
      */
     public function show(string $id)
     {
-        $recipe = $this->recipeApiService->getById($id);
+        $recipe = Recipe::find($id);
 
         return view(
             'recipes.show',
             [
-                'pageTitle' => $recipe['meals'][0]['strMeal'] ?? 'Recipe',
-                'recipe' => $recipe['meals'][0] ?? []
+                'pageTitle' => $recipe->name ?? '',
+                'recipe' => $recipe ?? []
             ]
         );
     }
