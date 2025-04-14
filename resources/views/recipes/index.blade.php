@@ -50,7 +50,9 @@
                 </div>
             </div>
         </div>
-
+        <div>
+            
+        </div>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -61,23 +63,23 @@
                 </tr>
             </thead>
             <tbody> 
-                @if(!is_array($recipes))
+                @if(is_string($recipes))
                     <tr>
-                        <td colspan="4" class="text-center">No recipes found.</td>
+                        <td colspan="4" class="text-center">{{ $recipes }}</td>
                     </tr>
                 @else
                     @foreach ($recipes as $recipe)
                         <tr>
                             <td>
-                                <img src="{{ $recipe['strMealThumb'] }}" alt="{{ $recipe['strMeal'] }}" style="width: 100px; height: auto;">
+                                <img src="{{ $recipe->thumbnail_url }}" alt="{{ $recipe->name }}" style="width: 100px; height: auto;">
                             </td>
                             <td>
-                                <a href="{{ route('recipes.show', $recipe['idMeal']) }}">
-                                    {{ $recipe['strMeal'] }}
+                                <a href="{{ route('recipes.show', $recipe->id) }}">
+                                    {{ $recipe->name }}
                                 </a>
                             </td>    
-                            <td>{{ $recipe['strCategory'] }}</td>
-                            <td>{{ $recipe['strArea'] }}</td>
+                            <td>{{ $recipe->category() }}</td>
+                            <td>{{ $recipe->area() }}</td>
                         </tr>
                     @endforeach
                 @endif
