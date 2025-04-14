@@ -19,8 +19,12 @@ class RecipeController extends Controller
      */
     public function index(Request $request)
     {
-        $request->get('search') ? $this->recipeApiService->search($request->get('search')) : $this->recipeApiService->letter('a');
-        $recipes = $this->recipeApiService->get();
+        if ($request->get('recipe-ingredients')) {
+            $recipes = $this->recipeApiService->getByIngredients($request->get('recipe-ingredients'));
+        } else {
+            $request->get('search') ? $this->recipeApiService->search($request->get('search')) : $this->recipeApiService->letter('a');
+            $recipes = $this->recipeApiService->get();
+        }
 
         return view(
             'recipes.index',
