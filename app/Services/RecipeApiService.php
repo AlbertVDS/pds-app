@@ -34,11 +34,16 @@ class RecipeApiService
      * Filter by ingredients
      * Premium API Only
      * @param array $ingredients
-     * @return void
+     * @return array
      */
-    public function filterByIngredients($ingredients): void
+    public function getByIngredients($ingredients): array
     {
-        $this->parameters[] = implode(',', $ingredients);
+        $response = Http::get($this->baseUrl . 'filter.php?i=' . implode(',', $ingredients));
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        return [];
     }
 
     /**
