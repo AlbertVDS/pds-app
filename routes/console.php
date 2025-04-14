@@ -5,5 +5,5 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 
 Schedule::call(function () {
-    Artisan::call('recipe:sync');
+    Artisan::call('app:recipe-sync');
 })->weekly();
