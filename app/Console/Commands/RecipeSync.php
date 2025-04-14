@@ -7,6 +7,7 @@ use App\Models\Recipe;
 use App\Models\RecipeArea;
 use App\Models\RecipeCategory;
 use App\Models\RecipeIngredient;
+use App\Models\RecipeMeasurement;
 use App\Models\RecipeTag;
 use Illuminate\Console\Command;
 
@@ -128,7 +129,7 @@ class RecipeSync extends Command
             $measurement = $recipe['strMeasure' . $number];
 
             if ($measurement) {
-                $recipeIngredient = RecipeIngredient::firstOrCreate(['name' => $measurement]);
+                $recipeIngredient = RecipeMeasurement::firstOrCreate(['name' => $measurement]);
                 $measurements[] = $recipeIngredient->id;
             }
         }
