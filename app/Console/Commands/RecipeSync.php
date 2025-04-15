@@ -106,7 +106,7 @@ class RecipeSync extends Command
         foreach ($numbers as $number) {
             $ingredient = $recipe['strIngredient' . $number];
 
-            if ($ingredient) {
+            if (!empty($ingredient) && $ingredient !== ' ') {
                 $recipeIngredient = RecipeIngredient::firstOrCreate(['name' => $ingredient]);
                 $ingredients[] = $recipeIngredient->id;
             }
@@ -128,7 +128,7 @@ class RecipeSync extends Command
         foreach ($numbers as $number) {
             $measurement = $recipe['strMeasure' . $number];
 
-            if ($measurement) {
+            if (!empty($measurement) && $measurement !== ' ') {
                 $recipeIngredient = RecipeMeasurement::firstOrCreate(['name' => $measurement]);
                 $measurements[] = $recipeIngredient->id;
             }

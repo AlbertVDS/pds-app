@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\RecipeArea;
 use App\Models\RecipeCategory;
 use App\Models\RecipeIngredient;
+use Illuminate\Support\Collection;
 
 class Recipe extends Model
 {
@@ -65,20 +66,20 @@ class Recipe extends Model
 
     /**
      * Get ingredients
-     * @return array
+     * @return Collection
      */
-    public function ingredients(): array
+    public function ingredientsNames(): Collection
     {
-        return RecipeIngredient::whereIn('id', $this->ingredients)->get()->toArray();
+        return RecipeIngredient::whereIn('id', $this->ingredients)->orderByRaw("FIELD(id," . implode(',', $this->ingredients) . ")")->get();
     }
 
     /**
      * Get measurements
-     * @return array
+     * @return Collection
      */
-    public function measurements(): array
+    public function measurementNames(): Collection
     {
-        return RecipeIngredient::whereIn('id', $this->measurements)->get()->toArray();
+        return RecipeMeasurement::whereIn('id', $this->measurements)->orderByRaw("FIELD(id," . implode(',', $this->measurements) . ")")->get();
     }
 
     /**
@@ -87,9 +88,27 @@ class Recipe extends Model
      */
     public function getIngredientsWithMeasurements(): array
     {
-        return array_combine(
-            $this->ingredients,
-            $this->measurements
-        );
+        $ingredientArray = [];
+        $measurements = $this->measurements;
+
+        foreach ($this->ingredientsNames() as $key => $ingredient) {
+            $ingredientArray[$ingredient->name] = RecipeMeasurement::find($measurements[$key])->name ?? null;
+        }
+
+        return $ingredientArray;
+    }
+
+    /**
+     * Get area name
+     * @return string
+     */
+    public function areaName(): string
+    {
+        return $this->hasOne(RecipeArea::class, 'id', 'area_id')->first()->name ?? '';
+    }
+
+    public function categoryName(): string
+    {
+        return $this->hasOne(RecipeCategory::class, 'id', 'category_id')->first()->name ?? '';
     }
 }
