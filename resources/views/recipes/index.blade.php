@@ -22,37 +22,89 @@
 @endsection
 
 @section('content')
+        <p>
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+                aria-controls="collapseExample">
+                Search and filters
+            </a>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <form method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="card card-body">
 
-        <div class="container text-center">
-            <div class="row align-items-start">
-                <div class="col">
-
-                    <!-- recipe search form -->
-                    <form method="GET">
-                        <div class="input-group mb-3">
-                            <input type="text" name="search" class="form-control" placeholder="Search for recipes..."
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="recipeSearch" class="col-form-label">Recipe name</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" id="recipeSearch" name="search" class="form-control" placeholder="Search for recipes..."
                                 value="{{ request('search') }}">
-                            <button class="btn btn-outline-secondary" type="submit">Search</button>
                         </div>
-                    </form>
-                </div>
-                <div class="col">
+                    </div>
 
-                    <!-- ingredient search form -->
-                    <form method="GET" enctype="multipart/form-data">
-                        @csrf
-                        <div class="input-group mb-3">
-                            <select class="search-address form-control" id="change-add" name="recipe-ingredients[]" multiple="multiple"></select>
-                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="ingredient-select" class="col-form-label">Ingredients</label>
                         </div>
-                    </form>
+                        <div class="col-auto">                            
+                            <select class="search-address form-control" id="ingredient-select" name="recipe-ingredients[]" multiple="multiple">
+                                @foreach($recipeIngredients as $ingredient)
+                                    <option value="{{ $ingredient->id }}" selected>{{ $ingredient->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="tag-select" class="col-form-label">Tags</label>
+                        </div>
+                        <div class="col-auto">
+                            <select class="search-address form-control" id="tag-select" name="recipe-tags[]" multiple="multiple">
+                                @foreach ($recipeTags as $tag)
+                                    <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>                                    
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="area-select" class="col-form-label">Area</label>
+                        </div>
+                        <div class="col-auto">
+                            <select class="search-address form-control" id="area-select" name="recipe-areas[]" multiple="multiple">
+                                @foreach($recipeAreas as $area)
+                                    <option value="{{ $area->id }}" selected>{{ $area->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="category-select" class="col-form-label">Categories</label>
+                        </div>
+                        <div class="col-auto">
+                            <select class="search-address form-control" id="category-select" name="recipe-categories[]" multiple="multiple">
+                                @foreach($recipeCategories as $category)
+                                    <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Search</button>
 
                 </div>
-            </div>
+            </form>
         </div>
-        <div>
-            
+
+        <div class="d-flex justify-content-between align-items-center">
+            {{ $recipes->links() }}
         </div>
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -76,8 +128,9 @@
                             <td>
                                 <a href="{{ route('recipes.show', $recipe->id) }}">
                                     {{ $recipe->name }}
-                                </a>
-                            </td>    
+                                </a><br>
+                                {{ $recipe->tagNames }}
+                            </td>
                             <td>{{ $recipe->category() }}</td>
                             <td>{{ $recipe->area() }}</td>
                         </tr>
@@ -86,28 +139,106 @@
             </tbody>
         </table>
 
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            {{ $recipes->links() }}
+        </div>
+
        <script type="text/javascript">
-        var path = "{{ route('autocomplete') }}";
+            var path = "{{ route('ingredient-autocomplete') }}";
 
-        $('#change-add').select2({
-            placeholder: 'Select ingredients',
-            ajax: {
-                url: path,
-                dataType: 'json',
-                delay: 250,
-                processResults: function (data) {
-                    return {
-                        results: $.map(data, function (item) {
-                            return {
-                                text: item.name,
-                                id: item.id
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
+            $('#ingredient-select').select2({
+                placeholder: 'Select ingredients',
+                ajax: {
+                    url: path,
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        </script>
 
-    </script>
+        <script type="text/javascript">
+            var path = "{{ route('tag-autocomplete') }}";
+
+            $('#tag-select').select2({
+                placeholder: 'Select tags',
+                ajax: {
+                    url: path,
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+        </script>
+
+        <script type="text/javascript">
+            var path = "{{ route('area-autocomplete') }}";
+
+            $('#area-select').select2({
+                placeholder: 'Select area',
+                ajax: {
+                    url: path,
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+        </script>
+
+        <script type="text/javascript">
+            var path = "{{ route('category-autocomplete') }}";
+
+            $('#category-select').select2({
+                placeholder: 'Select categories',
+                ajax: {
+                    url: path,
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+        </script>
 @endsection
