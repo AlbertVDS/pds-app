@@ -9,6 +9,8 @@ class RecipeIngredientController extends Controller
 {
     /**
      * Get results based on the search term.
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function autoComplete(Request $request)
     {
