@@ -107,6 +107,10 @@ class Recipe extends Model
         return $this->hasOne(RecipeArea::class, 'id', 'area_id')->first()->name ?? '';
     }
 
+    /**
+     * Get category name
+     * @return string
+     */
     public function categoryName(): string
     {
         return $this->hasOne(RecipeCategory::class, 'id', 'category_id')->first()->name ?? '';
