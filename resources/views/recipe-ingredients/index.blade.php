@@ -18,6 +18,7 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center">
         {{ $ingredients->links() }}
+        <button class="btn btn-primary" id="submit-all">Submit all</button>
     </div>
 
     <table class="table table-striped">
@@ -56,6 +57,7 @@
             $('.select2').select2({
                 placeholder: 'Select a food',
                 allowClear: true,
+                closeOnSelect: false,
                 width: '100%',
                 ajax: {
                     url: path,
@@ -107,6 +109,12 @@
                         console.error('Error:', error);
                     }
                 });
+            });
+
+            $('#submit-all').on('click', function() {
+                $('.submit-food.btn-primary').each(function() {
+                    $(this).trigger('click');
+                }).delay(250);
             });
         });
     </script>
