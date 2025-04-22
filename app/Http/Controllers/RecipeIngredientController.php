@@ -23,4 +23,38 @@ class RecipeIngredientController extends Controller
 
         return response()->json($data);
     }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return view('recipe-ingredients.index', [
+            'pageTitle' => 'Ingridient list',
+            'ingredients' => RecipeIngredient::orderBy('name')->paginate(40),
+        ]);
+    }
+
+    /**
+     * Save linked foods
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveLinkedFoods(Request $request)
+    {
+        $food = RecipeIngredient::find($request->get('ingredient_id'));
+        $food->food_ids = $request->get('food_ids');
+
+        if ($food->save()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Linked foods saved successfully.',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to save linked foods.',
+            ]);
+        }
+    }
 }
