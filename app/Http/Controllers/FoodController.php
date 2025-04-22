@@ -4,9 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Food;
 use Illuminate\Http\Request;
+use App\Services\FoodSubstituteService;
 
 class FoodController extends Controller
 {
+    private $foodSubstituteService;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->foodSubstituteService = new FoodSubstituteService();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -35,20 +48,31 @@ class FoodController extends Controller
         //
     }
 
+
     /**
      * Display the specified resource.
      */
     public function show(Food $food)
     {
-        //
+        return view('foods.details', [
+            'pageTitle' => 'Food details',
+            'food' => $food,
+            'sameTypeFoods' => $food->getPossibleSubstitutesChunked(),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Food $food)
     {
-        //
+        return view('foods.details', [
+            'pageTitle' => 'Edit food',
+            'food' => $food,
+            'sameTypeFoods' => $food->getPossibleSubstitutesChunked(),
+            'substituteIds' => $food->substitutesIds(),
+        ]);
     }
 
     /**
