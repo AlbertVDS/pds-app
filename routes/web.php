@@ -24,6 +24,7 @@ Route::get('category-autocomplete', action: [RecipeCategoryController::class, 'a
 Route::get('ingredient-autocomplete', action: [RecipeIngredientController::class, 'autocomplete'])->name('ingredient-autocomplete');
 Route::get('tag-autocomplete', action: [RecipeTagController::class, 'autocomplete'])->name('tag-autocomplete');
 Route::resource('foods', FoodController::class);
+Route::post('save-substitute', [FoodSubstitutesController::class, 'updateSubstitute'])->name('save-substitute');
 Route::resource('mailings', MailingController::class);
 Route::match(['get', 'post'], 'recipes', [RecipeController::class, 'index']);
 Route::get('recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');

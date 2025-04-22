@@ -2,65 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Food;
 use App\Models\FoodSubstitute;
 use Illuminate\Http\Request;
 
 class FoodSubstitutesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Update the substitute for a food item.
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function index()
+    public function updateSubstitute(Request $request)
     {
-        $subs = FoodSubstitute::all();
-        return view('food_substitutes.index', ['subs' => $subs]);
-    }
+        $food = Food::findOrFail($request->input('food_id'));
+        $substitute = Food::findOrFail($request->input('substitute_id'));
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        if ($request->boolean('checked')) {
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            FoodSubstitute::updateOrCreate(
+                ['food_id' => $food->id, 'substitute_id' => $substitute->id],
+                ['food_id' => $food->id, 'substitute_id' => $substitute->id]
+            );
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            return response()->json([
+                'success' => true,
+                'message' => 'Substitute added successfully.',
+            ]);
+        } else {
+            FoodSubstitute::where('food_id', $food->id)
+                ->where('substitute_id', $substitute->id)
+                ->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Substitute removed successfully.',
+            ]);
+        }
     }
 }

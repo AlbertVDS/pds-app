@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Has substitutes</th>
                 <th>Type</th>
                 <th>Level</th>
                 <th>Weight</th>
@@ -25,9 +26,10 @@
             @foreach ($foods as $food)
                 <tr>
                     <td>{{ $food->name }}</td>
+                    <td>{{ $food->hasSubstitutes() }}</td>
                     <td>{{ $food->type_id }}</td>
                     <td>{{ $food->level }}</td>
-                    <td>{{ $food->weight }} gr</td>
+                    <td>{{ $food->weightText() }}</td>
                     <td>{{ $food->fructose }}</td>
                     <td>{{ $food->lactose }}</td>
                     <td>{{ $food->mannitol }}</td>
