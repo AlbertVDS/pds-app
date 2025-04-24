@@ -30,7 +30,7 @@ class RecipeIngredientController extends Controller
     public function index()
     {
         return view('recipe-ingredients.index', [
-            'pageTitle' => 'Ingridient list',
+            'pageTitle' => 'Ingredient list',
             'ingredients' => RecipeIngredient::orderBy('name')->paginate(40),
         ]);
     }
