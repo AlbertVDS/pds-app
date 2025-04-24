@@ -18,7 +18,6 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center">
         {{ $ingredients->links() }}
-        <button class="btn btn-primary" id="submit-all">Submit all</button>
     </div>
 
     <table class="table table-striped">
@@ -49,6 +48,11 @@
             @endforeach
         </tbody>
     </table>
+
+    <div class="d-flex justify-content-between align-items-center">
+        {{ $ingredients->links() }}
+        <button class="btn btn-primary" id="submit-all">Submit all</button>
+    </div>
 
     <script>
         var path = "{{ route('food-autocomplete') }}";
@@ -112,14 +116,12 @@
             });
 
             $('#submit-all').on('click', function() {
+                $(this).html('<i class="fa-solid fa-spinner"></i>');
                 $('.submit-food.btn-primary').each(function() {
                     $(this).trigger('click');
                 }).delay(250);
+                $(this).html('Submit all');
             });
         });
     </script>
-
-    <div class="d-flex justify-content-between align-items-center">
-        {{ $ingredients->links() }}
-    </div>
 @endsection
