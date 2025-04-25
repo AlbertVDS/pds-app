@@ -24,7 +24,11 @@
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-                @include('layout-parts.sidebar')
+                @if(Auth::user() && Auth::user()->isAdmin())
+                    @include('layout-parts.admin-sidebar')
+                @else
+                    @include('layout-parts.sidebar')
+                @endif
             </div>
             <div class="col py-3">
                 <h3>{{ $pageTitle }}</h3>

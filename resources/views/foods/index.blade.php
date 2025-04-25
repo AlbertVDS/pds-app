@@ -19,7 +19,9 @@
                 <th>Sorbitol</th>
                 <th>GOS</th>
                 <th>Fructan</th>
-                <th>Actions</th>
+                @if(Auth::user() && Auth::user()->isAdmin())
+                    <th>Actions</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -36,10 +38,12 @@
                     <td>{{ $food->sorbitol }}</td>
                     <td>{{ $food->GOS }}</td>
                     <td>{{ $food->fructan }}</td>
-                    <td class="content-left">
-                        <a href="{{ route('foods.edit', $food->id) }}" class=""><i class="fa-solid fa-pencil"></i></a>
-                        <a href="{{ route('foods.edit', $food->id) }}" class=""><i class="fa-solid fa-trash-can"></i></i></a>
-                    </td>
+                    @if(Auth::user() && Auth::user()->isAdmin())
+                        <td class="content-left">
+                            <a href="{{ route('foods.edit', $food->id) }}" class=""><i class="fa-solid fa-pencil"></i></a>
+                            <a href="{{ route('foods.edit', $food->id) }}" class=""><i class="fa-solid fa-trash-can"></i></i></a>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>
