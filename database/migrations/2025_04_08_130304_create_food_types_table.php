@@ -17,29 +17,6 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->timestamps();
         });
-
-        DB::insert(
-            "INSERT INTO food_types (name) VALUES
-            ('Fresh fruit'),
-            ('Processed fruit'),
-            ('Dairy'),
-            ('Plant - based dairy alternatives'),
-            ('Nuts & Seeds'),
-            ('Vegetarian substitutes'),
-            ('Pulses & Legumes'),
-            ('Sugars & Sweeteners'),
-            ('Fresh Vegetables'),
-            ('Processed Vegetables'),
-            ('Tea'),
-            ('Alcohol'),
-            ('Coffee'),
-            ('Drink Powders'),
-            ('Cordial'),
-            ('Juices'),
-            ('Cereals'),
-            ('Grains'),
-            ('Flours');"
-        );
     }
 
     /**
