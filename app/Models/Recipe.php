@@ -115,4 +115,11 @@ class Recipe extends Model
     {
         return $this->hasOne(RecipeCategory::class, 'id', 'category_id')->first()->name ?? '';
     }
+
+    public function tagNames(): array
+    {
+        return array_map(function ($tag) {
+            return RecipeTag::find($tag)->name ?? null;
+        }, $this->tags);
+    }
 }
