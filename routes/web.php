@@ -21,6 +21,7 @@ Route::get('/', function () {
 
 Route::middleware([IsAdminMiddleware::class])->group(function () {
     Route::resource('foods', FoodController::class);
+    Route::resource('mailing', MailingController::class);
     Route::post('save-linked-foods', [RecipeIngredientController::class, 'saveLinkedFoods'])->name('save-linked-foods');
     Route::post('save-substitute', [FoodSubstitutesController::class, 'updateSubstitute'])->name('save-substitute');
     Route::resource('mailings', MailingController::class);
