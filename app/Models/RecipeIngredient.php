@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 class RecipeIngredient extends Model
 {
+    use SoftDeletes;
+
     /**
      * Attributes which are cast as set type
      * @var array
