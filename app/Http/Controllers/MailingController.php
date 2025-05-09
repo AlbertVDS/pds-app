@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mailing;
+use App\Models\MailingGroup;
 use Illuminate\Http\Request;
 
 class MailingController extends Controller
@@ -12,8 +13,11 @@ class MailingController extends Controller
      */
     public function index()
     {
-        $mailings = Mailing::all();
-        return view('mailing.index', ['mailings' => $mailings]);
+        $mailings = Mailing::paginate(30);
+        return view('mailing.index', [
+            'pageTitle' => 'Mailings',
+            'mailings' => $mailings
+        ]);
     }
 
     /**
@@ -21,7 +25,10 @@ class MailingController extends Controller
      */
     public function create()
     {
-        //
+        return view('mailing.create-edit', [
+            'pageTitle' => 'Create Mailing',
+            'mailingGroups' => MailingGroup::all(),
+        ]);
     }
 
     /**
@@ -29,15 +36,16 @@ class MailingController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'mailing_group_id' => 'required|exists:mailing_groups,id',
+            'body' => 'required|string',
+            'schedule' => 'required'
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Mailing $mailing)
-    {
-        //
+        Mailing::create($request->all());
+
+        return redirect()->route('mailings.index')->with('success', 'Mailing created successfully.');
     }
 
     /**
@@ -45,8 +53,12 @@ class MailingController extends Controller
      */
     public function edit(Mailing $mailing)
     {
-        $mailings = Mailing::all();
-        return view('mailing.edit', ['mailings' => $mailings]);
+        return view('mailing.create-edit', [
+            'pageTitle' => 'Edit Mailing',
+            'mailing' => $mailing,
+            'mailings' => Mailing::all(),
+            'mailingGroups' => MailingGroup::all(),
+        ]);
     }
 
     /**
@@ -54,7 +66,16 @@ class MailingController extends Controller
      */
     public function update(Request $request, Mailing $mailing)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'mailing_group_id' => 'required|exists:mailing_groups,id',
+            'body' => 'required|string',
+            'schedule' => 'required'
+        ]);
+
+        $mailing->update($request->all());
+
+        return redirect()->route('mailings.index')->with('success', 'Mailing updated successfully.');
     }
 
     /**
@@ -62,6 +83,7 @@ class MailingController extends Controller
      */
     public function destroy(Mailing $mailing)
     {
-        //
+        $mailing->delete();
+        return redirect()->route('mailings.index')->with('success', 'Mailing deleted successfully.');
     }
 }
