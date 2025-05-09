@@ -39,9 +39,14 @@
                     <td>{{ $food->GOS }}</td>
                     <td>{{ $food->fructan }}</td>
                     @if(Auth::user() && Auth::user()->isAdmin())
-                        <td class="content-left">
-                            <a href="{{ route('foods.edit', $food->id) }}" class=""><i class="fa-solid fa-pencil"></i></a>
-                            <a href="{{ route('foods.edit', $food->id) }}" class=""><i class="fa-solid fa-trash-can"></i></i></a>
+                        <td class="content-left d-flex">
+                            <a href="{{ route('foods.edit', $food->id) }}" class="pe-1"><i class="fa-solid fa-pencil"></i></a>
+                            <form action={{ route('foods.destroy', $food->id) }} method="POST" class="d-flex">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-link p-0"><i
+                                        class="fa-solid fa-trash"></i></button>
+                            </form>
                         </td>
                     @endif
                 </tr>
