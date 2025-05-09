@@ -129,7 +129,7 @@
                                 <a href="{{ route('recipes.show', $recipe->id) }}">
                                     {{ $recipe->name }}
                                 </a><br>
-                                {{ $recipe->tagNames }}
+                                {{ $recipe->tagNames() }}
                             </td>
                             <td>{{ $recipe->category() }}</td>
                             <td>{{ $recipe->area() }}</td>
