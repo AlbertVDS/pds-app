@@ -116,10 +116,14 @@ class Recipe extends Model
         return $this->hasOne(RecipeCategory::class, 'id', 'category_id')->first()->name ?? '';
     }
 
-    public function tagNames(): array
+    /**
+     * Get tag names
+     * @return string
+     */
+    public function tagNames(): string
     {
-        return array_map(function ($tag) {
+        return implode(', ', array_map(function ($tag) {
             return RecipeTag::find($tag)->name ?? null;
-        }, $this->tags);
+        }, $this->tags));
     }
 }
