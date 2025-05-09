@@ -23,7 +23,9 @@ class Mailing extends Model
      */
     protected $fillable = [
         'title',
+        'mailing_group_id',
         'body',
+        'schedule',
         'user_data_created',
         'sent',
     ];
@@ -34,5 +36,30 @@ class Mailing extends Model
     public function mailData(): HasMany
     {
         return $this->hasMany(MailData::class);
+    }
+
+    /**
+     * Get all unsent mail data associated with the mailing.
+     * @return HasMany
+     */
+    public function unsentMailData(): HasMany
+    {
+        return $this->hasMany(MailData::class)->where('sent', false);
+    }
+
+    /**
+     * Get the mailing group associated with the mailing.
+     */
+    public function mailingGroup()
+    {
+        return $this->belongsTo(MailingGroup::class, 'mailing_group_id');
+    }
+
+    /**
+     * Get mailing group name.
+     */
+    public function mailingGroupName()
+    {
+        return $this->mailingGroup->name ?? 'No group';
     }
 }

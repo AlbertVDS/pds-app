@@ -28,7 +28,7 @@ class RecipeSync extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Sync recipes from the API';
 
     /**
      * Create a new command instance.
