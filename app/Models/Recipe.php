@@ -57,6 +57,7 @@ class Recipe extends Model
         return $this->hasOne(RecipeArea::class, 'id', 'area_id')->first()->name;
     }
 
+
     /**
      * Get category name
      * @return string
@@ -64,6 +65,15 @@ class Recipe extends Model
     public function category(): string
     {
         return $this->hasOne(RecipeCategory::class, 'id', 'category_id')->first()->name;
+    }
+
+    /**
+     * Get recipe name and translate it if needed
+     * @return array|string|null
+     */
+    public function getName(): string
+    {
+        return __($this->name);
     }
 
     /**
@@ -94,7 +104,7 @@ class Recipe extends Model
         $measurements = $this->measurements;
 
         foreach ($this->ingredientsNames() as $key => $ingredient) {
-            $ingredientArray[$ingredient->name] = RecipeMeasurement::find($measurements[$key])->name ?? null;
+            $ingredientArray[__($ingredient->name)] = __(RecipeMeasurement::find($measurements[$key])->name ?? null);
         }
 
         return $ingredientArray;
@@ -106,7 +116,7 @@ class Recipe extends Model
      */
     public function areaName(): string
     {
-        return $this->hasOne(RecipeArea::class, 'id', 'area_id')->first()->name ?? '';
+        return __($this->hasOne(RecipeArea::class, 'id', 'area_id')->first()->name ?? '');
     }
 
     /**
@@ -115,7 +125,7 @@ class Recipe extends Model
      */
     public function categoryName(): string
     {
-        return $this->hasOne(RecipeCategory::class, 'id', 'category_id')->first()->name ?? '';
+        return __($this->hasOne(RecipeCategory::class, 'id', 'category_id')->first()->name ?? '');
     }
 
     /**
@@ -125,7 +135,25 @@ class Recipe extends Model
     public function tagNames(): string
     {
         return implode(', ', array_map(function ($tag) {
-            return RecipeTag::find($tag)->name ?? null;
+            return __(RecipeTag::find($tag)->name ?? null);
         }, $this->tags));
+    }
+
+    /**
+     * Get recipe instructions
+     * @return string
+     */
+    public function instructions(): string
+    {
+        return __($this->hasOne(RecipeInstruction::class, 'id', 'instructions')->first()->instructions ?? '');
+    }
+
+    /**
+     * MorphTo relationship.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<Model, OriginalText>
+     */
+    public function foreign()
+    {
+        return $this->morphTo();
     }
 }

@@ -27,7 +27,7 @@ class FoodSubstitutesController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Substitute added successfully.',
+                'message' => __('Substitute added successfully.'),
             ]);
         } else {
             FoodSubstitute::where('food_id', $food->id)
@@ -35,7 +35,7 @@ class FoodSubstitutesController extends Controller
                 ->delete();
             return response()->json([
                 'success' => true,
-                'message' => 'Substitute removed successfully.',
+                'message' => __('Substitute removed successfully.'),
             ]);
         }
     }

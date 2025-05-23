@@ -23,4 +23,13 @@ class RecipeTag extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * MorphTo relationship.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<Model, OriginalText>
+     */
+    public function foreign()
+    {
+        return $this->morphTo();
+    }
 }
