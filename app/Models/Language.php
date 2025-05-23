@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\OriginalText;
+
+class Language extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    /**
+     * The table associated with the model.
+     * @var string
+     */
+    protected $table = 'languages';
+
+    /**
+     * The attributes that are mass assignable.
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'code',
+    ];
+
+    public function translations()
+    {
+        return $this->hasMany(Translation::class)->with('original');
+    }
+
+    public function complete()
+    {
+        $total = OriginalText::count();
+        return $this->translations()->count() ? round($this->translations()->count() / $total * 100) . '%' : '0%';
+    }
+
+    /**
+     * MorphTo relationship.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<Model, OriginalText>
+     */
+    public function foreign()
+    {
+        return $this->morphTo();
+    }
+}

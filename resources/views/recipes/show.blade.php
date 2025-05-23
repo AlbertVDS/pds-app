@@ -8,7 +8,7 @@
                     style="width: 80%; height: auto;">
             </div>
             <div class="col">
-                <b>Ingredients:</b><br>
+                <b>{{ __('Ingredients') }}:</b><br>
                 <ul class="m-2">
                     @foreach($recipe->getIngredientsWithMeasurements() as $ingredient => $measurement)
                         <li><b>{{ $ingredient }}:</b> <i>{{ $measurement }}</i></li>
@@ -18,9 +18,9 @@
         </div>
 
         <div class="card-body">
-            <h5 class="card-title">Directions:</h5>
+            <h5 class="card-title">{{ __('Directions') }}:</h5>
             <p class="card-text">
-                {{ $recipe->instructions }}
+                {{ __($recipe->instructions) }}
             </p>
         </div>
         <ul class="list-group list-group-flush">

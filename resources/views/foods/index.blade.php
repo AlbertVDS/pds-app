@@ -2,32 +2,32 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="{{ route('foods.create') }}" class="btn btn-primary">Add Food</a>
+        <a href="{{ route('foods.create') }}" class="btn btn-primary">{{ __('Add Food') }}</a>
         {{ $foods->links() }}
     </div>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Has substitutes</th>
-                <th>Type</th>
-                <th>Level</th>
-                <th>Weight</th>
-                <th>Fructose</th>
-                <th>Lactose</th>
-                <th>Mannitol</th>
-                <th>Sorbitol</th>
-                <th>GOS</th>
-                <th>Fructan</th>
+                <th>{{ __('Name') }}</th>
+                <th>{{ __('Has substitutes') }}</th>
+                <th>{{ __('Type') }}</th>
+                <th>{{ __('Level') }}</th>
+                <th>{{ __('Weight') }}</th>
+                <th>{{ __('Fructose') }}</th>
+                <th>{{ __('Lactose') }}</th>
+                <th>{{ __('Mannitol') }}</th>
+                <th>{{ __('Sorbitol') }}</th>
+                <th>{{ __('GOS') }}</th>
+                <th>{{ __('Fructan') }}</th>
                 @if(Auth::user() && Auth::user()->isAdmin())
-                    <th>Actions</th>
+                    <th>{{ __('Actions') }}</th>
                 @endif
             </tr>
         </thead>
         <tbody>
             @foreach ($foods as $food)
                 <tr>
-                    <td>{{ $food->name }}</td>
+                    <td>{{ $food->getName() }}</td>
                     <td>{{ $food->hasSubstitutes() }}</td>
                     <td>{{ $food->type_id }}</td>
                     <td>{{ $food->level }}</td>
@@ -54,7 +54,7 @@
         </tbody>
     </table>
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="{{ route('foods.create') }}" class="btn btn-primary">Add Food</a>
+        <a href="{{ route('foods.create') }}" class="btn btn-primary">{{ __('Add Food') }}</a>
         {{ $foods->links() }}
     </div>
 @endsection

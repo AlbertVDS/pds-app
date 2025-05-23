@@ -23,26 +23,26 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Ingredient</th>
-                <th>Food</th>
-                <th>Actions</th>
+                <th>{{ __('Ingredient') }}</th>
+                <th>{{ __('Food') }}</th>
+                <th>{{ __('Actions') }}</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($ingredients as $ingredient)
                 <tr>
-                    <td>{{ $ingredient->name }}</td>
+                    <td>{{ $ingredient->getName() }}</td>
                     <td>
                         <select class="select2" ingredient-id="{{ $ingredient->id }}" multiple="multiple">
                         @foreach($ingredient->foods() as $food)
                             <option value="{{ $food->id }}" selected>
-                                {{ $food->name }}
+                                {{ $food->getName() }}
                             </option>
                         @endforeach
                         </select>
                     </td>
                     <td>
-                        <button class="submit-food btn disabled" id="{{ $ingredient->id }}">Submit</button>
+                        <button class="submit-food btn disabled" id="{{ $ingredient->id }}">{{ __('Submit') }}</button>
                     </td>
                 </tr>
             @endforeach
@@ -51,7 +51,7 @@
 
     <div class="d-flex justify-content-between align-items-center">
         {{ $ingredients->links() }}
-        <button class="btn btn-primary" id="submit-all">Submit all</button>
+        <button class="btn btn-primary" id="submit-all">{{ __('Submit all') }}</button>
     </div>
 
     <script>
@@ -59,7 +59,7 @@
 
         $(document).ready(function() {
             $('.select2').select2({
-                placeholder: 'Select a food',
+                placeholder: '{{ __('Select a food') }}',
                 allowClear: true,
                 closeOnSelect: false,
                 width: '100%',

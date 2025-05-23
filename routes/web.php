@@ -9,6 +9,7 @@ use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RecipeTagController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RecipeIngredientController;
+use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::middleware([IsAdminMiddleware::class])->group(function () {
     Route::post('save-substitute', [FoodSubstitutesController::class, 'updateSubstitute'])->name('save-substitute');
     Route::resource('mailings', MailingController::class);
     Route::resource('roles', RoleController::class);
+    Route::resource('translations', TranslationController::class);
     Route::resource('users', UserController::class);
 });
 

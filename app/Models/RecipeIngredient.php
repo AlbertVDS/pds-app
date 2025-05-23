@@ -31,4 +31,18 @@ class RecipeIngredient extends Model
     {
         return $this->food_ids ? Food::whereIn('id', $this->food_ids)->orderBy('name')->get() : new Collection();
     }
+
+    public function getName()
+    {
+        return __($this->name);
+    }
+
+    /**
+     * MorphTo relationship.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<Model, OriginalText>
+     */
+    public function foreign()
+    {
+        return $this->morphTo();
+    }
 }

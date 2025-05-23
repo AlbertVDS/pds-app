@@ -28,4 +28,13 @@ class Role extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * MorphTo relationship.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<Model, OriginalText>
+     */
+    public function foreign()
+    {
+        return $this->morphTo();
+    }
 }

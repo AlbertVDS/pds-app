@@ -30,7 +30,7 @@ class RecipeController extends Controller
         return view(
             'recipes.index',
             [
-                'pageTitle' => 'Recipes',
+                'pageTitle' => __('Recipes'),
                 'recipes' => $recipes->orderBy('name')->paginate(10) ?? '',
                 'search' => $request->get('search') ?? '',
                 'recipeIngredients' => $recipeIngredients,
@@ -51,7 +51,7 @@ class RecipeController extends Controller
         return view(
             'recipes.show',
             [
-                'pageTitle' => $recipe->name ?? '',
+                'pageTitle' => __($recipe->name ?? ''),
                 'recipe' => $recipe ?? []
             ]
         );

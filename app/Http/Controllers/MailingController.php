@@ -15,7 +15,7 @@ class MailingController extends Controller
     {
         $mailings = Mailing::paginate(30);
         return view('mailing.index', [
-            'pageTitle' => 'Mailings',
+            'pageTitle' => __('Mailings'),
             'mailings' => $mailings
         ]);
     }
@@ -26,7 +26,7 @@ class MailingController extends Controller
     public function create()
     {
         return view('mailing.create-edit', [
-            'pageTitle' => 'Create Mailing',
+            'pageTitle' => __('Create Mailing'),
             'mailingGroups' => MailingGroup::all(),
         ]);
     }
@@ -45,7 +45,7 @@ class MailingController extends Controller
 
         Mailing::create($request->all());
 
-        return redirect()->route('mailings.index')->with('success', 'Mailing created successfully.');
+        return redirect()->route('mailings.index')->with('success', __('Mailing created successfully.'));
     }
 
     /**
@@ -54,7 +54,7 @@ class MailingController extends Controller
     public function edit(Mailing $mailing)
     {
         return view('mailing.create-edit', [
-            'pageTitle' => 'Edit Mailing',
+            'pageTitle' => __('Edit Mailing'),
             'mailing' => $mailing,
             'mailings' => Mailing::all(),
             'mailingGroups' => MailingGroup::all(),
@@ -75,7 +75,7 @@ class MailingController extends Controller
 
         $mailing->update($request->all());
 
-        return redirect()->route('mailings.index')->with('success', 'Mailing updated successfully.');
+        return redirect()->route('mailings.index')->with('success', __('Mailing updated successfully.'));
     }
 
     /**
@@ -84,6 +84,6 @@ class MailingController extends Controller
     public function destroy(Mailing $mailing)
     {
         $mailing->delete();
-        return redirect()->route('mailings.index')->with('success', 'Mailing deleted successfully.');
+        return redirect()->route('mailings.index')->with('success', __('Mailing deleted successfully.'));
     }
 }
