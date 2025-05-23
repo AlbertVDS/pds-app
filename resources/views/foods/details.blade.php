@@ -3,19 +3,19 @@
 @section('content')
     <div class="card m-4">
         <div class="card-header">
-            <h5 class="card-title">{{ $food->name }}</h5>
+            <h5 class="card-title">{{ $food->getName() }}</h5>
         </div>
         <div class="card-body">
             <div class="container text-center">
                 <div class="row align-items-start">
                     <div class="col">
-                        Type: {{ $food->getTypeName() }}
+                        {{ __('Type') }}: {{ $food->getTypeName() }}
                     </div>
                     <div class="col">
-                        Level: @include('foods.level', ['level' => $food->level])
+                        {{ __('Level') }}: @include('foods.level', ['level' => $food->level])
                     </div>
                     <div class="col">
-                        Weight: {{ $food->weightText() }}
+                        {{ __('Weight') }}: {{ $food->weightText() }}
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="card-header">
-            <h6 class="card-title">Substitutes</h6>
+            <h6 class="card-title">{{ __('Substitutes') }}</h6>
         </div>
         <div class="card-body">
             <div class="container text-center">
@@ -44,8 +44,8 @@
                                         <input class="form-check-input"  type="checkbox" id="{{ $sameTypeFood->id }}" {{ in_array($sameTypeFood->id, $substituteIds) ? 'checked' : '' }}>
                                                
                                     @endif
-                                    <label class="form-check-label" for="check{{ $sameTypeFood->name }}">
-                                        {{ $sameTypeFood->name }}
+                                    <label class="form-check-label" for="check{{ $sameTypeFood->getName() }}">
+                                        {{ $sameTypeFood->getName() }}
                                         @foreach($food->fodmaps as $fodmap)
                                             @include('foods.contains', ['name' => $fodmap, 'hasFodmap' => $sameTypeFood->$fodmap])
                                         @endforeach
@@ -60,12 +60,12 @@
 
         </div>
         <div class="card-footer text-muted">
-            <a href="{{ route('foods.index') }}" class="btn btn-primary">Back</a>
+            <a href="{{ route('foods.index') }}" class="btn btn-primary">{{ __('Back') }}</a>
             @if(Route::currentRouteAction() == 'App\Http\Controllers\FoodController@edit')
                 <form action="{{ route('foods.destroy', $food->id) }}" method="POST" class="d-inline-block">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
                 </form>
             @endif
         </div>

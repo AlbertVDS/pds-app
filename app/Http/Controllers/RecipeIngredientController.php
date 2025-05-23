@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RecipeIngredient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeIngredientController extends Controller
 {
@@ -14,13 +15,19 @@ class RecipeIngredientController extends Controller
      */
     public function autoComplete(Request $request)
     {
-        $query = RecipeIngredient::select("name", "id");
-
-        $request->filled('q') ? $query->where('name', 'LIKE', '%' . $request->get('q') . '%') : null;
+        $query = RecipeIngredient::query();
+        if (Auth::user()) {
+            $query->join('original_text', 'recipe_ingredients.name', '=', 'original_text.text');
+            $query->join('translations', 'original_text.id', '=', 'translations.original_text_id');
+            $query->where('translations.translation', 'LIKE', '%' . $request->get('q'));
+            $query->where('translations.language_id', Auth::user()->language_id);
+        } else {
+            $query->where('name', 'LIKE', '%' . $request->get('q') . '%');
+        }
         $query->orderBy('name');
         $query->take(20);
         $data = $query->get();
-
+        $data = $this->translate($data);
         return response()->json($data);
     }
 
@@ -30,7 +37,7 @@ class RecipeIngredientController extends Controller
     public function index()
     {
         return view('recipe-ingredients.index', [
-            'pageTitle' => 'Ingredient list',
+            'pageTitle' => __('Ingredient list'),
             'ingredients' => RecipeIngredient::orderBy('name')->paginate(40),
         ]);
     }
@@ -48,13 +55,23 @@ class RecipeIngredientController extends Controller
         if ($food->save()) {
             return response()->json([
                 'status' => 'success',
-                'message' => 'Linked foods saved successfully.',
+                'message' => __('Linked foods saved successfully.'),
             ]);
         } else {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Failed to save linked foods.',
+                'message' => __('Failed to save linked foods.'),
             ]);
         }
+    }
+
+    private function translate($data)
+    {
+        if (Auth::user()) {
+            foreach ($data as $item) {
+                $item->name = __($item->name);
+            }
+        }
+        return $data;
     }
 }

@@ -27,7 +27,7 @@ class FoodController extends Controller
     {
         $foods = Food::paginate(10);
         return view('foods.index', [
-            'pageTitle' => 'Food list',
+            'pageTitle' => __('Food list'),
             'foods' => $foods
         ]);
     }
@@ -55,7 +55,7 @@ class FoodController extends Controller
     public function show(Food $food)
     {
         return view('foods.details', [
-            'pageTitle' => 'Food details',
+            'pageTitle' => __('Food details'),
             'food' => $food,
             'sameTypeFoods' => $food->getPossibleSubstitutesChunked(),
         ]);
@@ -68,7 +68,7 @@ class FoodController extends Controller
     public function edit(Food $food)
     {
         return view('foods.details', [
-            'pageTitle' => 'Edit food',
+            'pageTitle' => __('Edit food'),
             'food' => $food,
             'sameTypeFoods' => $food->getPossibleSubstitutesChunked(),
             'substituteIds' => $food->substitutesIds(),

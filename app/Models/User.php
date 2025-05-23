@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'language_id',
         'mailing_group_ids',
     ];
 
@@ -80,5 +81,14 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role->name === 'admin';
+    }
+
+    /**
+     * Get the user's language
+     * @return BelongsTo
+     */
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class);
     }
 }

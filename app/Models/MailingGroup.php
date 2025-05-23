@@ -24,10 +24,28 @@ class MailingGroup extends Model
     ];
 
     /**
+     * Get group name and translate it if needed
+     * @return array|string|null
+     */
+    public function getName()
+    {
+        return __($this->name);
+    }
+
+    /**
      * Get the users associated with the mailing group.
      */
     public function users()
     {
         return User::whereJsonContains('mailing_group_ids', $this->id)->get();
+    }
+
+    /**
+     * MorphTo relationship.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<Model, OriginalText>
+     */
+    public function foreign()
+    {
+        return $this->morphTo();
     }
 }

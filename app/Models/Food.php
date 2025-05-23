@@ -105,13 +105,18 @@ class Food extends Model
         return $result->chunk(ceil(count($result) / 3));
     }
 
+    public function getName(): string
+    {
+        return __($this->name);
+    }
+
     /**
      * Get the food type associated with the food.
      * @return string
      */
     public function getTypeName(): string
     {
-        return $this->hasOne(FoodType::class, 'id', 'type_id')->first()->name;
+        return __($this->hasOne(FoodType::class, 'id', 'type_id')->first()->name);
     }
 
     /**
@@ -120,6 +125,15 @@ class Food extends Model
      */
     public function weightText(): string
     {
-        return $this->weight ?  "$this->weight gr" : 'Free use';
+        return $this->weight ?  "$this->weight gr" : __('Free use');
+    }
+
+    /**
+     * Get origional text
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne<OriginalText, Food>
+     */
+    public function originalText()
+    {
+        return $this->morphOne(OriginalText::class, 'foreign');
     }
 }
