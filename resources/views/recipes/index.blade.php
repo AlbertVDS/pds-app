@@ -25,7 +25,7 @@
         <p>
             <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
                 aria-controls="collapseExample">
-                Search and filters
+                {{ __('Search and filters') }}
             </a>
         </p>
         <div class="collapse" id="collapseExample">
@@ -35,17 +35,17 @@
 
                     <div class="row g-3 align-items-center">
                         <div class="col-auto">
-                            <label for="recipeSearch" class="col-form-label">Recipe name</label>
+                            <label for="recipeSearch" class="col-form-label">{{ __('Recipe name') }}</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" id="recipeSearch" name="search" class="form-control" placeholder="Search for recipes..."
+                            <input type="text" id="recipeSearch" name="search" class="form-control" placeholder="{{ __('Search for recipes') }}..."
                                 value="{{ request('search') }}">
                         </div>
                     </div>
 
                     <div class="row g-3 align-items-center">
                         <div class="col-auto">
-                            <label for="ingredient-select" class="col-form-label">Ingredients</label>
+                            <label for="ingredient-select" class="col-form-label">{{ __('Ingredients') }}</label>
                         </div>
                         <div class="col-auto">                            
                             <select class="search-address form-control" id="ingredient-select" name="recipe-ingredients[]" multiple="multiple">
@@ -58,7 +58,7 @@
 
                     <div class="row g-3 align-items-center">
                         <div class="col-auto">
-                            <label for="tag-select" class="col-form-label">Tags</label>
+                            <label for="tag-select" class="col-form-label">{{ __('Tags') }}</label>
                         </div>
                         <div class="col-auto">
                             <select class="search-address form-control" id="tag-select" name="recipe-tags[]" multiple="multiple">
@@ -71,7 +71,7 @@
 
                     <div class="row g-3 align-items-center">
                         <div class="col-auto">
-                            <label for="area-select" class="col-form-label">Area</label>
+                            <label for="area-select" class="col-form-label">{{ __('Area') }}</label>
                         </div>
                         <div class="col-auto">
                             <select class="search-address form-control" id="area-select" name="recipe-areas[]" multiple="multiple">
@@ -84,7 +84,7 @@
 
                     <div class="row g-3 align-items-center">
                         <div class="col-auto">
-                            <label for="category-select" class="col-form-label">Categories</label>
+                            <label for="category-select" class="col-form-label">{{ __('Categories') }}</label>
                         </div>
                         <div class="col-auto">
                             <select class="search-address form-control" id="category-select" name="recipe-categories[]" multiple="multiple">
@@ -95,7 +95,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" type="submit">Search</button>
+                    <button class="btn btn-primary" type="submit">{{ __('Search') }}</button>
 
                 </div>
             </form>
@@ -108,10 +108,10 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Thumbnail</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Area</th>
+                    <th>{{ __('Thumbnail') }}</th>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Category') }}</th>
+                    <th>{{ __('Area') }}</th>
                 </tr>
             </thead>
             <tbody> 
@@ -127,12 +127,12 @@
                             </td>
                             <td>
                                 <a href="{{ route('recipes.show', $recipe->id) }}">
-                                    {{ $recipe->name }}
+                                    {{ $recipe->getName() }}
                                 </a><br>
                                 {{ $recipe->tagNames() }}
                             </td>
-                            <td>{{ $recipe->category() }}</td>
-                            <td>{{ $recipe->area() }}</td>
+                            <td>{{ $recipe->categoryName() }}</td>
+                            <td>{{ $recipe->areaName() }}</td>
                         </tr>
                     @endforeach
                 @endif
@@ -147,7 +147,7 @@
             var path = "{{ route('ingredient-autocomplete') }}";
 
             $('#ingredient-select').select2({
-                placeholder: 'Select ingredients',
+                placeholder: '{{ __('Select ingredients') }}',
                 ajax: {
                     url: path,
                     dataType: 'json',
@@ -171,7 +171,7 @@
             var path = "{{ route('tag-autocomplete') }}";
 
             $('#tag-select').select2({
-                placeholder: 'Select tags',
+                placeholder: '{{ __('Select tags') }}',
                 ajax: {
                     url: path,
                     dataType: 'json',
@@ -196,7 +196,7 @@
             var path = "{{ route('area-autocomplete') }}";
 
             $('#area-select').select2({
-                placeholder: 'Select area',
+                placeholder: '{{ __('Select area') }}',
                 ajax: {
                     url: path,
                     dataType: 'json',
@@ -221,7 +221,7 @@
             var path = "{{ route('category-autocomplete') }}";
 
             $('#category-select').select2({
-                placeholder: 'Select categories',
+                placeholder: '{{ __('Select categories') }}',
                 ajax: {
                     url: path,
                     dataType: 'json',

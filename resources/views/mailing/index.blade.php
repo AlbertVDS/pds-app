@@ -2,18 +2,18 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="{{ route('mailing.create') }}" class="btn btn-primary">Add Mailing</a>
+        <a href="{{ route('mailing.create') }}" class="btn btn-primary">{{ __('Add Mailing') }}</a>
         {{ $mailings->links() }}
     </div>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Mailing Group</th>
-                <th>Schedule</th>
-                <th>Sent</th>
+                <th>{{ __('Title') }}</th>
+                <th>{{ __('Mailing Group') }}</th>
+                <th>{{ __('Schedule') }}</th>
+                <th>{{ __('Sent') }}</th>
                 @if(Auth::user() && Auth::user()->isAdmin())
-                    <th>Actions</th>
+                    <th>{{ __('Actions') }}</th>
                 @endif
             </tr>
         </thead>
@@ -45,7 +45,7 @@
         </tbody>
     </table>
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="{{ route('mailing.create') }}" class="btn btn-primary">Add Mailing</a>
+        <a href="{{ route('mailing.create') }}" class="btn btn-primary">{{ __('Add Mailing') }}</a>
         {{ $mailings->links() }}
     </div>
 @endsection
