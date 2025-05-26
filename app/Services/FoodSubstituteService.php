@@ -18,7 +18,7 @@ class FoodSubstituteService
         $food->GOS ? $sameTypeFoods->where('GOS', '=', 0) : null;
         $food->fructan ? $sameTypeFoods->where('fructan', '=', 0) : null;
 
-        $result =  $sameTypeFoods->orderBy('name')->get();
+        $result = $sameTypeFoods->orderBy('name')->get();
         return $result->chunk(ceil(count($result) / 3));
     }
 }
