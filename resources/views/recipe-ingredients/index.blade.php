@@ -34,7 +34,7 @@
                     <td>{{ $ingredient->getName() }}</td>
                     <td>
                         <select class="select2" ingredient-id="{{ $ingredient->id }}" multiple="multiple">
-                        @foreach($ingredient->foods() as $food)
+                        @foreach($ingredient->foods as $food)
                             <option value="{{ $food->id }}" selected>
                                 {{ $food->getName() }}
                             </option>

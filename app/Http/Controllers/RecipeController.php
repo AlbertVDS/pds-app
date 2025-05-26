@@ -8,6 +8,7 @@ use App\Models\RecipeArea;
 use App\Models\RecipeCategory;
 use App\Models\RecipeIngredient;
 use App\Models\RecipeTag;
+use App\Models\RecipeIngredientFood;
 
 class RecipeController extends Controller
 {
@@ -46,6 +47,7 @@ class RecipeController extends Controller
      */
     public function show(string $id)
     {
+
         $recipe = Recipe::find($id);
 
         return view(
