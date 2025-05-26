@@ -11,8 +11,21 @@
                 <b>{{ __('Ingredients') }}:</b><br>
                 <ul class="m-2">
                     @foreach($recipe->ingredientMeasurements as $ingredientMeasurement)
-                        <li><b>{{ $ingredientMeasurement->ingredientName() }}:</b> <i>{{ $ingredientMeasurement->measurementName() }}</i></li>
-                    @endforeach
+                            <li><b>{{ __($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ __($ingredientMeasurement->measurementName()) }}</i></li>
+
+                            ###{{ __('1') }}
+                            @foreach ($ingredientMeasurement->ingredient->foods as $food)
+                                
+                                   @foreach($food->substitutes as $substitute)
+                                 
+                                   {{ __($substitute->name) }}<br>
+                                    
+                                @endforeach
+
+                            @endforeach
+
+
+                    @endforeach 
                 </ul>
             </div>
         </div>

@@ -3,20 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\RecipeIngredientFood;
 
 class RecipeIngredient extends Model
 {
     use SoftDeletes;
-
-    /**
-     * Attributes which are cast as set type
-     * @var array
-     */
-    protected $casts = [
-        'food_ids' => 'array',
-    ];
 
     protected $table = 'recipe_ingredients';
     protected $fillable = [
@@ -25,11 +19,11 @@ class RecipeIngredient extends Model
 
     /**
      * Foods associated with this recipe ingredient
-     * @return Collection
+     
      */
-    public function foods(): Collection
+    public function foods()
     {
-        return $this->food_ids ? Food::whereIn('id', $this->food_ids)->orderBy('name')->get() : new Collection();
+        return $this->belongsToMany(Food::class, 'recipe_ingredient_foods', 'recipe_ingredient_id', 'food_id')->wherePivotNull('deleted_at');
     }
 
     public function getName()
@@ -44,5 +38,19 @@ class RecipeIngredient extends Model
     public function foreign()
     {
         return $this->morphTo();
+    }
+
+    public function getSubstitutesAttribute()
+    {
+        $result = [];
+        foreach ($this->foods() as $food) {
+            foreach ($food->substitutes as $substitute) {
+                if (!in_array($substitute->id, $result)) {
+                    $result[] = $substitute;
+                }
+            }
+        }
+
+        return $result;
     }
 }
