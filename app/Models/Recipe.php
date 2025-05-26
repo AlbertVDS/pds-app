@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\RecipeArea;
 use App\Models\RecipeCategory;
 use App\Models\RecipeIngredient;
+use App\Models\RecipeIngredientMeasurement;
+use App\Models\RecipeInstruction;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Recipe extends Model
 {
@@ -76,38 +79,9 @@ class Recipe extends Model
         return __($this->name);
     }
 
-    /**
-     * Get ingredients
-     * @return Collection
-     */
-    public function ingredientsNames(): Collection
+    public function ingredientMeasurements(): HasMany
     {
-        return RecipeIngredient::whereIn('id', $this->ingredients)->orderByRaw("FIELD(id," . implode(',', $this->ingredients) . ")")->get();
-    }
-
-    /**
-     * Get measurements
-     * @return Collection
-     */
-    public function measurementNames(): Collection
-    {
-        return RecipeMeasurement::whereIn('id', $this->measurements)->orderByRaw("FIELD(id," . implode(',', $this->measurements) . ")")->get();
-    }
-
-    /**
-     * Get ingredients with measurements
-     * @return array
-     */
-    public function getIngredientsWithMeasurements(): array
-    {
-        $ingredientArray = [];
-        $measurements = $this->measurements;
-
-        foreach ($this->ingredientsNames() as $key => $ingredient) {
-            $ingredientArray[__($ingredient->name)] = __(RecipeMeasurement::find($measurements[$key])->name ?? null);
-        }
-
-        return $ingredientArray;
+        return $this->hasMany(RecipeIngredientMeasurement::class, 'recipe_id', 'id');
     }
 
     /**
@@ -141,11 +115,16 @@ class Recipe extends Model
 
     /**
      * Get recipe instructions
-     * @return string
+     * 
      */
-    public function instructions(): string
+    public function instructions()
     {
-        return __($this->hasOne(RecipeInstruction::class, 'id', 'instructions')->first()->instructions ?? '');
+        return $this->hasOne(RecipeInstruction::class, 'id', 'id');
+    }
+
+    public function instructionText(): string
+    {
+        return __($this->instructions ? $this->instructions->instruction : '');
     }
 
     /**
