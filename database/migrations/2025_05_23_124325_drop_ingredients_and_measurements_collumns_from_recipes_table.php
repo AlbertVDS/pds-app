@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('recipes', function (Blueprint $table) {
-            $table->dropColumn('instructions');
+            $table->dropColumn('ingredients');
+            $table->dropColumn('measurements');
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('recipes', function (Blueprint $table) {
-            $table->longText('instructions');
+            $table->json('ingredients');
+            $table->json('measurements');
         });
     }
 };

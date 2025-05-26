@@ -10,8 +10,8 @@
             <div class="col">
                 <b>{{ __('Ingredients') }}:</b><br>
                 <ul class="m-2">
-                    @foreach($recipe->getIngredientsWithMeasurements() as $ingredient => $measurement)
-                        <li><b>{{ $ingredient }}:</b> <i>{{ $measurement }}</i></li>
+                    @foreach($recipe->ingredientMeasurements as $ingredientMeasurement)
+                        <li><b>{{ $ingredientMeasurement->ingredientName() }}:</b> <i>{{ $ingredientMeasurement->measurementName() }}</i></li>
                     @endforeach
                 </ul>
             </div>
@@ -20,7 +20,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ __('Directions') }}:</h5>
             <p class="card-text">
-                {{ __($recipe->instructions) }}
+                {{ __($recipe->instructions->instruction) }}
             </p>
         </div>
         <ul class="list-group list-group-flush">
