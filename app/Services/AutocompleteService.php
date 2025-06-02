@@ -7,29 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AutocompleteService
 {
-    // /**
-    //  * Get results based on the search term.
-    //  * @param Request $request
-    //  * @return \Illuminate\Http\JsonResponse
-    //  */
-    // public function autocomplete($modelClass, Request $request)
-    // {
-    //     $query = $modelClass::select("name", "id");
-
-    //     $request->filled('q') ? $query->where('name', 'LIKE', '%' . $request->get('q') . '%') : null;
-    //     $query->orderBy('name');
-    //     $query->take(20);
-    //     $data = $query->get();
-
-    //     return response()->json($data);
-    // }
-
     /**
      * Get results based on the search term.
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function autocomplete($modelClass, Request $request)
+    public function autocomplete($modelClass, Request $request)
     {
         $query = $modelClass::withoutTrashed();
         $query->with('originalText.translation');
@@ -45,7 +28,7 @@ class AutocompleteService
         $query->orderBy('name');
         $query->take(20);
         $data = $query->get();
-        $data = self::translate($data);
+        $data = $this->translate($data);
 
         return response()->json($data);
     }
@@ -56,7 +39,7 @@ class AutocompleteService
      * @param \Illuminate\Database\Eloquent\Collection $data
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    private static function translate($data)
+    private function translate($data)
     {
         if (Auth::user()) {
             foreach ($data as $item) {

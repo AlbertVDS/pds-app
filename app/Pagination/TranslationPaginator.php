@@ -6,7 +6,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class TranslationPaginator
 {
-    public static function paginate($originalText, $request)
+    public function paginate($originalText, $request)
     {
         return new LengthAwarePaginator(
             $originalText->forPage($request->page ?? 1, 30),

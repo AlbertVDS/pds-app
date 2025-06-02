@@ -9,6 +9,18 @@ use App\Services\LinkedFoodService;
 
 class RecipeIngredientController extends Controller
 {
+    private $linkedFoodService;
+    private $autocompleteService;
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct(LinkedFoodService $linkedFoodService, AutocompleteService $autocompleteService)
+    {
+        $this->linkedFoodService = $linkedFoodService;
+        $this->autocompleteService = $autocompleteService;
+    }
+
     /**
      * Get results based on the search term.
      * @param Request $request
@@ -16,7 +28,7 @@ class RecipeIngredientController extends Controller
      */
     public function autocomplete(Request $request)
     {
-        return AutocompleteService::autocomplete(RecipeIngredient::class, $request);
+        return $this->autocompleteService->autocomplete(RecipeIngredient::class, $request);
     }
 
     /**
@@ -37,7 +49,6 @@ class RecipeIngredientController extends Controller
      */
     public function saveLinkedFoods(Request $request)
     {
-        $linkedFoodService = new LinkedFoodService();
-        return $linkedFoodService->saveLinkedFoods($request);
+        return $this->linkedFoodService->saveLinkedFoods($request);
     }
 }
