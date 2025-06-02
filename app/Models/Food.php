@@ -51,11 +51,16 @@ class Food extends Model
 
     /**
      * Get food associated with the food substitute
-     * @return HasMany
+     * 
      */
-    public function substitutes(): HasMany
+    public function substitutes()
     {
-        return $this->hasMany(FoodSubstitute::class, 'food_id', 'id');
+        return $this->belongsToMany(
+            Food::class,
+            'food_substitutes',
+            'food_id',
+            'substitute_id'
+        );
     }
 
     /**
