@@ -10,7 +10,7 @@ class OriginalTextService
      * Get origional text
      * @return \Illuminate\Database\Eloquent\Collection<int, OriginalText>
      */
-    public static function getOriginalText()
+    public function getOriginalText()
     {
         return OriginalText::with(relations: 'foreign')
             ->with('translation')

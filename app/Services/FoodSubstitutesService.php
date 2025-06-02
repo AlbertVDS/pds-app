@@ -11,7 +11,7 @@ class FoodSubstitutesService
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function enableSubstitute($food, $substitute): \Illuminate\Http\JsonResponse
+    public function enableSubstitute($food, $substitute): \Illuminate\Http\JsonResponse
     {
         FoodSubstitute::withTrashed()->updateOrCreate(
             ['food_id' => $food->id, 'substitute_id' => $substitute->id],
@@ -29,7 +29,7 @@ class FoodSubstitutesService
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function disableSubstitute($food, $substitute): \Illuminate\Http\JsonResponse
+    public function disableSubstitute($food, $substitute): \Illuminate\Http\JsonResponse
     {
         FoodSubstitute::where('food_id', $food->id)
             ->where('substitute_id', $substitute->id)
