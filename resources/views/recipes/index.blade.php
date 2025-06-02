@@ -49,8 +49,8 @@
                         </div>
                         <div class="col-auto">                            
                             <select class="search-address form-control" id="ingredient-select" name="recipe-ingredients[]" multiple="multiple">
-                                @foreach($recipeIngredients as $ingredient)
-                                    <option value="{{ $ingredient->id }}" selected>{{ $ingredient->name }}</option>
+                                @foreach($recipeSearch->recipeIngredients as $ingredient)
+                                    <option value="{{ $ingredient->id }}" selected>{{ __($ingredient->name) }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -62,8 +62,8 @@
                         </div>
                         <div class="col-auto">
                             <select class="search-address form-control" id="tag-select" name="recipe-tags[]" multiple="multiple">
-                                @foreach ($recipeTags as $tag)
-                                    <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>                                    
+                                @foreach ($recipeSearch->recipeTags as $tag)
+                                    <option value="{{ $tag->id }}" selected>{{ __($tag->name) }}</option>                                    
                                 @endforeach
                             </select>
                         </div>
@@ -75,8 +75,8 @@
                         </div>
                         <div class="col-auto">
                             <select class="search-address form-control" id="area-select" name="recipe-areas[]" multiple="multiple">
-                                @foreach($recipeAreas as $area)
-                                    <option value="{{ $area->id }}" selected>{{ $area->name }}</option>
+                                @foreach($recipeSearch->recipeAreas as $area)
+                                    <option value="{{ $area->id }}" selected>{{ __($area->name) }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -88,8 +88,8 @@
                         </div>
                         <div class="col-auto">
                             <select class="search-address form-control" id="category-select" name="recipe-categories[]" multiple="multiple">
-                                @foreach($recipeCategories as $category)
-                                    <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                @foreach($recipeSearch->recipeCategories as $category)
+                                    <option value="{{ $category->id }}" selected>{{ __($category->name) }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -102,7 +102,7 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
-            {{ $recipes->links() }}
+            {{ $recipeSearch->recipes->links() }}
         </div>
 
         <table class="table table-striped">
@@ -115,12 +115,12 @@
                 </tr>
             </thead>
             <tbody> 
-                @if(is_string($recipes))
+                @if(is_string($recipeSearch->recipes))
                     <tr>
-                        <td colspan="4" class="text-center">{{ $recipes }}</td>
+                        <td colspan="4" class="text-center">{{ $recipeSearch->recipes }}</td>
                     </tr>
                 @else
-                    @foreach ($recipes as $recipe)
+                    @foreach ($recipeSearch->recipes as $recipe)
                         <tr>
                             <td>
                                 <img src="{{ $recipe->thumbnail_url }}" alt="{{ $recipe->name }}" style="width: 100px; height: auto;">
@@ -140,7 +140,7 @@
         </table>
 
         <div class="d-flex justify-content-between align-items-center mb-3">
-            {{ $recipes->links() }}
+            {{ $recipeSearch->recipes->links() }}
         </div>
 
        <script type="text/javascript">
@@ -153,6 +153,7 @@
                     dataType: 'json',
                     delay: 250,
                     processResults: function (data) {
+                        console.log(data);
                         return {
                             results: $.map(data, function (item) {
                                 return {

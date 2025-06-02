@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\RecipeIngredientFood;
+use App\Traits\HasOriginalText;
 
 class RecipeIngredient extends Model
 {
-    use SoftDeletes;
+    use HasOriginalText, SoftDeletes;
 
     protected $table = 'recipe_ingredients';
     protected $fillable = [

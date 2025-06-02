@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 
 class OriginalText extends Model
 {
@@ -49,6 +50,19 @@ class OriginalText extends Model
      */
     public function translation()
     {
-        return $this->hasOne(Translation::class, 'original_text_id');
+        return Auth::check() ? $this->translationLoggedIn() : $this->translationGuest();
+    }
+
+    private function translationLoggedIn()
+    {
+        return $this->hasOne(Translation::class, 'original_text_id')
+            ->where('language_id', Auth::user()->language_id);
+    }
+
+    private function translationGuest()
+    {
+        $languageId = Language::where('code', app()->getLocale())->first()->id;
+        return $this->hasOne(Translation::class, 'original_text_id')
+            ->where('language_id', $languageId);
     }
 }
