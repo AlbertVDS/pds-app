@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
-use App\Models\OriginalText;
-use App\Models\RecipeInstruction;
 use App\Models\Translation;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use App\Models\Recipe;
-
+use App\Pagination\TranslationPaginator;
+use App\Services\OriginalTextService;
 
 class TranslationController extends Controller
 {
@@ -37,22 +34,8 @@ class TranslationController extends Controller
      */
     public function show(string $id, Request $request)
     {
-        $originalText = OriginalText::with('foreign')
-            ->with('translation')
-            ->get()
-            ->where('related_value', '!=', '')
-            ->sortBy(function ($item) {
-                return $item->related_value;
-            });
-
-
-        $paginator = new LengthAwarePaginator(
-            $originalText->forPage($request->page ?? 1, 30),
-            $originalText->count(),
-            30,
-            $request->page ?? 1,
-            ['path' => $request->url(), 'query' => $request->query()]
-        );
+        $originalText = OriginalTextService::getOriginalText();
+        $paginator = TranslationPaginator::paginate($originalText, $request);
 
         return view('translations.show', [
             'pageTitle' => __('Languages'),

@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\OriginalText;
+use App\Traits\HasOriginalText;
 
 class RecipeTag extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, HasOriginalText, SoftDeletes;
 
     /**
      * The table associated with the model.
