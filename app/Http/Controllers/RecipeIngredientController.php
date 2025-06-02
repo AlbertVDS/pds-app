@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RecipeIngredient;
+use App\Models\RecipeIngredientFood;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,7 @@ class RecipeIngredientController extends Controller
      */
     public function autoComplete(Request $request)
     {
-        $query = RecipeIngredient::query();
+        $query = RecipeIngredient::withoutTrashed();
         if (Auth::user()) {
             $query->join('original_text', 'recipe_ingredients.name', '=', 'original_text.text');
             $query->join('translations', 'original_text.id', '=', 'translations.original_text_id');
@@ -49,22 +50,62 @@ class RecipeIngredientController extends Controller
      */
     public function saveLinkedFoods(Request $request)
     {
-        $food = RecipeIngredient::find($request->get('ingredient_id'));
-        $food->food_ids = $request->get('food_ids');
+        $ingredientId = $request->get('ingredient_id');
+        $foodIds = $request->get('food_ids');
 
-        if ($food->save()) {
-            return response()->json([
-                'status' => 'success',
-                'message' => __('Linked foods saved successfully.'),
-            ]);
+        $this->deleteUnlinkedFoods($foodIds, $ingredientId);
+        $saved = $this->upsertFoods($foodIds, $ingredientId);
+
+        if ($saved) {
+            return response()->json(['status' => 'success', 'message' => __('Linked foods saved successfully.')]);
         } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => __('Failed to save linked foods.'),
-            ]);
+            return response()->json(['status' => 'error', 'message' => __('Failed to save linked foods.')]);
         }
     }
 
+    /**
+     * Delete all foods all in RecipeIngredientFoods with ingredient_id that are not in the food_ids array.
+     *
+     * @param [type] $foodIds
+     * @param [type] $ingredientId
+     * @return void
+     */
+    private function deleteUnlinkedFoods($foodIds, $ingredientId)
+    {
+        $recipeIngredientFood = RecipeIngredientFood::where('recipe_ingredient_id', $ingredientId);
+        if (is_array('food_ids')) {
+            $recipeIngredientFood->whereNotIn('food_id', $foodIds);
+        }
+        $recipeIngredientFood->delete();
+    }
+
+    /**
+     * Upsert foods in RecipeIngredientFoods table.
+     *
+     * @param array $foodIds
+     * @param int $ingredientId
+     * @return \Illuminate\Database\Eloquent\Collection|bool
+     */
+    private function upsertFoods($foodIds, $ingredientId): Collection|bool
+    {
+        return !is_array($foodIds) ?: RecipeIngredientFood::upsert(
+            array_map(function ($foodId) use ($ingredientId) {
+                return [
+                    'recipe_ingredient_id' => $ingredientId,
+                    'food_id' => $foodId,
+                ];
+            }, $foodIds),
+            ['recipe_ingredient_id', 'food_id'],
+            ['recipe_ingredient_id', 'food_id']
+        );
+    }
+
+    /**
+     * Translate the ingredient names if the user is authenticated.
+     *
+     * @param \Illuminate\Database\Eloquent\Collection $data
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     private function translate($data)
     {
         if (Auth::user()) {
