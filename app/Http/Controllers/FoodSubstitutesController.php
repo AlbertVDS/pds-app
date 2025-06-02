@@ -8,6 +8,18 @@ use App\Services\FoodSubstitutesService;
 
 class FoodSubstitutesController extends Controller
 {
+    private $foodSubstitutesService;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param FoodSubstitutesService $foodSubstitutesService
+     */
+    public function __construct(FoodSubstitutesService $foodSubstitutesService)
+    {
+        $this->foodSubstitutesService = $foodSubstitutesService;
+    }
+
     /**
      * Update the substitute for a food item.
      * @param \Illuminate\Http\Request $request
@@ -19,9 +31,9 @@ class FoodSubstitutesController extends Controller
         $substitute = Food::findOrFail($request->input('substitute_id'));
 
         if ($request->boolean('checked')) {
-            FoodSubstitutesService::enableSubstitute($food, $substitute);
+            $this->foodSubstitutesService->enableSubstitute($food, $substitute);
         } else {
-            FoodSubstitutesService::disableSubstitute($food, $substitute);
+            $this->foodSubstitutesService->disableSubstitute($food, $substitute);
         }
     }
 }

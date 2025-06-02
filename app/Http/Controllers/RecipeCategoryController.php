@@ -8,6 +8,16 @@ use App\Services\AutocompleteService;
 
 class RecipeCategoryController extends Controller
 {
+    private $autocompleteService;
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct(AutocompleteService $autocompleteService)
+    {
+        $this->autocompleteService = $autocompleteService;
+    }
+
     /**
      * Get results based on the search term.
      * @param Request $request
@@ -15,6 +25,6 @@ class RecipeCategoryController extends Controller
      */
     public function autocomplete(Request $request)
     {
-        return AutocompleteService::autocomplete(RecipeCategory::class, $request);
+        return $this->autocompleteService->autocomplete(RecipeCategory::class, $request);
     }
 }
