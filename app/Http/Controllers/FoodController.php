@@ -15,9 +15,9 @@ class FoodController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(FoodSubstituteService $foodSubstituteService)
     {
-        $this->foodSubstituteService = new FoodSubstituteService();
+        $this->foodSubstituteService = $foodSubstituteService;
     }
 
     /**

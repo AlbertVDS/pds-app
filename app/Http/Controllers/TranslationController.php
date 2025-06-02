@@ -10,6 +10,18 @@ use App\Services\OriginalTextService;
 
 class TranslationController extends Controller
 {
+    private $originalTextService;
+    private $translationPaginator;
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct(OriginalTextService $originalTextService, TranslationPaginator $translationPaginator)
+    {
+        $this->originalTextService = $originalTextService;
+        $this->translationPaginator = $translationPaginator;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -34,8 +46,8 @@ class TranslationController extends Controller
      */
     public function show(string $id, Request $request)
     {
-        $originalText = OriginalTextService::getOriginalText();
-        $paginator = TranslationPaginator::paginate($originalText, $request);
+        $originalText = $this->originalTextService->getOriginalText();
+        $paginator = $this->translationPaginator->paginate($originalText, $request);
 
         return view('translations.show', [
             'pageTitle' => __('Languages'),

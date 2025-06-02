@@ -9,19 +9,26 @@ use App\Services\RecipeSearchService;
 
 class RecipeController extends Controller
 {
+    private $recipeSearchService;
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct(RecipeSearchService $recipeSearchService)
+    {
+        $this->recipeSearchService = $recipeSearchService;
+    }
 
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $recipeSearchService = new RecipeSearchService();
-
         return view(
             'recipes.index',
             [
                 'pageTitle' => __('Recipes'),
-                'recipeSearch' => $recipeSearchService->searchRecipes($request),
+                'recipeSearch' => $this->recipeSearchService->searchRecipes($request),
             ]
         );
     }

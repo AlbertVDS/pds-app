@@ -33,10 +33,10 @@ class RecipeSync extends Command
     /**
      * Create a new command instance.
      */
-    public function __construct()
+    public function __construct(RecipeApiService $recipeApiService)
     {
         parent::__construct();
-        $this->recipeApiService = new RecipeApiService();
+        $this->recipeApiService = $recipeApiService;
     }
 
     /**
