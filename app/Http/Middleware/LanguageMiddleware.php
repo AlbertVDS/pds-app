@@ -17,9 +17,9 @@ class LanguageMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if (Auth::check()) {
-        //     App::setLocale(Auth::user()->language->code);
-        // }
+        if (Auth::check()) {
+            App::setLocale(Auth::user()->language->code);
+        }
 
         return $next($request);
     }
