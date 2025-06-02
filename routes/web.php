@@ -24,7 +24,7 @@ Route::middleware([IsAdminMiddleware::class])->group(function () {
     Route::resource('foods', FoodController::class);
     Route::resource('mailing', MailingController::class);
     Route::post('save-linked-foods', [RecipeIngredientController::class, 'saveLinkedFoods'])->name('save-linked-foods');
-    Route::post('save-substitute', [FoodSubstitutesController::class, 'updateSubstitute'])->name('save-substitute');
+    Route::post('save-substitute', [FoodSubstitutesController::class, 'update'])->name('save-substitute');
     Route::resource('mailings', MailingController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('translations', TranslationController::class);
