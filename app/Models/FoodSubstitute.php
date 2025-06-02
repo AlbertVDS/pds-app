@@ -26,6 +26,7 @@ class FoodSubstitute extends Model
     protected $fillable = [
         'food_id',
         'substitute_id',
+        'deleted_at',
     ];
 
     /**
