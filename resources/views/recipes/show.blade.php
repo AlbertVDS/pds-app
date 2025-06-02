@@ -13,7 +13,6 @@
                     @foreach($recipe->ingredientMeasurements as $ingredientMeasurement)
                             <li><b>{{ __($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ __($ingredientMeasurement->measurementName()) }}</i></li>
 
-                            ###{{ __('1') }}
                             @foreach ($ingredientMeasurement->ingredient->foods as $food)
                                 
                                    @foreach($food->substitutes as $substitute)
