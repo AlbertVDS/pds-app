@@ -45,4 +45,26 @@ class Language extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Get all languages which have at least one translation.
+     * @return \Illuminate\Database\Eloquent\Collection<int, Language>
+     */
+    public static function getAvailableLanguages()
+    {
+        return self::whereIn('id', Translation::select('language_id')
+            ->distinct()
+            ->pluck('language_id')
+            ->toArray())
+            ->get();
+    }
+
+    /**
+     * Get the default language.
+     * @return Language|null
+     */
+    public static function getDefaultLanguage()
+    {
+        return self::where('code', env('APP_LOCALE'))->first();
+    }
 }
