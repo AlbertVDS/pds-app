@@ -91,4 +91,36 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Language::class);
     }
+
+    /**
+     * Get all favourite recipes of the user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Recipe, UserFavRecipe>
+     */
+    public function favRecipes()
+    {
+        return $this->belongsToMany(
+            Recipe::class,
+            'user_fav_recipes',
+            'user_id',
+            'recipe_id'
+        );
+    }
+
+    /**
+     * Get user fodmap settings
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<UserFodmap, User>
+     */
+    public function fodmap()
+    {
+        return $this->hasOne(UserFodmap::class);
+    }
+
+    /**
+     * Get user's subscribed mailing groups
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<UserMailingGroup, User>
+     */
+    public function mailingGroups()
+    {
+        return $this->hasMany(UserMailingGroup::class);
+    }
 }
