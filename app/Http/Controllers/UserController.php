@@ -3,12 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Language;
+use App\Models\MailingGroup;
+use App\Models\Translation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Http\RedirectResponse;
+use App\Services\UserSettingsService;
 
 class UserController extends Controller
 {
+    /**
+     * @var UserSettingsService
+     */
+    private $userSettingsService;
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct(UserSettingsService $userSettingsService)
+    {
+        $this->userSettingsService = $userSettingsService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -19,43 +36,28 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id = null)
     {
-        //
+        return view('users.edit', [
+            'pageTitle' => __('User Settings'),
+            'user' => Auth::user(),
+            'defaultLanguage' => Language::getDefaultLanguage(),
+            'languages' => Language::getAvailableLanguages(),
+            'mailingGroups' => MailingGroup::all(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id = '')
     {
-        //
+        $user = $id ? User::findOrFail($id) : Auth::user();
+        $this->userSettingsService->updateUserSettings($request, $user);
+
+        return redirect()->back()->with('success', __('User settings saved'));
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RecipeIngredientController;
 use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserFavRecipeController;
 use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -55,3 +56,10 @@ Route::resource('foods', FoodController::class)->except([
 Route::match(['get', 'post'], 'recipes', [RecipeController::class, 'index']);
 Route::get('recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');
 Route::get('recipe-ingredients', [RecipeIngredientController::class, 'index']);
+
+// User routes
+Route::get('user/settings/{id?}', [UserController::class, 'edit'])->name('user.settings');
+Route::post('user/settings/update/{id?}', [UserController::class, 'update'])->name('user.settings.update');
+Route::get('user/favorite-recipes/{id?}', [UserFavRecipeController::class, 'index'])->name('user.favorite-recipes');
+Route::post('user/favorite-recipes', [UserFavRecipeController::class, 'store'])->name('user.favorite-recipe.store');
+Route::delete('user/favorite-recipes/{recipe}', [UserFavRecipeController::class, 'destroy'])->name('user.favorite-recipe.destroy');
