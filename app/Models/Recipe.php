@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\RecipeArea;
 use App\Models\RecipeCategory;
-use App\Models\RecipeIngredient;
 use App\Models\RecipeIngredientMeasurement;
 use App\Models\RecipeInstruction;
-use Illuminate\Support\Collection;
+use App\Models\UserFavRecipe;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Recipe extends Model
 {
@@ -134,5 +134,11 @@ class Recipe extends Model
     public function foreign()
     {
         return $this->morphTo();
+    }
+
+    public function userFavRecipe()
+    {
+        return $this->belongsTo(UserFavRecipe::class, 'id', 'recipe_id')
+            ->where('user_id', Auth::user()->id);
     }
 }
