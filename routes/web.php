@@ -58,8 +58,18 @@ Route::get('recipes/{id}', [RecipeController::class, 'show'])->name('recipes.sho
 Route::get('recipe-ingredients', [RecipeIngredientController::class, 'index']);
 
 // User routes
-Route::get('user/settings/{id?}', [UserController::class, 'edit'])->name('user.settings');
-Route::post('user/settings/update/{id?}', [UserController::class, 'update'])->name('user.settings.update');
-Route::get('user/favorite-recipes/{id?}', [UserFavRecipeController::class, 'index'])->name('user.favorite-recipes');
-Route::post('user/favorite-recipes', [UserFavRecipeController::class, 'store'])->name('user.favorite-recipe.store');
-Route::delete('user/favorite-recipes/{recipe}', [UserFavRecipeController::class, 'destroy'])->name('user.favorite-recipe.destroy');
+Route::middleware(['auth'])->group(function () {
+    Route::get('user/settings/{id?}', [UserController::class, 'edit'])->name('user.settings');
+    Route::post('user/settings/update/{id?}', [UserController::class, 'update'])->name('user.settings.update');
+    Route::get('user/favorite-recipes/{id?}', [UserFavRecipeController::class, 'index'])->name('user.favorite-recipes');
+    Route::post('user/favorite-recipes', [UserFavRecipeController::class, 'store'])->name('user.favorite-recipe.store');
+    Route::delete('user/favorite-recipes/{recipe}', [UserFavRecipeController::class, 'destroy'])->name('user.favorite-recipe.destroy');
+});
+
+Route::get('/login', function () {
+    return view('home', [
+        'pageTitle' => 'homepage',
+    ]);
+})
+    ->middleware('guest')
+    ->name('login');
