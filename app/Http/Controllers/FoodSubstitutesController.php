@@ -13,9 +13,9 @@ class FoodSubstitutesController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param FoodSubstitutesService $foodSubstitutesService
+     * @param FoodSubstituteService $foodSubstitutesService
      */
-    public function __construct(FoodSubstitutesService $foodSubstitutesService)
+    public function __construct(FoodSubstituteService $foodSubstitutesService)
     {
         $this->foodSubstitutesService = $foodSubstitutesService;
     }
