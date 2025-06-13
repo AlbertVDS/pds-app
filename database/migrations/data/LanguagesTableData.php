@@ -1,10 +1,8 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Migrations\Data;
 
-use Illuminate\Database\Seeder;
-
-class LanguagesTableSeeder extends Seeder
+class LanguagesTableData
 {
 
     /**
@@ -12,7 +10,7 @@ class LanguagesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public static function insert()
     {
 
 
@@ -1667,5 +1665,14 @@ class LanguagesTableSeeder extends Seeder
                 'deleted_at' => NULL,
             ),
         ));
+    }
+
+    /**
+     * Turncate Table
+     * @return void
+     */
+    public static function truncate()
+    {
+        \DB::table('languages')->truncate();
     }
 }
