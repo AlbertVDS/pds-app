@@ -1,31 +1,16 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Migrations;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use Database\Seeders\UserSeeder;
-use Database\Seeders\FoodSeeder;
 
-class DatabaseSeeder extends Seeder
+class DatabaseData
 {
     /**
      * Seed the application's database.
      */
-    public function run(): void
+    public function insert(): void
     {
-        $this->call(FoodSubstitutesTableSeeder::class);
-        $this->call(FoodTypesTableSeeder::class);
-        $this->call(FoodsTableSeeder::class);
-        $this->call(RecipeAreasTableSeeder::class);
-        $this->call(RecipeCategoriesTableSeeder::class);
-        $this->call(RecipeIngredientsTableSeeder::class);
-        $this->call(RecipeMeasurementsTableSeeder::class);
-        $this->call(RecipeTagsTableSeeder::class);
-        $this->call(RecipesTableSeeder::class);
-        $this->call(RolesTableSeeder::class);
-        $this->call(UserSeeder::class);
-        $this->call(LanguagesTableSeeder::class);
+       //
     }
 }
