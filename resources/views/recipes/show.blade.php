@@ -1,7 +1,9 @@
 @extends('layout-parts.main')
 
 @section('content')
-    @if($recipe->userFavRecipe)
+    @if(!Auth::check())
+
+    @elseif(Auth::check() && $recipe->userFavRecipe)
         <form action="{{ route('user.favorite-recipe.destroy', [$recipe->id]) }}" method="POST">
             @csrf
             @method('DELETE')
@@ -9,14 +11,12 @@
                     class="fa-solid fa-star" style="color:yellow"></i></button>
         </form>
 
-    @elseif(Auth::check())
+    @else
         <form action="{{ route('user.favorite-recipe.store') }}" method="POST">
             @csrf
             <input type="hidden" name="recipe_id" value="{{ $recipe->id }}">
             <button type="submit" class="btn btn-link p-0"><i class="fa-solid fa-star" style="color: lightgray"></i></button>
         </form>
-    @else
-
     @endif
             <div class="card m-4">
                 <div class="row align-items-start">
@@ -28,7 +28,7 @@
                         <b>{{ __('Ingredients') }}:</b><br>
                         <ul class="m-2">
                             @foreach($recipe->ingredientMeasurements as $ingredientMeasurement)
-                                    <li><b>{{ __($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ __($ingredientMeasurement->measurementName()) }}</i></li>
+                                    <li><b>{{ __($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ $ingredientMeasurement->measurementName() }}</i></li>
 
                                     @foreach ($ingredientMeasurement->ingredient->foods as $food)
 

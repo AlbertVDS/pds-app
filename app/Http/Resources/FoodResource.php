@@ -15,6 +15,7 @@ class FoodResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'type' => $this->getTypeName(),
             'level' => $this->level,
@@ -26,19 +27,18 @@ class FoodResource extends JsonResource
             'GOS' => $this->GOS,
             'fructan' => $this->fructan,
             'substitutes' => $this->substitutes->map(function ($substitute) {
-                $sub = $substitute->food;
                 return [
-                    'id' => $sub->id,
-                    'name' => $sub->name,
-                    'type' => $sub->getTypeName(),
-                    'level' => $sub->level,
-                    'weight' => $sub->weight,
-                    'fructose' => $sub->fructose,
-                    'lactose' => $sub->lactose,
-                    'mannitol' => $sub->mannitol,
-                    'sorbitol' => $sub->sorbitol,
-                    'GOS' => $sub->GOS,
-                    'fructan' => $sub->fructan
+                    'id' => $substitute->id,
+                    'name' => $substitute->name,
+                    'type' => $substitute->getTypeName(),
+                    'level' => $substitute->level,
+                    'weight' => $substitute->weight,
+                    'fructose' => $substitute->fructose,
+                    'lactose' => $substitute->lactose,
+                    'mannitol' => $substitute->mannitol,
+                    'sorbitol' => $substitute->sorbitol,
+                    'GOS' => $substitute->GOS,
+                    'fructan' => $substitute->fructan
                 ];
             }),
         ];
