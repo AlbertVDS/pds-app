@@ -19,11 +19,16 @@ class RecipeResource extends JsonResource
             'name' => $this->name,
             'category' => $this->categoryName(),
             'area' => $this->areaName(),
-            'instructions' => $this->instructions,
+            'instructions' => $this->instructions->instruction,
             'thumbnail_url' => $this->thumbnail_url,
             'tags' => $this->tagNames(),
             'youtube_url' => $this->youtube_url,
-            'ingredients' => $this->getIngredientsWithMeasurements(),
+            'ingredients' => $this->ingredientMeasurements->map(function ($ingredient) {
+                return [
+                    "name" => $ingredient->ingredientName(),
+                    "measurement" => $ingredient->measurementName(),
+                ];
+            }),
         ];
     }
 }

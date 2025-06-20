@@ -1,0 +1,30 @@
+<?php
+
+namespace Tests\Feature\Pages;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+use App\Models\User;
+
+class RecipeIngredientsTest extends TestCase
+{
+    public function test_admin_can_load_recipe_ingredients_page(): void
+    {
+        $admin = User::where('role_id', 1)->first();
+
+        $response = $this->actingAs($admin)->get('/recipe-ingredients');
+
+        $response->assertSee(__('Ingredient list'));
+        $response->assertStatus(200);
+    }
+
+    public function test_user_cannot_load_recipe_ingredients_page(): void
+    {
+        $user = User::where('role_id', 2)->first();
+
+        $response = $this->actingAs($user)->get('/recipe-ingredients');
+
+        $response->assertStatus(302);
+    }
+}

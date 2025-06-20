@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home', [
-        'pageTitle' => 'homepage',
+        'pageTitle' => 'Homepage',
     ]);
 });
 
@@ -28,6 +28,7 @@ Route::middleware([IsAdminMiddleware::class])->group(function () {
     Route::post('save-substitute', [FoodSubstitutesController::class, 'update'])->name('save-substitute');
     Route::resource('mailings', MailingController::class);
     Route::resource('roles', RoleController::class);
+    Route::get('recipe-ingredients', [RecipeIngredientController::class, 'index']);
     Route::resource('translations', TranslationController::class);
     Route::resource('users', UserController::class);
 });
@@ -55,7 +56,6 @@ Route::resource('foods', FoodController::class)->except([
 // Recipe routes
 Route::match(['get', 'post'], 'recipes', [RecipeController::class, 'index']);
 Route::get('recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');
-Route::get('recipe-ingredients', [RecipeIngredientController::class, 'index']);
 
 // User routes
 Route::middleware(['auth'])->group(function () {
