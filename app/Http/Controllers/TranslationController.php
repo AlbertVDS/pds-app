@@ -47,6 +47,12 @@ class TranslationController extends Controller
     public function show(string $id, Request $request)
     {
         $originalText = $this->originalTextService->getOriginalText();
+
+        foreach ($originalText as $translation) {
+            if ($translation->translation === null) {
+                echo $translation->translation;
+            }
+        }
         $paginator = $this->translationPaginator->paginate($originalText, $request);
 
         return view('translations.show', [

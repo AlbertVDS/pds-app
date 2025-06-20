@@ -114,10 +114,10 @@
                     <th>{{ __('Area') }}</th>
                 </tr>
             </thead>
-            <tbody> 
-                @if(is_string($recipeSearch->recipes))
+            <tbody>
+                @if($recipeSearch->recipes->isEmpty())
                     <tr>
-                        <td colspan="4" class="text-center">{{ $recipeSearch->recipes }}</td>
+                        <td colspan="4" class="text-center">{{ __('No recipes found') }}</td>
                     </tr>
                 @else
                     @foreach ($recipeSearch->recipes as $recipe)

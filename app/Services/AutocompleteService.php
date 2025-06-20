@@ -16,7 +16,7 @@ class AutocompleteService
     {
         $query = $modelClass::withoutTrashed();
         $query->with('originalText.translation');
-        if (Auth::check()) {
+        if (Auth::check() && !Auth::user()->isAdmin()) {
             $query->whereHas('originalText.translation', function ($q) use ($request) {
                 $q->where('translation', 'LIKE', '%' . $request->get('q') . '%')
                     ->where('language_id', Auth::user()->language_id);
