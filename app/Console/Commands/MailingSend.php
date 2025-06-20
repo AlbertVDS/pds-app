@@ -16,7 +16,7 @@ class MailingSend extends Command
      *
      * @var string
      */
-    protected $signature = 'mailing:send';
+    protected $signature = 'mailingsend';
 
     /**
      * The console command description.
