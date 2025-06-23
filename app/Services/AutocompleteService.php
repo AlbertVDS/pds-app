@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AutocompleteService
 {
@@ -16,7 +17,7 @@ class AutocompleteService
     {
         $query = $modelClass::withoutTrashed();
         $query->with('originalText.translation');
-        if (Auth::check() && !Auth::user()->isAdmin()) {
+        if (Gate::allows('isUser')) {
             $query->whereHas('originalText.translation', function ($q) use ($request) {
                 $q->where('translation', 'LIKE', '%' . $request->get('q') . '%')
                     ->where('language_id', Auth::user()->language_id);

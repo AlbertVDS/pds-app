@@ -12,9 +12,9 @@
                 <th>{{ __('Mailing Group') }}</th>
                 <th>{{ __('Schedule') }}</th>
                 <th>{{ __('Sent') }}</th>
-                @if(Auth::user() && Auth::user()->isAdmin())
+                @can('isAdmin')
                     <th>{{ __('Actions') }}</th>
-                @endif
+                @endcan
             </tr>
         </thead>
         <tbody>
@@ -30,7 +30,7 @@
                             <i class="fa-solid fa-calendar-days">
                         @endif
                     </td>
-                    @if(Auth::user() && Auth::user()->isAdmin())
+                    @can('isAdmin')
                         <td class="content-left d-flex">
                             <a href="{{ route('mailing.edit', $mailing->id) }}" class="pe-1"><i class="fa-solid fa-pencil"></i></a>
                             <form action={{ route('mailing.destroy', $mailing->id) }} method="POST" class="d-flex">
@@ -39,7 +39,7 @@
                                 <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-link p-0"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         </td>
-                    @endif
+                    @endcan
                 </tr>
             @endforeach
         </tbody>
