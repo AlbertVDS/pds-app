@@ -18,7 +18,7 @@ class UserController extends Controller
     public function edit()
     {
         return view('users.edit', [
-            'pageTitle' => __('User Settings'),
+            'pageTitle' => translate('User Settings'),
             'user' => Auth::user(),
             'defaultLanguage' => Language::getDefaultLanguage(),
             'languages' => Language::getAvailableLanguages(),
@@ -41,7 +41,7 @@ class UserController extends Controller
         ]);
 
         (new UserSettingsService())->updateUserSettings($request, Auth::user());
-        noty()->success(__('User settings saved'));
+        noty()->success(translate('User settings saved'));
         return redirect()->back();
     }
 }

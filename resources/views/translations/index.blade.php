@@ -8,9 +8,9 @@
         <thead>
             <tr>
                 <th>                        
-                    {{ __('Language') }}
+                    {{ translate('Language') }}
                 </th>
-                <th>{{ __('Comepletion') }}</th>
+                <th>{{ translate('Comepletion') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +18,7 @@
                 <tr>
                     <td>
                         <a href="{{ route('translations.show', $language->id) }}">
-                            {{ __($language->name) }}
+                            {{ translate($language->name) }}
                         </a>
                     </td>
                     <td>{{ $language->complete() }}</td>

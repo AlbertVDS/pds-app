@@ -29,11 +29,11 @@
         @csrf
         @method('POST')
         <div class="container">
-            <h3 class="mb-3">{{ __('Profile') }}</h3>
+            <h3 class="mb-3">{{ translate('Profile') }}</h3>
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">{{ __('Name') }}</span>
+                        <span class="input-group-text" id="basic-addon1">{{ translate('Name') }}</span>
                         <input type="text" class="form-control" aria-label="Username" name="user[name]" value="{{ $user->name }}" aria-describedby="basic-addon1">                
                     </div>
                     <p><strong>Email:</strong> {{ $user->email }}</p>
@@ -42,11 +42,11 @@
                         <select id="language-select" name="language" class="form-select">
                             <option value="{{ $defaultLanguage->id }}"
                                 data-image="{{ 'https://' . request()->getHost() . '/img/flags/' . $defaultLanguage->code . '.png' }}" {{ $user->language_id === $defaultLanguage->id ? 'selected' : '' }}>
-                                {{ __($defaultLanguage->name) . (__($defaultLanguage->name) != $defaultLanguage->name ? ' - ' . $defaultLanguage->name : null) }}
+                                {{ translate($defaultLanguage->name) . (translate($defaultLanguage->name) != $defaultLanguage->name ? ' - ' . $defaultLanguage->name : null) }}
                             </option>
                             @foreach($languages as $language)
                                 <option value="{{ $language->id }}" data-image="{{ 'https://' . request()->getHost() . '/img/flags/' . $language->code . '.png' }}" {{ $user->language_id === $language->id ? 'selected' : '' }}>
-                                    {{ __($language->name) . (__($language->name) != $language->name ? ' - ' . $language->name : null) }}
+                                    {{ translate($language->name) . (translate($language->name) != $language->name ? ' - ' . $language->name : null) }}
                                 </option>
                             @endforeach
                         </select>
@@ -55,9 +55,9 @@
             </div>
 
 
-            <h3 class="mb-3">{{ __('FODMAP settings') }}</h3>
+            <h3 class="mb-3">{{ translate('FODMAP settings') }}</h3>
 
-                {{ __('Select FODMAPs you are sensitive to.') }}
+                {{ translate('Select FODMAPs you are sensitive to.') }}
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -99,8 +99,8 @@
                     </tbody>
                 </table>
 
-            <h3 class="mb-3">{{ __('Mailing settings') }}</h3>
-            <p>{{ __('You can choose to receive emails about new recipes, tips, and updates.') }}</p>
+            <h3 class="mb-3">{{ translate('Mailing settings') }}</h3>
+            <p>{{ translate('You can choose to receive emails about new recipes, tips, and updates.') }}</p>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -125,7 +125,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <button class="btn btn-primary" type="submit">{{ __('Apply changes') }}</button>
+            <button class="btn btn-primary" type="submit">{{ translate('Apply changes') }}</button>
         </div>
     </form>
 

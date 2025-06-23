@@ -3,16 +3,16 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <form action="{{ route('translations.show', $language->id ) }}" method="GET" class="mb-3">
-            <input type="text" name="search" class="form-control" placeholder="{{ __('Search') }}" value="{{ request()->input('search') }}">
+            <input type="text" name="search" class="form-control" placeholder="{{ translate('Search') }}" value="{{ request()->input('search') }}">
         </form>
         {{ $originalText->links() }}
     </div>
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
-                <th>{{ __('Original text') }}</th>
-                <th>{{ __('Translated text') }}</th>
-                <th>{{ __('Action') }}</th>
+                <th>{{ translate('Original text') }}</th>
+                <th>{{ translate('Translated text') }}</th>
+                <th>{{ translate('Action') }}</th>
             </tr>
         </thead>
         <tbody>

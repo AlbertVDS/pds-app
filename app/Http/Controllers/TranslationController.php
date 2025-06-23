@@ -35,7 +35,7 @@ class TranslationController extends Controller
 
 
         return view('translations.index', [
-            'pageTitle' => __('Translations'),
+            'pageTitle' => translate('Translations'),
             'languages' => $languages,
         ]);
     }
@@ -56,7 +56,7 @@ class TranslationController extends Controller
         $paginator = $this->translationPaginator->paginate($originalText, $request);
 
         return view('translations.show', [
-            'pageTitle' => __('Languages'),
+            'pageTitle' => translate('Languages'),
             'originalText' => $paginator,
             'language' => Language::find($id),
         ]);
@@ -68,7 +68,7 @@ class TranslationController extends Controller
     public function edit(string $id)
     {
         return view('translations.edit', [
-            'pageTitle' => __('Translations'),
+            'pageTitle' => translate('Translations'),
             'translation' => Translation::find($id),
         ]);
     }
@@ -88,7 +88,7 @@ class TranslationController extends Controller
         ]);
 
         return redirect(route('translations.show', $translation->language_id))
-            ->with('success', __('Translation updated successfully.'));
+            ->with('success', translate('Translation updated successfully.'));
     }
 
     /**
