@@ -5,8 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\Mailing;
-use App\Models\User;
+use App\Models\Mailing\Mailing;
+use App\Models\User\User;
 
 class MailingTest extends TestCase
 {
@@ -16,7 +16,7 @@ class MailingTest extends TestCase
 
         $response = $this->actingAs($admin)->get('/mailing');
 
-        $response->assertSee(__('Mailings'));
+        $response->assertSee(translate('Mailings'));
         $response->assertStatus(200);
     }
 
@@ -37,7 +37,7 @@ class MailingTest extends TestCase
 
         $response = $this->actingAs($admin)->get('/mailing/' . $mailing->id .  '/edit');
 
-        $response->assertSee(__('Edit Mailing'));
+        $response->assertSee(translate('Edit Mailing'));
         $response->assertSee($mailing->title, false);
         $response->assertSee($mailing->content, false);
         $response->assertSee('<option value="' . $mailing->mailing_group_id . '" selected', false);

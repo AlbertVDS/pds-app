@@ -5,7 +5,7 @@ namespace Tests\Feature\Pages;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\User;
+use App\Models\User\User;
 
 class UserSettingsTest extends TestCase
 {
@@ -15,7 +15,7 @@ class UserSettingsTest extends TestCase
 
         $response = $this->actingAs($user)->get('/user/settings');
 
-        $response->assertSee(__('User Settings'));
+        $response->assertSee(translate('User Settings'));
 
         $response->assertStatus(200);
     }

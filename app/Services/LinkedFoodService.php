@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Recipe;
-use App\Models\RecipeIngredientFood;
+use App\Models\Recipe\Recipe;
+use App\Models\Recipe\RecipeIngredientFood;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -23,9 +23,9 @@ class LinkedFoodService
         $saved = $this->upsertFoods($foodIds, $ingredientId);
 
         if ($saved) {
-            return response()->json(['status' => 'success', 'message' => __('Linked foods saved successfully.')]);
+            return response()->json(['status' => 'success', 'message' => translate('Linked foods saved successfully.')]);
         } else {
-            return response()->json(['status' => 'error', 'message' => __('Failed to save linked foods.')]);
+            return response()->json(['status' => 'error', 'message' => translate('Failed to save linked foods.')]);
         }
     }
 

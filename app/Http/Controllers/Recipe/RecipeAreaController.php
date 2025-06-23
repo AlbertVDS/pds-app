@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Recipe;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\RecipeArea;
+use App\Models\Recipe\RecipeArea;
 use App\Services\AutocompleteService;
 
 class RecipeAreaController extends Controller

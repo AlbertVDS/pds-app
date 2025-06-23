@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Recipe;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Language\OriginalText;
 
-class ControllerText extends Model
+class RecipeMeasurement extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -14,14 +15,14 @@ class ControllerText extends Model
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'controller_text';
+    protected $table = 'recipe_measurements';
 
     /**
      * The attributes that are mass assignable.
      * @var array<int, string>
      */
     protected $fillable = [
-        'text',
+        'name',
     ];
 
     /**

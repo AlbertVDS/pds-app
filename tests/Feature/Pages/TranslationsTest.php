@@ -5,7 +5,7 @@ namespace Tests\Feature\Pages;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\User;
+use App\Models\User\User;
 
 class TranslationsTest extends TestCase
 {
@@ -15,7 +15,7 @@ class TranslationsTest extends TestCase
 
         $response = $this->actingAs($admin)->get('/translations');
 
-        $response->assertSee(__('Translations'));
+        $response->assertSee(translate('Translations'));
         $response->assertStatus(200);
     }
 

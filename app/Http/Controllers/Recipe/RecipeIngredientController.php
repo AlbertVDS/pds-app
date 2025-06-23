@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Recipe;
 
 use App\Http\Controllers\Controller;
-use App\Models\RecipeIngredient;
+use App\Models\Recipe\RecipeIngredient;
 use Illuminate\Http\Request;
 use App\Services\AutocompleteService;
 use App\Services\LinkedFoodService;
@@ -35,7 +35,7 @@ class RecipeIngredientController extends Controller
     public function index()
     {
         return view('recipe-ingredients.index', [
-            'pageTitle' => __('Ingredient list'),
+            'pageTitle' => translate('Ingredient list'),
             'ingredients' => RecipeIngredient::orderBy('name')->paginate(40),
         ]);
     }

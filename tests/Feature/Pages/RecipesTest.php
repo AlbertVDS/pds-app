@@ -5,7 +5,7 @@ namespace Tests\Feature\Pages;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\Recipe;
+use App\Models\Recipe\Recipe;
 
 class RecipesTest extends TestCase
 {
@@ -14,7 +14,7 @@ class RecipesTest extends TestCase
         $response = $this->get('/recipes');
 
         $response->assertSee('Recipes');
-        $response->assertDontSee(__('No recipes found'));
+        $response->assertDontSee(translate('No recipes found'));
         $response->assertStatus(200);
     }
 
@@ -24,7 +24,7 @@ class RecipesTest extends TestCase
             'search' => 'pasta'
         ]);
 
-        $response->assertSee(__('Pasta'));
+        $response->assertSee(translate('Pasta'));
         $response->assertStatus(200);
     }
 

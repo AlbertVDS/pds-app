@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Language;
-use App\Models\MailingGroup;
+use App\Models\User\User;
+use App\Models\Language\Language;
+use App\Models\Mailing\MailingGroup;
 use App\Services\UserSettingsService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -22,7 +22,7 @@ class ProfileController extends Controller
     public function index()
     {
         return view('profile.index', [
-            'pageTitle' => __('User Profiles'),
+            'pageTitle' => translate('User Profiles'),
             'users' => User::paginate(20),
         ]);
     }
@@ -33,7 +33,7 @@ class ProfileController extends Controller
     public function edit(User $user): View
     {
         return view('profile.edit', [
-            'pageTitle' => __('User Settings'),
+            'pageTitle' => translate('User Settings'),
             'user' => $user,
             'defaultLanguage' => Language::getDefaultLanguage(),
             'languages' => Language::getAvailableLanguages(),
@@ -48,7 +48,7 @@ class ProfileController extends Controller
     {
         (new UserSettingsService())->updateUserSettings($request, $user);
 
-        return redirect()->back()->with('success', __('User settings saved'));
+        return redirect()->back()->with('success', translate('User settings saved'));
     }
 
     /**
@@ -57,10 +57,10 @@ class ProfileController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         if ($user->id === Auth::id()) {
-            return redirect()->back()->withErrors(__('You cannot delete your own account'));
+            return redirect()->back()->withErrors(translate('You cannot delete your own account'));
         }
         $user->delete();
-        noty()->success(__('User deleted successfully'));
+        noty()->success(translate('User deleted successfully'));
         return redirect()->route('profiles.user.index');
     }
 }

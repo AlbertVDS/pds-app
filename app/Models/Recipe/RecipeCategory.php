@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Recipe;
 
+use App\Traits\HasOriginalText;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Language\OriginalText;
 
-class MailingGroup extends Model
+class RecipeCategory extends Model
 {
-    use SoftDeletes;
+    use HasFactory, HasOriginalText, SoftDeletes;
 
     /**
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'mailing_groups';
+    protected $table = 'recipe_categories';
 
     /**
      * The attributes that are mass assignable.
@@ -22,23 +25,6 @@ class MailingGroup extends Model
     protected $fillable = [
         'name',
     ];
-
-    /**
-     * Get group name and translate it if needed
-     * @return array|string|null
-     */
-    public function getName()
-    {
-        return __($this->name);
-    }
-
-    /**
-     * Get the users associated with the mailing group.
-     */
-    public function users()
-    {
-        return User::whereJsonContains('mailing_group_ids', $this->id)->get();
-    }
 
     /**
      * MorphTo relationship.

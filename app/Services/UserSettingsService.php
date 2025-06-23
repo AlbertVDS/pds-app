@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\UserFodmap;
-use App\Models\UserMailingGroup;
+use App\Models\User\User;
+use App\Models\User\UserFodmap;
+use App\Models\User\UserMailingGroup;
 use Illuminate\Support\Arr;
 
 class UserSettingsService

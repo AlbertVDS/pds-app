@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Food;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use App\Models\FoodSubstitute;
+use App\Models\Language\OriginalText;
 
 class Food extends Model
 {
@@ -112,7 +111,7 @@ class Food extends Model
 
     public function getName(): string
     {
-        return __($this->name);
+        return translate($this->name);
     }
 
     /**
@@ -121,7 +120,7 @@ class Food extends Model
      */
     public function getTypeName(): string
     {
-        return __($this->hasOne(FoodType::class, 'id', 'type_id')->first()->name);
+        return translate($this->hasOne(FoodType::class, 'id', 'type_id')->first()->name);
     }
 
     /**
@@ -130,7 +129,7 @@ class Food extends Model
      */
     public function weightText(): string
     {
-        return $this->weight ?  "$this->weight gr" : __('Free use');
+        return $this->weight ?  "$this->weight gr" : translate('Free use');
     }
 
     /**

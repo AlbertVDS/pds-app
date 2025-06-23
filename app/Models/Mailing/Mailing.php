@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Mailing;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -61,6 +61,6 @@ class Mailing extends Model
      */
     public function mailingGroupName()
     {
-        return __($this->mailingGroup->name ?? 'No group');
+        return translate($this->mailingGroup->name ?? 'No group');
     }
 }
