@@ -60,6 +60,7 @@ class ProfileController extends Controller
             return redirect()->back()->withErrors(__('You cannot delete your own account'));
         }
         $user->delete();
-        return redirect()->route('profiles.user.index')->with('success', __('User deleted successfully'));
+        noty()->success(__('User deleted successfully'));
+        return redirect()->route('profiles.user.index');
     }
 }
