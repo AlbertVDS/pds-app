@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        @if(Auth::user() && Auth::user()->isAdmin())
+        @can('isAdmin')
             <a href="{{ route('foods.create') }}" class="btn btn-primary">{{ __('Add Food') }}</a>
-        @endif
+        @endcan
 
         {{ $foods->links() }}
     </div>
@@ -22,15 +22,15 @@
                 <th>{{ __('Sorbitol') }}</th>
                 <th>{{ __('GOS') }}</th>
                 <th>{{ __('Fructan') }}</th>
-                @if(Auth::user() && Auth::user()->isAdmin())
+                @can('isAdmin')
                     <th>{{ __('Actions') }}</th>
-                @endif
+                @endcan
             </tr>
         </thead>
         <tbody>
             @if($foods->isEmpty())
                 <tr>
-                    <td colspan="{{ Auth::user() && Auth::user()->isAdmin() ? 12 : 11 }}" class="text-center">
+                    <td colspan="{{ Gate::allows('is-admin') ? 12 : 11 }}" class="text-center">
                         {{ __('No foods found') }}
                     </td>
                 </tr>
@@ -48,7 +48,7 @@
                         <td>{{ $food->sorbitol }}</td>
                         <td>{{ $food->GOS }}</td>
                         <td>{{ $food->fructan }}</td>
-                        @if(Auth::user() && Auth::user()->isAdmin())
+                        @can('isAdmin')
                             <td class="content-left d-flex">
                                 <a href="{{ route('foods.edit', $food->id) }}" class="pe-1"><i class="fa-solid fa-pencil"></i></a>
                                 <form action={{ route('foods.destroy', $food->id) }} method="POST" class="d-flex">
@@ -58,16 +58,16 @@
                                             class="fa-solid fa-trash"></i></button>
                                 </form>
                             </td>
-                        @endif
+                        @endcan
                     </tr>
                 @endforeach
             @endif
         </tbody>
     </table>
     <div class="d-flex justify-content-between align-items-center mb-3">
-        @if(Auth::user() && Auth::user()->isAdmin())
+        @can('isAdmin')
             <a href="{{ route('foods.create') }}" class="btn btn-primary">{{ __('Add Food') }}</a>
-        @endif
+        @endcan
 
         {{ $foods->links() }}
     </div>

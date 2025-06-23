@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\Recipe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class UserFavRecipeController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
+        $user = $request->user();
         $user->favRecipes()->attach($request->recipe_id);
         return redirect()->back()->with('success', __('Recipe added to favorites'));
     }

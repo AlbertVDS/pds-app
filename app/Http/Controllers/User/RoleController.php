@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\Models\FoodType;
+use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
-class FoodTypeController extends Controller
+
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $foodTypes = FoodType::all();
-        return view('food_types.index', ['foodTypes' => $foodTypes]);
+        $roles = Role::all();
+        return view('roles.index', ['roles' => $roles]);
     }
 
     /**
@@ -35,7 +37,7 @@ class FoodTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(FoodType $foodType)
+    public function show(Role $role)
     {
         //
     }
@@ -43,7 +45,7 @@ class FoodTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FoodType $foodType)
+    public function edit(Role $role)
     {
         //
     }
@@ -51,7 +53,7 @@ class FoodTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FoodType $foodType)
+    public function update(Request $request, Role $role)
     {
         //
     }
@@ -59,7 +61,7 @@ class FoodTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FoodType $foodType)
+    public function destroy(Role $role)
     {
         //
     }

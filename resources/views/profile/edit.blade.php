@@ -25,9 +25,9 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('user.settings.update') }}" method="POST" id="settings-form">
+    <form action="{{ route('profiles.user.update', $user) }}" method="POST" id="settings-form">
         @csrf
-        @method('POST')
+        @method('PATCH')
         <div class="container">
             <h3 class="mb-3">{{ __('Profile') }}</h3>
             <div class="card mb-4">
@@ -126,8 +126,14 @@
                 </tbody>
             </table>
             <button class="btn btn-primary" type="submit">{{ __('Apply changes') }}</button>
+
+            <form action="{{ route('profiles.user.destroy', [$user]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-warning"><i class="fa-solid fa-trash"></i> Delete</button> </form>
         </div>
     </form>
+
 
     <script>
         $('#language-select').select2({

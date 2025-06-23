@@ -29,12 +29,28 @@ class FoodSubstituteService
         return $result->chunk(ceil(count($result) / 3));
     }
 
+    /**
+     * Toggle the substitute for a food item.
+     *
+     * @param bool $checked
+     * @param Food $food
+     * @param Food $substitute
+     */
+    public function toggleSubstitute(bool $checked, Food $food, Food $substitute): void
+    {
+        if ($checked) {
+            $this->enableSubstitute($food, $substitute);
+        } else {
+            $this->disableSubstitute($food, $substitute);
+        }
+    }
+
     /** 
      * Enable a substitute for a food item.
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function enableSubstitute($food, $substitute): \Illuminate\Http\JsonResponse
+    private function enableSubstitute($food, $substitute): \Illuminate\Http\JsonResponse
     {
         FoodSubstitute::withTrashed()->updateOrCreate(
             ['food_id' => $food->id, 'substitute_id' => $substitute->id],
@@ -52,7 +68,7 @@ class FoodSubstituteService
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function disableSubstitute($food, $substitute): \Illuminate\Http\JsonResponse
+    private function disableSubstitute($food, $substitute): \Illuminate\Http\JsonResponse
     {
         FoodSubstitute::where('food_id', $food->id)
             ->where('substitute_id', $substitute->id)
