@@ -5,16 +5,16 @@
     <div class="container">
 
         @if($user->favRecipes->isEmpty())
-            <p>{{ __('You have no favorite recipes yet.') }}</p>
+            <p>{{ translate('You have no favorite recipes yet.') }}</p>
         @else
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>{{ __('Thumbnail') }}</th>
-                        <th>{{ __('Name') }}</th>
-                        <th>{{ __('Category') }}</th>
-                        <th>{{ __('Area') }}</th>
-                        <th>{{ __('Actions') }}</th>
+                        <th>{{ translate('Thumbnail') }}</th>
+                        <th>{{ translate('Name') }}</th>
+                        <th>{{ translate('Category') }}</th>
+                        <th>{{ translate('Area') }}</th>
+                        <th>{{ translate('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody> 

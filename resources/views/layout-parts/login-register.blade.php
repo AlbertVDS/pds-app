@@ -1,11 +1,11 @@
 <!-- Button trigger login modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-    {{ __('Login') }}
+    {{ translate('Login') }}
 </button>
 
 <!-- Button trigger register modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
-    {{ __('Register') }}
+    {{ translate('Register') }}
 </button>
 
 
@@ -14,23 +14,23 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="loginModalLabel">{{ __('Login') }}</h1>
+                <h1 class="modal-title fs-5" id="loginModalLabel">{{ translate('Login') }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="email" class="form-label">{{ __('Email address') }}</label>
+                    <label for="email" class="form-label">{{ translate('Email address') }}</label>
                     <input type="email" class="form-control" id="email" name="email" required autofocus>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">{{ __('Password') }}</label>
+                    <label for="password" class="form-label">{{ translate('Password') }}</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Close') }}</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ translate('Close') }}</button>
                 <input type="submit" class="btn btn-primary" value="Login">
             </div>
             </form>
@@ -43,31 +43,31 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="registerModalLabel">{{ __('Register') }}</h1>
+                <h1 class="modal-title fs-5" id="registerModalLabel">{{ translate('Register') }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="name" class="form-label">{{ __('Name') }}</label>
+                        <label for="name" class="form-label">{{ translate('Name') }}</label>
                         <input type="name" class="form-control" id="name" name="name" required autofocus>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">{{ __('Email address') }}</label>
+                        <label for="email" class="form-label">{{ translate('Email address') }}</label>
                         <input type="email" class="form-control" id="email" name="email" required autofocus>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">{{ __('Password') }}</label>
+                        <label for="password" class="form-label">{{ translate('Password') }}</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <div class="mb-3">
-                        <label for="password_confirmation" class="form-label">{{ __('Retype password') }}</label>
+                        <label for="password_confirmation" class="form-label">{{ translate('Retype password') }}</label>
                         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Close') }}</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ translate('Close') }}</button>
                     <input type="submit" class="btn btn-primary" value="register">
                 </div>
             </form>

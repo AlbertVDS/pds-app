@@ -3,7 +3,7 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         @can('isAdmin')
-            <a href="{{ route('foods.create') }}" class="btn btn-primary">{{ __('Add Food') }}</a>
+            <a href="{{ route('foods.create') }}" class="btn btn-primary">{{ translate('Add Food') }}</a>
         @endcan
 
         {{ $foods->links() }}
@@ -11,19 +11,19 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>{{ __('Name') }}</th>
-                <th>{{ __('Has substitutes') }}</th>
-                <th>{{ __('Type') }}</th>
-                <th>{{ __('Level') }}</th>
-                <th>{{ __('Weight') }}</th>
-                <th>{{ __('Fructose') }}</th>
-                <th>{{ __('Lactose') }}</th>
-                <th>{{ __('Mannitol') }}</th>
-                <th>{{ __('Sorbitol') }}</th>
-                <th>{{ __('GOS') }}</th>
-                <th>{{ __('Fructan') }}</th>
+                <th>{{ translate('Name') }}</th>
+                <th>{{ translate('Has substitutes') }}</th>
+                <th>{{ translate('Type') }}</th>
+                <th>{{ translate('Level') }}</th>
+                <th>{{ translate('Weight') }}</th>
+                <th>{{ translate('Fructose') }}</th>
+                <th>{{ translate('Lactose') }}</th>
+                <th>{{ translate('Mannitol') }}</th>
+                <th>{{ translate('Sorbitol') }}</th>
+                <th>{{ translate('GOS') }}</th>
+                <th>{{ translate('Fructan') }}</th>
                 @can('isAdmin')
-                    <th>{{ __('Actions') }}</th>
+                    <th>{{ translate('Actions') }}</th>
                 @endcan
             </tr>
         </thead>
@@ -31,7 +31,7 @@
             @if($foods->isEmpty())
                 <tr>
                     <td colspan="{{ Gate::allows('is-admin') ? 12 : 11 }}" class="text-center">
-                        {{ __('No foods found') }}
+                        {{ translate('No foods found') }}
                     </td>
                 </tr>
             @else
@@ -66,7 +66,7 @@
     </table>
     <div class="d-flex justify-content-between align-items-center mb-3">
         @can('isAdmin')
-            <a href="{{ route('foods.create') }}" class="btn btn-primary">{{ __('Add Food') }}</a>
+            <a href="{{ route('foods.create') }}" class="btn btn-primary">{{ translate('Add Food') }}</a>
         @endcan
 
         {{ $foods->links() }}

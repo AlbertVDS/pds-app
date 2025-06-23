@@ -30,7 +30,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => __('The provided credentials do not match our records.'),
+            'email' => translate('The provided credentials do not match our records.'),
         ])->onlyInput('email');
     }
 

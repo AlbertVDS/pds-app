@@ -25,23 +25,23 @@
                             style="width: 80%; height: auto;">
                     </div>
                     <div class="col">
-                        <b>{{ __('Ingredients') }}:</b><br>
+                        <b>{{ translate('Ingredients') }}:</b><br>
                         <ul class="m-2">
                             @foreach($recipe->ingredientMeasurements as $ingredientMeasurement)
-                                <li><b>{{ __($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ translate($ingredientMeasurement->measurementName()) }}</i></li>
+                                <li><b>{{ translate($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ translate($ingredientMeasurement->measurementName()) }}</i></li>
 
                                 @foreach ($ingredientMeasurement->ingredient->foods as $food)
                                     @if($food->hasSubstitutes())
                                         <a class="btn btn-link p-0" data-bs-toggle="collapse" href="#{{ $ingredientMeasurement->ingredientName() }}Collapse"
                                             role="button" aria-expanded="false" aria-controls="collapseExample">
-                                            {{ __('Show substitutes') }}
+                                            {{ translate('Show substitutes') }}
                                         </a>
                                         <div class="collapse" id="{{ $ingredientMeasurement->ingredientName() }}Collapse">
                                             <div class="card card-body">
                                                     
                                                 @foreach($food->substitutes as $substitute)
 
-                                                    {{ __($substitute->name) }}<br>
+                                                    {{ translate($substitute->name) }}<br>
 
                                                 @endforeach
                                     
@@ -57,9 +57,9 @@
                 </div>
 
                 <div class="card-body">
-                    <h5 class="card-title">{{ __('Directions') }}:</h5>
+                    <h5 class="card-title">{{ translate('Directions') }}:</h5>
                     <p class="card-text">
-                        {{ __($recipe->instructions->instruction) }}
+                        {{ translate($recipe->instructions->instruction) }}
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">
