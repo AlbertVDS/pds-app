@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Recipe;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Food\Food;
 
 class RecipeIngredientFood extends Model
 {

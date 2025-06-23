@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserMailingGroup extends Model
+class UserFodmap extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -14,7 +14,7 @@ class UserMailingGroup extends Model
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'user_mailing_groups';
+    protected $table = 'user_fodmaps';
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +22,12 @@ class UserMailingGroup extends Model
      */
     protected $fillable = [
         'user_id',
-        'mailing_group_id',
-        'deleted_at',
+        'fructose',
+        'lactose',
+        'mannitol',
+        'sorbitol',
+        'GOS',
+        'fructan',
+        'soft_deleted_at',
     ];
 }

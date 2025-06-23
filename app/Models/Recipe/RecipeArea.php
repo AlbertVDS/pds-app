@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Recipe;
 
 use App\Traits\HasOriginalText;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Language\OriginalText;
 
-class RecipeCategory extends Model
+class RecipeArea extends Model
 {
     use HasFactory, HasOriginalText, SoftDeletes;
 
@@ -15,7 +16,7 @@ class RecipeCategory extends Model
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'recipe_categories';
+    protected $table = 'recipe_areas';
 
     /**
      * The attributes that are mass assignable.

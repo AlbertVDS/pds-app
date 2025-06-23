@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Mailing;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Models\Food;
+use App\Models\User\User;
 
-class FoodSubstitute extends Model
+class MailData extends Model
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, SoftDeletes;
@@ -17,23 +17,24 @@ class FoodSubstitute extends Model
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'food_substitutes';
+    protected $table = 'user_mail_data';
 
     /**
      * The attributes that are mass assignable.
      * @var array<int, string>
      */
     protected $fillable = [
-        'food_id',
-        'substitute_id',
-        'deleted_at',
+        'mailing_id',
+        'user_id',
+        'body',
+        'sent',
     ];
 
     /**
-     * Get food associated with the food substitute
+     * Get user associated with user mail data
      */
-    public function food(): HasOne
+    public function user(): HasOne
     {
-        return $this->hasOne(Food::class, 'id', 'food_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Mailing;
 
 use App\Http\Controllers\Controller;
-use App\Models\Mailing;
-use App\Models\MailingGroup;
+use App\Models\Mailing\Mailing;
+use App\Models\Mailing\MailingGroup;
 use Illuminate\Http\Request;
 
 class MailingController extends Controller

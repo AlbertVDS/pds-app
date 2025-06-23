@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Recipe;
+use App\Models\Recipe\Recipe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 

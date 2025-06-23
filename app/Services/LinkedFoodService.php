@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Recipe;
-use App\Models\RecipeIngredientFood;
+use App\Models\Recipe\Recipe;
+use App\Models\Recipe\RecipeIngredientFood;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Food;
 
 use App\Http\Controllers\Controller;
-use App\Models\Food;
+use App\Models\Food\Food;
 use Illuminate\Http\Request;
 use App\Services\FoodSubstituteService;
 

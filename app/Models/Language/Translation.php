@@ -1,33 +1,40 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Language;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Role extends Model
+class Translation extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, SoftDeletes;
 
     /**
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'roles';
+    protected $table = 'translations';
 
     /**
      * The attributes that are mass assignable.
      * @var array<int, string>
      */
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'language_id',
+        'original_text_id',
+        'translation',
+    ];
 
     /**
-     * Indicates if the model should be timestamped.
-     * @var bool
+     * Summary of originalText
+     * @return BelongsTo
      */
-    public $timestamps = false;
+    public function original(): BelongsTo
+    {
+        return $this->belongsTo(OriginalText::class, 'original_text_id');
+    }
 
     /**
      * MorphTo relationship.

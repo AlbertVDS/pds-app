@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Language;
-use App\Models\Translation;
+use App\Models\Language\Language;
+use App\Models\Language\Translation;
 use Illuminate\Http\Request;
 use App\Pagination\TranslationPaginator;
 use App\Services\OriginalTextService;
