@@ -9,13 +9,13 @@
             <div class="container text-center">
                 <div class="row align-items-start">
                     <div class="col">
-                        {{ __('Type') }}: {{ $food->getTypeName() }}
+                        {{ translate('Type') }}: {{ $food->getTypeName() }}
                     </div>
                     <div class="col">
-                        {{ __('Level') }}: @include('foods.level', ['level' => $food->level])
+                        {{ translate('Level') }}: @include('foods.level', ['level' => $food->level])
                     </div>
                     <div class="col">
-                        {{ __('Weight') }}: {{ $food->weightText() }}
+                        {{ translate('Weight') }}: {{ $food->weightText() }}
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="card-header">
-            <h6 class="card-title">{{ __('Substitutes') }}</h6>
+            <h6 class="card-title">{{ translate('Substitutes') }}</h6>
         </div>
         <div class="card-body">
             <div class="container text-center">
@@ -60,12 +60,12 @@
 
         </div>
         <div class="card-footer text-muted">
-            <a href="{{ route('foods.index') }}" class="btn btn-primary">{{ __('Back') }}</a>
+            <a href="{{ route('foods.index') }}" class="btn btn-primary">{{ translate('Back') }}</a>
             @if(Route::currentRouteAction() == 'App\Http\Controllers\FoodController@edit')
                 <form action="{{ route('foods.destroy', $food->id) }}" method="POST" class="d-inline-block">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
+                    <button type="submit" class="btn btn-danger">{{ translate('Delete') }}</button>
                 </form>
             @endif
         </div>

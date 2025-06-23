@@ -5,10 +5,10 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>{{ __('Name') }}</th>
-                    <th>{{ __('E-mail') }}</th>
-                    <th>{{ __('Role') }}</th>
-                    <th>{{ __('Actions') }}</th>
+                    <th>{{ translate('Name') }}</th>
+                    <th>{{ translate('E-mail') }}</th>
+                    <th>{{ translate('Role') }}</th>
+                    <th>{{ translate('Actions') }}</th>
                 </tr>
             </thead>
             <tbody> 

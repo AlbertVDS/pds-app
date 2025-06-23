@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 12.18.0.
+ * Generated for Laravel 12.19.3.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -12908,6 +12908,58 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Get the number of pending jobs.
+         *
+         * @param string|null $queue
+         * @return int 
+         * @static 
+         */
+        public static function pendingSize($queue = null)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+            return $instance->pendingSize($queue);
+        }
+
+        /**
+         * Get the number of delayed jobs.
+         *
+         * @param string|null $queue
+         * @return int 
+         * @static 
+         */
+        public static function delayedSize($queue = null)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+            return $instance->delayedSize($queue);
+        }
+
+        /**
+         * Get the number of reserved jobs.
+         *
+         * @param string|null $queue
+         * @return int 
+         * @static 
+         */
+        public static function reservedSize($queue = null)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+            return $instance->reservedSize($queue);
+        }
+
+        /**
+         * Get the creation timestamp of the oldest pending job, excluding delayed jobs.
+         *
+         * @param string|null $queue
+         * @return int|null 
+         * @static 
+         */
+        public static function creationTimeOfOldestPendingJob($queue = null)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+            return $instance->creationTimeOfOldestPendingJob($queue);
+        }
+
+        /**
          * Push a new job onto the queue.
          *
          * @param string|object $job
@@ -23343,6 +23395,138 @@ namespace Barryvdh\Debugbar\Facades {
             }
     }
 
+namespace Flasher\Laravel\Facade {
+    /**
+     * 
+     *
+     * @method static NotificationBuilder title(string $message)
+     * @method static NotificationBuilder message(string $message)
+     * @method static NotificationBuilder type(string $message)
+     * @method static NotificationBuilder options(array<string, mixed> $options, bool $merge = true)
+     * @method static NotificationBuilder option(string $name, $value)
+     * @method static NotificationBuilder priority(int $priority)
+     * @method static NotificationBuilder hops(int $amount)
+     * @method static NotificationBuilder keep()
+     * @method static NotificationBuilder delay(int $delay)
+     * @method static NotificationBuilder translate(array<string, mixed> $parameters = [], ?string $locale = null)
+     * @method static NotificationBuilder handler(string $handler)
+     * @method static NotificationBuilder context(array<string, mixed> $context)
+     * @method static NotificationBuilder when(bool|\Closure $condition)
+     * @method static NotificationBuilder unless(bool|\Closure $condition)
+     * @method static NotificationBuilder with(StampInterface[] $stamps = array())
+     * @method static NotificationBuilder withStamp(StampInterface $stamp)
+     * @method static Envelope            success(string $message, array<string, mixed> $options = [], ?string $title = null)
+     * @method static Envelope            error(string $message, array<string, mixed> $options = [], ?string $title = null)
+     * @method static Envelope            info(string $message, array<string, mixed> $options = [], ?string $title = null)
+     * @method static Envelope            warning(string $message, array<string, mixed> $options = [], ?string $title = null)
+     * @method static Envelope            flash(?string $type = null, ?string $message = null, array<string, mixed> $options = [], ?string $title = null)
+     * @method static Envelope            preset(string $preset, array<string, mixed> $parameters = [])
+     * @method static Envelope            operation(string $operation, string|object|null $resource = null)
+     * @method static Envelope            created(string|object|null $resource = null)
+     * @method static Envelope            updated(string|object|null $resource = null)
+     * @method static Envelope            saved(string|object|null $resource = null)
+     * @method static Envelope            deleted(string|object|null $resource = null)
+     * @method static Envelope            push()
+     * @method static Envelope            addPreset(string $preset, array<string, mixed> $parameters = [])
+     * @method static Envelope            addCreated(string|object|null $resource = null)
+     * @method static Envelope            addUpdated(string|object|null $resource = null)
+     * @method static Envelope            addDeleted(string|object|null $resource = null)
+     * @method static Envelope            addSaved(string|object|null $resource = null)
+     * @method static Envelope            addOperation(string $operation, string|object|null $resource = null)
+     * @method static Envelope            getEnvelope()
+     */
+    class Flasher {
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function use($alias)
+        {
+            /** @var \Flasher\Prime\Flasher $instance */
+            return $instance->use($alias);
+        }
+
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function create($alias)
+        {
+            /** @var \Flasher\Prime\Flasher $instance */
+            return $instance->create($alias);
+        }
+
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function render($presenter = 'html', $criteria = [], $context = [])
+        {
+            /** @var \Flasher\Prime\Flasher $instance */
+            return $instance->render($presenter, $criteria, $context);
+        }
+
+            }
+    }
+
+namespace Flasher\Noty\Laravel\Facade {
+    /**
+     * 
+     *
+     * @method static NotyBuilder success(string $message, array<string, mixed> $options = array())
+     * @method static NotyBuilder error(string $message, array<string, mixed> $options = array())
+     * @method static NotyBuilder warning(string $message, array<string, mixed> $options = array())
+     * @method static NotyBuilder info(string $message, array<string, mixed> $options = array())
+     * @method static NotyBuilder flash(StampInterface[] $stamps = array())
+     * @method static NotyBuilder message(string $message)
+     * @method static NotyBuilder options(array<string, mixed> $options, bool $merge = true)
+     * @method static NotyBuilder option(string $name, string $value)
+     * @method static NotyBuilder priority(int $priority)
+     * @method static NotyBuilder hops(int $amount)
+     * @method static NotyBuilder keep()
+     * @method static NotyBuilder delay(int $delay)
+     * @method static NotyBuilder now()
+     * @method static NotyBuilder with(StampInterface[] $stamps = array())
+     * @method static NotyBuilder withStamp(StampInterface $stamp)
+     * @method static NotyBuilder handler(string $handler)
+     * @method static Envelope    getEnvelope()
+     * @method static NotyBuilder text(string $text)
+     * @method static NotyBuilder alert(string $message = null, array<string, mixed> $options = array())
+     * @method static NotyBuilder layout(string $layout)
+     * @method static NotyBuilder theme(string $theme)
+     * @method static NotyBuilder timeout(bool|int $timeout)
+     * @method static NotyBuilder progressBar(bool $progressBar = false)
+     * @method static NotyBuilder closeWith(string|string[] $closeWith)
+     * @method static NotyBuilder animation(string $animation, string $effect)
+     * @method static NotyBuilder sounds(string $option, mixed $value)
+     * @method static NotyBuilder docTitle(string $option, mixed $docTitle)
+     * @method static NotyBuilder modal(bool $modal = true)
+     * @method static NotyBuilder id(bool|string $id)
+     * @method static NotyBuilder force(bool $force = true)
+     * @method static NotyBuilder queue(string $queue)
+     * @method static NotyBuilder killer(bool|string $killer)
+     * @method static NotyBuilder container(bool|string $container)
+     * @method static NotyBuilder buttons(string[] $buttons)
+     * @method static NotyBuilder visibilityControl(bool $visibilityControl)
+     */
+    class Noty {
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function createNotificationBuilder()
+        {
+            /** @var \Flasher\Noty\Prime\Noty $instance */
+            return $instance->createNotificationBuilder();
+        }
+
+            }
+    }
+
 namespace Orangehill\Iseed\Facades {
     /**
      * 
@@ -23517,15 +23701,14 @@ namespace Orangehill\Iseed\Facades {
         }
 
         /**
-         * Get all table names
+         * 
          *
-         * @return array {string}
          * @static 
          */
-        public static function getAllTableNames($databaseName = null)
+        public static function getAllTableNames()
         {
             /** @var \Orangehill\Iseed\Iseed $instance */
-            return $instance->getAllTableNames($databaseName);
+            return $instance->getAllTableNames();
         }
 
             }
@@ -28443,6 +28626,8 @@ namespace  {
     class View extends \Illuminate\Support\Facades\View {}
     class Vite extends \Illuminate\Support\Facades\Vite {}
     class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
+    class Flasher extends \Flasher\Laravel\Facade\Flasher {}
+    class Noty extends \Flasher\Noty\Laravel\Facade\Noty {}
     class Iseed extends \Orangehill\Iseed\Facades\Iseed {}
 }
 
