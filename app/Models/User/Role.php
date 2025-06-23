@@ -1,28 +1,34 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\User;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Language\OriginalText;
 
-class ViewText extends Model
+class Role extends Model
 {
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, SoftDeletes;
 
     /**
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'view_text';
+    protected $table = 'roles';
 
     /**
      * The attributes that are mass assignable.
      * @var array<int, string>
      */
-    protected $fillable = [
-        'text',
-    ];
+    protected $fillable = ['name'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * MorphTo relationship.

@@ -3,19 +3,19 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Food;
-use App\Models\FoodSubstitute;
-use App\Models\FoodType;
-use App\Models\Language;
-use App\Models\MailingGroup;
-use App\Models\Recipe;
-use App\Models\RecipeArea;
-use App\Models\RecipeCategory;
-use App\Models\RecipeIngredient;
-use App\Models\RecipeMeasurement;
-use App\Models\RecipeTag;
-use App\Models\Role;
-use App\Models\OriginalText;
+use App\Models\Food\Food;
+use App\Models\Food\FoodSubstitute;
+use App\Models\Food\FoodType;
+use App\Models\Language\Language;
+use App\Models\Mailing\MailingGroup;
+use App\Models\Recipe\Recipe;
+use App\Models\Recipe\RecipeArea;
+use App\Models\Recipe\RecipeCategory;
+use App\Models\Recipe\RecipeIngredient;
+use App\Models\Recipe\RecipeMeasurement;
+use App\Models\Recipe\RecipeTag;
+use App\Models\User\Role;
+use App\Models\Language\OriginalText;
 
 class PopulateOriginalTextTable extends Command
 {

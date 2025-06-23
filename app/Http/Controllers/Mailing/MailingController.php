@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Mailing;
 
 use App\Http\Controllers\Controller;
-use App\Models\Mailing;
-use App\Models\MailingGroup;
+use App\Models\Mailing\Mailing;
+use App\Models\Mailing\MailingGroup;
 use Illuminate\Http\Request;
 
 class MailingController extends Controller
@@ -16,7 +16,7 @@ class MailingController extends Controller
     {
         $mailings = Mailing::paginate(30);
         return view('mailing.index', [
-            'pageTitle' => __('Mailings'),
+            'pageTitle' => translate('Mailings'),
             'mailings' => $mailings
         ]);
     }
@@ -27,7 +27,7 @@ class MailingController extends Controller
     public function create()
     {
         return view('mailing.create-edit', [
-            'pageTitle' => __('Create Mailing'),
+            'pageTitle' => translate('Create Mailing'),
             'mailingGroups' => MailingGroup::all(),
         ]);
     }
@@ -45,7 +45,7 @@ class MailingController extends Controller
         ]);
 
         Mailing::create($request->all());
-        noty()->success(__('Mailing created successfully.'));
+        noty()->success(translate('Mailing created successfully.'));
         return redirect()->route('mailings.index');
     }
 
@@ -55,7 +55,7 @@ class MailingController extends Controller
     public function edit(Mailing $mailing)
     {
         return view('mailing.create-edit', [
-            'pageTitle' => __('Edit Mailing'),
+            'pageTitle' => translate('Edit Mailing'),
             'mailing' => $mailing,
             'mailings' => Mailing::all(),
             'mailingGroups' => MailingGroup::all(),
@@ -75,7 +75,7 @@ class MailingController extends Controller
         ]);
 
         $mailing->update($request->all());
-        noty()->success(__('Mailing updated successfully.'));
+        noty()->success(translate('Mailing updated successfully.'));
         return redirect()->route('mailings.index');
     }
 
@@ -85,7 +85,7 @@ class MailingController extends Controller
     public function destroy(Mailing $mailing)
     {
         $mailing->delete();
-        noty()->success(__('Mailing deleted successfully.'));
+        noty()->success(translate('Mailing deleted successfully.'));
         return redirect()->route('mailings.index');
     }
 }

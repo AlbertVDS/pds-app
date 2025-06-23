@@ -3,7 +3,7 @@
 function translate($string)
 {
     if (intval($string) == 0) {
-        return translate($string);
+        return __($string);
     } else {
         return $string;
     }

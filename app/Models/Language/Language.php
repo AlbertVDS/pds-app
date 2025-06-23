@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Language;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\OriginalText;
+use App\Models\Language\OriginalText;
 
 class Language extends Model
 {

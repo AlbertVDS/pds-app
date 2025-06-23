@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Recipe;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Recipe;
+use App\Models\Recipe\Recipe;
 use App\Services\RecipeSearchService;
 
 
@@ -28,7 +28,7 @@ class RecipeController extends Controller
         return view(
             'recipes.index',
             [
-                'pageTitle' => __('Recipes'),
+                'pageTitle' => translate('Recipes'),
                 'recipeSearch' => $this->recipeSearchService->searchRecipes($request),
             ]
         );
@@ -42,7 +42,7 @@ class RecipeController extends Controller
         return view(
             'recipes.show',
             [
-                'pageTitle' => __($recipe->name ?? ''),
+                'pageTitle' => translate($recipe->name ?? ''),
                 'recipe' => $recipe ?? []
             ]
         );

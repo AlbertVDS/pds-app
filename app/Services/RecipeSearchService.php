@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\Recipe;
-use App\Models\RecipeIngredient;
-use App\Models\RecipeCategory;
-use App\Models\RecipeArea;
-use App\Models\RecipeTag;
+use App\Models\Recipe\Recipe;
+use App\Models\Recipe\RecipeIngredient;
+use App\Models\Recipe\RecipeCategory;
+use App\Models\Recipe\RecipeArea;
+use App\Models\Recipe\RecipeTag;
 use Illuminate\Http\Request;
 
 class RecipeSearchService

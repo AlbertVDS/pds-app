@@ -5,7 +5,7 @@ namespace Tests\Feature\Pages;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\User;
+use App\Models\User\User;
 
 class RecipeIngredientsTest extends TestCase
 {
@@ -15,7 +15,7 @@ class RecipeIngredientsTest extends TestCase
 
         $response = $this->actingAs($admin)->get('/recipe-ingredients');
 
-        $response->assertSee(__('Ingredient list'));
+        $response->assertSee(translate('Ingredient list'));
         $response->assertStatus(200);
     }
 

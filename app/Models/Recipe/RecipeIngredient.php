@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Recipe;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\RecipeIngredientFood;
 use App\Traits\HasOriginalText;
+use App\Models\Food\Food;
+use App\Models\Language\OriginalText;
 
 class RecipeIngredient extends Model
 {
@@ -29,7 +28,7 @@ class RecipeIngredient extends Model
 
     public function getName()
     {
-        return __($this->name);
+        return translate($this->name);
     }
 
     /**

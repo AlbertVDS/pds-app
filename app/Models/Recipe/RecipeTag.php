@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Recipe;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Language\OriginalText;
+use App\Traits\HasOriginalText;
 
-class RecipeMeasurement extends Model
+class RecipeTag extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, HasOriginalText, SoftDeletes;
 
     /**
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'recipe_measurements';
+    protected $table = 'recipe_tags';
 
     /**
      * The attributes that are mass assignable.

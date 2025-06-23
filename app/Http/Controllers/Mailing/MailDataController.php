@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Mailing;
 
 use App\Http\Controllers\Controller;
-use App\Models\MailData;
+use App\Models\Mailing\MailData;
 
 class MailDataController extends Controller
 {

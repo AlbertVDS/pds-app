@@ -5,7 +5,7 @@ namespace Tests\Feature\Pages;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\User;
+use App\Models\User\User;
 
 class ProfilesTest extends TestCase
 {
@@ -15,7 +15,7 @@ class ProfilesTest extends TestCase
 
         $response = $this->actingAs($admin)->get('/profiles/user');
 
-        $response->assertSee(__('User Profiles'));
+        $response->assertSee(translate('User Profiles'));
         $response->assertStatus(200);
     }
 
@@ -34,7 +34,7 @@ class ProfilesTest extends TestCase
 
         $response = $this->actingAs($admin)->get('profiles/user/1/edit');
 
-        $response->assertSee(__('User Settings'));
+        $response->assertSee(translate('User Settings'));
 
         $response->assertStatus(200);
     }

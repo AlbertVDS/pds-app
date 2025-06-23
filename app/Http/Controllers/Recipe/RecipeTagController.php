@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Recipe;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\RecipeTag;
+use App\Models\Recipe\RecipeTag;
 use App\Services\AutocompleteService;
 
 class RecipeTagController extends Controller

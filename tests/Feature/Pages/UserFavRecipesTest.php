@@ -5,7 +5,7 @@ namespace Tests\Feature\Pages;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\User;
+use App\Models\User\User;
 
 class UserFavRecipesTest extends TestCase
 {
@@ -15,7 +15,7 @@ class UserFavRecipesTest extends TestCase
 
         $response = $this->actingAs($user)->get('/user/favorite-recipes');
 
-        $response->assertSee(__('Favorite Recipes'));
+        $response->assertSee(translate('Favorite Recipes'));
         $response->assertStatus(200);
     }
 
