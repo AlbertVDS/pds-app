@@ -19,20 +19,10 @@ class UserSettingsService
      */
     public function updateUserSettings(Request $request, User $user)
     {
-        // $request->validate([
-        //     // 'name' => 'required|string|max:255',
-        //     // 'email' => 'required|string|email|max:255',
-        //     // 'language_id' => 'exists:languages,id',
-        //     'fodmaps' => 'array',
-        //     'fodmaps.*' => 'boolean',
-        //     // 'mailing_groups' => 'array',
-        //     // 'mailing_groups.*' => 'boolean',
-        // ]);
-
         $this->updateUser($request->get('user'), $user);
         $this->upsertUserFodmaps($request->get('fodmaps') ?? [], $user->id);
-        $this->deleteUnlinkedMailingGroups($request->get('mailing_groups'), $user->id);
-        $this->upsertUserMailingGroups($request->get('mailing_groups'), $user->id);
+        $this->deleteUnlinkedMailingGroups($request->get('mailing_groups') ?? [], $user->id);
+        $this->upsertUserMailingGroups($request->get('mailing_groups') ?? [], $user->id);
     }
 
     private function updateUser(array $userData, $user)
@@ -46,11 +36,13 @@ class UserSettingsService
         UserFodmap::upsert([$fodmaps], 'user_id');
     }
 
-    private function deleteUnlinkedMailingGroups($mailingGroups, int $user_id)
+    private function deleteUnlinkedMailingGroups(array $mailingGroups, int $user_id)
     {
-        UserMailingGroup::where('user_id', $user_id)
-            ->whereNotIn('mailing_group_id', $mailingGroups)
-            ->delete();
+        $userMailingGroup = UserMailingGroup::where('user_id', $user_id);
+        if (!empty($mailingGroups)) {
+            $userMailingGroup->whereNotIn('mailing_group_id', $mailingGroups);
+        }
+        $userMailingGroup->delete();
     }
 
     private function upsertUserMailingGroups(array $mailingGroups, int $user_id)
