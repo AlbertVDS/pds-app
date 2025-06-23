@@ -41,7 +41,7 @@ class UserController extends Controller
         ]);
 
         (new UserSettingsService())->updateUserSettings($request, Auth::user());
-
-        return redirect()->back()->with('success', __('User settings saved'));
+        noty()->success(__('User settings saved'));
+        return redirect()->back();
     }
 }

@@ -24,7 +24,8 @@ class ProfileFavRecipeController extends Controller
     {
         $user = $request->user();
         $user->favRecipes()->attach($request->recipe_id);
-        return redirect()->back()->with('success', __('Recipe added to favorites'));
+        noty()->success(__('Recipe added to favorites'));
+        return redirect()->back();
     }
 
     /**
@@ -34,6 +35,7 @@ class ProfileFavRecipeController extends Controller
     {
         $user = Auth::user();
         $user->favRecipes()->detach($recipe->id);
-        return redirect()->back()->with('success', __('Recipe removed from favorites'));
+        noty()->success(__('Recipe removed from favorites'));
+        return redirect()->back();
     }
 }
