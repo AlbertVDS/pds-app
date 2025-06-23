@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,7 +34,9 @@ class Language extends Model
 
     public function complete()
     {
-        $total = OriginalText::count();
+        $total = Cache::remember('origional_text_count', 60, function () {
+            return OriginalText::count();
+        });
         return $this->translations()->count() ? round($this->translations()->count() / $total * 100) . '%' : '0%';
     }
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Recipe;
 
+use App\Http\Controllers\Controller;
 use App\Models\RecipeIngredient;
 use Illuminate\Http\Request;
 use App\Services\AutocompleteService;
@@ -10,15 +11,12 @@ use App\Services\LinkedFoodService;
 class RecipeIngredientController extends Controller
 {
     private $linkedFoodService;
-    private $autocompleteService;
-
     /**
      * Create a new controller instance.
      */
-    public function __construct(LinkedFoodService $linkedFoodService, AutocompleteService $autocompleteService)
+    public function __construct(LinkedFoodService $linkedFoodService)
     {
         $this->linkedFoodService = $linkedFoodService;
-        $this->autocompleteService = $autocompleteService;
     }
 
     /**
@@ -28,7 +26,7 @@ class RecipeIngredientController extends Controller
      */
     public function autocomplete(Request $request)
     {
-        return $this->autocompleteService->autocomplete(RecipeIngredient::class, $request);
+        return (new AutocompleteService())->autocomplete(RecipeIngredient::class, $request);
     }
 
     /**

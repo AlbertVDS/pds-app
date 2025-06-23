@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Mailing;
 
+use App\Http\Controllers\Controller;
 use App\Models\Mailing;
 use App\Models\MailingGroup;
 use Illuminate\Http\Request;

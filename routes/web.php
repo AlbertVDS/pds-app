@@ -1,17 +1,19 @@
 <?php
 
-use App\Http\Controllers\FoodController;
-use App\Http\Controllers\FoodSubstitutesController;
-use App\Http\Controllers\MailingController;
-use App\Http\Controllers\RecipeAreaController;
-use App\Http\Controllers\RecipeCategoryController;
-use App\Http\Controllers\RecipeController;
-use App\Http\Controllers\RecipeTagController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\RecipeIngredientController;
+use App\Http\Controllers\Food\FoodController;
+use App\Http\Controllers\Food\FoodSubstitutesController;
+use App\Http\Controllers\Mailing\MailingController;
+use App\Http\Controllers\Recipe\RecipeController;
+use App\Http\Controllers\Recipe\RecipeAreaController;
+use App\Http\Controllers\Recipe\RecipeCategoryController;
+use App\Http\Controllers\Recipe\RecipeIngredientController;
+use App\Http\Controllers\Recipe\RecipeTagController;
 use App\Http\Controllers\TranslationController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserFavRecipeController;
+use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\RoleController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\UserFavRecipeController;
 use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -31,12 +33,23 @@ Route::middleware([IsAdminMiddleware::class])->group(function () {
     Route::get('recipe-ingredients', [RecipeIngredientController::class, 'index']);
     Route::resource('translations', TranslationController::class);
     Route::resource('users', UserController::class);
+
+    // Admin CP profile routes
+    Route::resource('profiles/user', ProfileController::class)->names([
+        'index' => 'profiles.user.index',
+        'create' => 'profiles.user.create',
+        'store' => 'profiles.user.store',
+        'show' => 'profiles.user.show',
+        'edit' => 'profiles.user.edit',
+        'update' => 'profiles.user.update',
+        'destroy' => 'profiles.user.destroy',
+    ]);
 });
 
 // Auth routes
-Route::post('login', [UserController::class, 'login'])->name('login');
-Route::get('logout', [UserController::class, 'logout'])->name('logout');
-Route::post('register', [UserController::class, 'register'])->name('register');
+Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('register', [AuthController::class, 'register'])->name('register');
 
 // Autocomplete routes
 Route::get('area-autocomplete', action: [RecipeAreaController::class, 'autocomplete'])->name('area-autocomplete');
@@ -55,16 +68,17 @@ Route::resource('foods', FoodController::class)->except([
 
 // Recipe routes
 Route::match(['get', 'post'], 'recipes', [RecipeController::class, 'index']);
-Route::get('recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');
+Route::get('recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
 
-// User routes
+// Auth user setting routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('user/settings/{id?}', [UserController::class, 'edit'])->name('user.settings');
-    Route::post('user/settings/update/{id?}', [UserController::class, 'update'])->name('user.settings.update');
-    Route::get('user/favorite-recipes/{id?}', [UserFavRecipeController::class, 'index'])->name('user.favorite-recipes');
+    Route::get('user/settings', [UserController::class, 'edit'])->name('user.settings');
+    Route::post('user/settings/update', [UserController::class, 'update'])->name('user.settings.update');
+    Route::get('user/favorite-recipes', [UserFavRecipeController::class, 'index'])->name('user.favorite-recipes');
     Route::post('user/favorite-recipes', [UserFavRecipeController::class, 'store'])->name('user.favorite-recipe.store');
     Route::delete('user/favorite-recipes/{recipe}', [UserFavRecipeController::class, 'destroy'])->name('user.favorite-recipe.destroy');
 });
+
 
 Route::get('/login', function () {
     return view('home', [
