@@ -22,9 +22,8 @@ class OriginalText extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'text',
-        'target_id',
-        'type',
+        'foreign_id',
+        'foreign_type'
     ];
 
     /**

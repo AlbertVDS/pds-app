@@ -3,10 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
-use App\Models\OriginalText;
-use App\Models\ControllerText;
+use App\Services\FilesToOriginalTextService;
 
 class FilesToOrigionalTextTable extends Command
 {
@@ -22,42 +19,20 @@ class FilesToOrigionalTextTable extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Copy translatable strings from files to the original_text table';
 
     /**
-     * Array of file locations and corisponding model names.
-     *
-     * @var array
+     * filesToOriginalTextService
+     * @var 
      */
-    protected $fileLocations;
+    private $filesToOriginalTextService;
 
-    /**
-     * Current class
-     * @var
-     */
-    protected $class;
 
-    /**
-     * Current path
-     * @var
-     */
-    protected $path;
-
-    /**
-     * Regex to find text inside laravel translate function.
-     *
-     * @var string
-     */
-    protected $regex = "/__\('([^'$]*?)'\)/";
-
-    public function __construct()
+    public function __construct(FilesToOriginalTextService $filesToOriginalTextService)
     {
         parent::__construct();
 
-        $this->fileLocations = [
-            'App\Models\ControllerText' => app_path('Http/Controllers'),
-            'App\Models\ViewText' => resource_path('views'),
-        ];
+        $this->filesToOriginalTextService = $filesToOriginalTextService;
     }
 
     /**
@@ -65,49 +40,8 @@ class FilesToOrigionalTextTable extends Command
      */
     public function handle()
     {
-        foreach ($this->fileLocations as $class => $path) {
-            $this->proccesFiles($class, $path);
-        }
-    }
-
-    /**
-     * Proccess in specific directory and save them through model
-     * @return void
-     */
-    private function proccesFiles($class, $path)
-    {
-        $this->class = $class;
-        $this->path = $path;
-        $files = File::allFiles($path);
-
-        foreach ($files as $file) {
-            $filePath = $file->getPathname();
-            $content = File::get($filePath);
-            $translateables = Str::of($content)->matchAll($this->regex);
-
-            $this->saveTranslatables($translateables);
-        }
-    }
-
-    /**
-     * Save the translatable strings to the database.
-     *
-     * @param  \Illuminate\Support\Collection  $translateables
-     * @return void
-     */
-    public function saveTranslatables($translateables)
-    {
-        foreach ($translateables as $translateable) {
-            $text = Str::of($translateable)->replaceMatches($this->regex, '$1')->toString();
-
-            $controller = $this->class::firstOrCreate([
-                'text' => $text,
-            ]);
-
-            OriginalText::firstOrCreate([
-                'foreign_id' => $controller->id,
-                'foreign_type' => $this->class,
-            ]);
-        }
+        $this->info('Starting to copy translatable strings from files to the original_text table...');
+        $this->filesToOriginalTextService->procces();
+        $this->info('Translatable strings copied successfully to the original_text table.');
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Food;
 
+use App\Http\Controllers\Controller;
 use App\Models\Food;
 use Illuminate\Http\Request;
 use App\Services\FoodSubstituteService;
@@ -100,7 +101,9 @@ class FoodController extends Controller
     {
         $query = Food::select("name", "id");
 
-        $request->filled('q') ? $query->where('name', 'LIKE', '%' . $request->get('q') . '%') : null;
+        if ($request->filled('q')) {
+            $query->where('name', 'LIKE', '%' . $request->get('q') . '%');
+        }
         $query->orderBy('name');
         $query->take(20);
         $data = $query->get();
