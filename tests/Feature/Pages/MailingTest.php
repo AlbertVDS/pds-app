@@ -5,8 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\Mailing;
-use App\Models\User;
+use App\Models\Mailing\Mailing;
+use App\Models\User\User;
 
 class MailingTest extends TestCase
 {

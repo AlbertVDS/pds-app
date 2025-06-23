@@ -68,7 +68,7 @@ Route::resource('foods', FoodController::class)->except([
 
 // Recipe routes
 Route::match(['get', 'post'], 'recipes', [RecipeController::class, 'index'])->name('recipes.index');
-Route::get('recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show')->name('recipes.show');
+Route::get('recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
 
 // Auth user setting routes
 Route::middleware(['auth'])->group(function () {

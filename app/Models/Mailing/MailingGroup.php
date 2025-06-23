@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Mailing;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Language\OriginalText;
+use App\Models\User\User;
 
 class MailingGroup extends Model
 {

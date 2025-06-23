@@ -1,29 +1,34 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\User;
 
-use App\Traits\HasOriginalText;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Language\OriginalText;
 
-class RecipeArea extends Model
+class Role extends Model
 {
-    use HasFactory, HasOriginalText, SoftDeletes;
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, SoftDeletes;
 
     /**
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'recipe_areas';
+    protected $table = 'roles';
 
     /**
      * The attributes that are mass assignable.
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-    ];
+    protected $fillable = ['name'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * MorphTo relationship.

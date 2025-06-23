@@ -5,7 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Models\ControllerText;
-use App\Models\OriginalText;
+use App\Models\Language\OriginalText;
 
 class FilesToOriginalTextService
 {

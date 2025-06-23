@@ -1,29 +1,27 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Language;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\OriginalText;
-use App\Traits\HasOriginalText;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class RecipeTag extends Model
+class ViewText extends Model
 {
-    use HasFactory, HasOriginalText, SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     /**
      * The table associated with the model.
      * @var string
      */
-    protected $table = 'recipe_tags';
+    protected $table = 'view_text';
 
     /**
      * The attributes that are mass assignable.
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'text',
     ];
 
     /**

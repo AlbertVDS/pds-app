@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Language;
-use App\Models\MailingGroup;
+use App\Models\User\User;
+use App\Models\Language\Language;
+use App\Models\Mailing\MailingGroup;
 use App\Services\UserSettingsService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Recipe;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Recipe;
+use App\Models\Recipe\Recipe;
 use App\Services\RecipeSearchService;
 
 

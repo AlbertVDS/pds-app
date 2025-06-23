@@ -2,7 +2,7 @@
 
 namespace Database\Migrations;
 
-use App\Models\User;
+use App\Models\User\User;
 
 class DatabaseData
 {
@@ -11,6 +11,6 @@ class DatabaseData
      */
     public function insert(): void
     {
-       //
+        //
     }
 }

@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Recipe;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\RecipeArea;
-use App\Models\RecipeCategory;
-use App\Models\RecipeIngredientMeasurement;
-use App\Models\RecipeInstruction;
-use App\Models\UserFavRecipe;
+use App\Models\Language\OriginalText;
+use App\Models\Recipe\RecipeArea;
+use App\Models\Recipe\RecipeCategory;
+use App\Models\Recipe\RecipeIngredientMeasurement;
+use App\Models\Recipe\RecipeInstruction;
+use App\Models\User\UserFavRecipe;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 

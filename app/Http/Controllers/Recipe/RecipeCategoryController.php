@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Recipe;
 
 use App\Http\Controllers\Controller;
-use App\Models\RecipeCategory;
+use App\Models\Recipe\RecipeCategory;
 use Illuminate\Http\Request;
 use App\Services\AutocompleteService;
 

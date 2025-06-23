@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Recipe;
 
 use App\Http\Controllers\Controller;
-use App\Models\RecipeIngredient;
+use App\Models\Recipe\RecipeIngredient;
 use Illuminate\Http\Request;
 use App\Services\AutocompleteService;
 use App\Services\LinkedFoodService;
