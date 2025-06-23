@@ -45,8 +45,8 @@ class MailingController extends Controller
         ]);
 
         Mailing::create($request->all());
-
-        return redirect()->route('mailings.index')->with('success', __('Mailing created successfully.'));
+        noty()->success(__('Mailing created successfully.'));
+        return redirect()->route('mailings.index');
     }
 
     /**
@@ -75,8 +75,8 @@ class MailingController extends Controller
         ]);
 
         $mailing->update($request->all());
-
-        return redirect()->route('mailings.index')->with('success', __('Mailing updated successfully.'));
+        noty()->success(__('Mailing updated successfully.'));
+        return redirect()->route('mailings.index');
     }
 
     /**
@@ -85,6 +85,7 @@ class MailingController extends Controller
     public function destroy(Mailing $mailing)
     {
         $mailing->delete();
-        return redirect()->route('mailings.index')->with('success', __('Mailing deleted successfully.'));
+        noty()->success(__('Mailing deleted successfully.'));
+        return redirect()->route('mailings.index');
     }
 }
