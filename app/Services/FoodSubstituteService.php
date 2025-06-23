@@ -59,7 +59,7 @@ class FoodSubstituteService
 
         return response()->json([
             'success' => true,
-            'message' => __('Substitute added successfully.'),
+            'message' => translate('Substitute added successfully.'),
         ]);
     }
 
@@ -75,7 +75,7 @@ class FoodSubstituteService
             ->delete();
         return response()->json([
             'success' => true,
-            'message' => __('Substitute removed successfully.'),
+            'message' => translate('Substitute removed successfully.'),
         ]);
     }
 }

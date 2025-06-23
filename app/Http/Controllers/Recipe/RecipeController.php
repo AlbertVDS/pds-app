@@ -28,7 +28,7 @@ class RecipeController extends Controller
         return view(
             'recipes.index',
             [
-                'pageTitle' => __('Recipes'),
+                'pageTitle' => translate('Recipes'),
                 'recipeSearch' => $this->recipeSearchService->searchRecipes($request),
             ]
         );
@@ -42,7 +42,7 @@ class RecipeController extends Controller
         return view(
             'recipes.show',
             [
-                'pageTitle' => __($recipe->name ?? ''),
+                'pageTitle' => translate($recipe->name ?? ''),
                 'recipe' => $recipe ?? []
             ]
         );

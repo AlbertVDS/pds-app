@@ -15,7 +15,7 @@ class UserSettingsTest extends TestCase
 
         $response = $this->actingAs($user)->get('/user/settings');
 
-        $response->assertSee(__('User Settings'));
+        $response->assertSee(translate('User Settings'));
 
         $response->assertStatus(200);
     }

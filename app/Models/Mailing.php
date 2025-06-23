@@ -61,6 +61,6 @@ class Mailing extends Model
      */
     public function mailingGroupName()
     {
-        return __($this->mailingGroup->name ?? 'No group');
+        return translate($this->mailingGroup->name ?? 'No group');
     }
 }

@@ -12,7 +12,7 @@ class UserFavRecipeController extends Controller
     public function index(string $id = null)
     {
         return view('users.favorite-recipes', [
-            'pageTitle' => __('Favorite Recipes'),
+            'pageTitle' => translate('Favorite Recipes'),
             'user' => Auth::user(),
         ]);
     }
@@ -24,7 +24,7 @@ class UserFavRecipeController extends Controller
     {
         $user = $request->user();
         $user->favRecipes()->attach($request->recipe_id);
-        noty()->success(__("Recipe <b>$request->name</b> added to favorites"));
+        noty()->success(translate("Recipe <b>$request->name</b> added to favorites"));
         return redirect()->back();
     }
 
@@ -35,7 +35,7 @@ class UserFavRecipeController extends Controller
     {
         $user = Auth::user();
         $user->favRecipes()->detach($recipe->id);
-        noty()->success(__("Recipe <b>$recipe->name</b> removed from favorites"));
+        noty()->success(translate("Recipe <b>$recipe->name</b> removed from favorites"));
         return redirect()->back();
     }
 }

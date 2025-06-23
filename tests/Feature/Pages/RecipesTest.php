@@ -14,7 +14,7 @@ class RecipesTest extends TestCase
         $response = $this->get('/recipes');
 
         $response->assertSee('Recipes');
-        $response->assertDontSee(__('No recipes found'));
+        $response->assertDontSee(translate('No recipes found'));
         $response->assertStatus(200);
     }
 
@@ -24,7 +24,7 @@ class RecipesTest extends TestCase
             'search' => 'pasta'
         ]);
 
-        $response->assertSee(__('Pasta'));
+        $response->assertSee(translate('Pasta'));
         $response->assertStatus(200);
     }
 

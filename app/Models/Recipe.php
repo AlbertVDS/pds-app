@@ -76,7 +76,7 @@ class Recipe extends Model
      */
     public function getName(): string
     {
-        return __($this->name);
+        return translate($this->name);
     }
 
     public function ingredientMeasurements(): HasMany
@@ -90,7 +90,7 @@ class Recipe extends Model
      */
     public function areaName(): string
     {
-        return __($this->hasOne(RecipeArea::class, 'id', 'area_id')->first()->name ?? '');
+        return translate($this->hasOne(RecipeArea::class, 'id', 'area_id')->first()->name ?? '');
     }
 
     /**
@@ -99,7 +99,7 @@ class Recipe extends Model
      */
     public function categoryName(): string
     {
-        return __($this->hasOne(RecipeCategory::class, 'id', 'category_id')->first()->name ?? '');
+        return translate($this->hasOne(RecipeCategory::class, 'id', 'category_id')->first()->name ?? '');
     }
 
     /**
@@ -109,7 +109,7 @@ class Recipe extends Model
     public function tagNames(): string
     {
         return implode(', ', array_map(function ($tag) {
-            return __(RecipeTag::find($tag)->name ?? null);
+            return translate(RecipeTag::find($tag)->name ?? null);
         }, $this->tags));
     }
 
@@ -124,7 +124,7 @@ class Recipe extends Model
 
     public function instructionText(): string
     {
-        return __($this->instructions ? $this->instructions->instruction : '');
+        return translate($this->instructions ? $this->instructions->instruction : '');
     }
 
     /**

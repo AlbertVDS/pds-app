@@ -44,7 +44,7 @@ class AutocompleteService
     {
         if (Auth::user()) {
             foreach ($data as $item) {
-                $item->name = __($item->name);
+                $item->name = translate($item->name);
             }
         }
         return $data;

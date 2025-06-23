@@ -13,7 +13,7 @@ class FoodListTest extends TestCase
     {
         $response = $this->get('/foods');
 
-        $response->assertSee(__('Food list'));
+        $response->assertSee(translate('Food list'));
         $response->assertDontSee('No foods found');
         $response->assertStatus(200);
     }
@@ -24,7 +24,7 @@ class FoodListTest extends TestCase
 
         $response = $this->actingAs($admin)->get('/foods');
 
-        $response->assertSee(__('Add Food'));
+        $response->assertSee(translate('Add Food'));
         $response->assertSee('class="fa-solid fa-pencil"', false);
         $response->assertSee('class="fa-solid fa-trash"', false);
         $response->assertStatus(200);
@@ -36,7 +36,7 @@ class FoodListTest extends TestCase
 
         $response = $this->actingAs($user)->get('/foods');
 
-        $response->assertDontSee(__('Add Food'));
+        $response->assertDontSee(translate('Add Food'));
         $response->assertDontSee('class="fa-solid fa-pencil"', false);
         $response->assertDontSee('class="fa-solid fa-trash"', false);
         $response->assertStatus(200);
