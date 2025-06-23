@@ -28,7 +28,7 @@
                         <b>{{ __('Ingredients') }}:</b><br>
                         <ul class="m-2">
                             @foreach($recipe->ingredientMeasurements as $ingredientMeasurement)
-                                <li><b>{{ __($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ $ingredientMeasurement->measurementName() }}</i></li>
+                                <li><b>{{ __($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ translate($ingredientMeasurement->measurementName()) }}</i></li>
 
                                 @foreach ($ingredientMeasurement->ingredient->foods as $food)
                                     @if($food->hasSubstitutes())
