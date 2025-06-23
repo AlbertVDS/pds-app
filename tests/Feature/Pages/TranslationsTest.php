@@ -15,7 +15,7 @@ class TranslationsTest extends TestCase
 
         $response = $this->actingAs($admin)->get('/translations');
 
-        $response->assertSee(__('Translations'));
+        $response->assertSee(translate('Translations'));
         $response->assertStatus(200);
     }
 

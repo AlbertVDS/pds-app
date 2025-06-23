@@ -15,7 +15,7 @@ class RecipeIngredientsTest extends TestCase
 
         $response = $this->actingAs($admin)->get('/recipe-ingredients');
 
-        $response->assertSee(__('Ingredient list'));
+        $response->assertSee(translate('Ingredient list'));
         $response->assertStatus(200);
     }
 

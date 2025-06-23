@@ -15,7 +15,7 @@ class UserFavRecipesTest extends TestCase
 
         $response = $this->actingAs($user)->get('/user/favorite-recipes');
 
-        $response->assertSee(__('Favorite Recipes'));
+        $response->assertSee(translate('Favorite Recipes'));
         $response->assertStatus(200);
     }
 

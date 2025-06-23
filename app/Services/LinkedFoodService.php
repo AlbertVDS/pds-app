@@ -23,9 +23,9 @@ class LinkedFoodService
         $saved = $this->upsertFoods($foodIds, $ingredientId);
 
         if ($saved) {
-            return response()->json(['status' => 'success', 'message' => __('Linked foods saved successfully.')]);
+            return response()->json(['status' => 'success', 'message' => translate('Linked foods saved successfully.')]);
         } else {
-            return response()->json(['status' => 'error', 'message' => __('Failed to save linked foods.')]);
+            return response()->json(['status' => 'error', 'message' => translate('Failed to save linked foods.')]);
         }
     }
 

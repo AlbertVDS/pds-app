@@ -112,7 +112,7 @@ class Food extends Model
 
     public function getName(): string
     {
-        return __($this->name);
+        return translate($this->name);
     }
 
     /**
@@ -121,7 +121,7 @@ class Food extends Model
      */
     public function getTypeName(): string
     {
-        return __($this->hasOne(FoodType::class, 'id', 'type_id')->first()->name);
+        return translate($this->hasOne(FoodType::class, 'id', 'type_id')->first()->name);
     }
 
     /**
@@ -130,7 +130,7 @@ class Food extends Model
      */
     public function weightText(): string
     {
-        return $this->weight ?  "$this->weight gr" : __('Free use');
+        return $this->weight ?  "$this->weight gr" : translate('Free use');
     }
 
     /**

@@ -29,7 +29,7 @@ class MailingGroup extends Model
      */
     public function getName()
     {
-        return __($this->name);
+        return translate($this->name);
     }
 
     /**
