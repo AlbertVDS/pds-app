@@ -28,17 +28,27 @@
                         <b>{{ __('Ingredients') }}:</b><br>
                         <ul class="m-2">
                             @foreach($recipe->ingredientMeasurements as $ingredientMeasurement)
-                                    <li><b>{{ __($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ $ingredientMeasurement->measurementName() }}</i></li>
+                                <li><b>{{ __($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ $ingredientMeasurement->measurementName() }}</i></li>
 
-                                    @foreach ($ingredientMeasurement->ingredient->foods as $food)
+                                @foreach ($ingredientMeasurement->ingredient->foods as $food)
+                                    @if($food->hasSubstitutes())
+                                        <a class="btn btn-link p-0" data-bs-toggle="collapse" href="#{{ $ingredientMeasurement->ingredientName() }}Collapse"
+                                            role="button" aria-expanded="false" aria-controls="collapseExample">
+                                            {{ __('Show substitutes') }}
+                                        </a>
+                                        <div class="collapse" id="{{ $ingredientMeasurement->ingredientName() }}Collapse">
+                                            <div class="card card-body">
+                                                    
+                                                @foreach($food->substitutes as $substitute)
 
-                                           @foreach($food->substitutes as $substitute)
+                                                    {{ __($substitute->name) }}<br>
 
-                                           {{ __($substitute->name) }}<br>
-
-                                        @endforeach
-
-                                    @endforeach
+                                                @endforeach
+                                    
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
 
 
                             @endforeach 
