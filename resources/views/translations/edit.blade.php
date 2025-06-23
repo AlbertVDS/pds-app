@@ -4,8 +4,8 @@
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
-                <th>{{ __('Original') }}</th>
-                <th>{{ __('Translated') }}</th>
+                <th>{{ translate('Original') }}</th>
+                <th>{{ translate('Translated') }}</th>
             </tr>
         </thead>
         <tbody> 
@@ -22,7 +22,7 @@
             </tr>
             <tr>
                 <td>
-                    <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ translate('Save') }}</button>
                 </td>
             </tr>
         </tbody>

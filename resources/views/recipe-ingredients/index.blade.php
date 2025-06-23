@@ -23,9 +23,9 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>{{ __('Ingredient') }}</th>
-                <th>{{ __('Food') }}</th>
-                <th>{{ __('Actions') }}</th>
+                <th>{{ translate('Ingredient') }}</th>
+                <th>{{ translate('Food') }}</th>
+                <th>{{ translate('Actions') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@
                         </select>
                     </td>
                     <td>
-                        <button class="submit-food btn disabled" id="{{ $ingredient->id }}">{{ __('Submit') }}</button>
+                        <button class="submit-food btn disabled" id="{{ $ingredient->id }}">{{ translate('Submit') }}</button>
                     </td>
                 </tr>
             @endforeach
@@ -51,7 +51,7 @@
 
     <div class="d-flex justify-content-between align-items-center">
         {{ $ingredients->links() }}
-        <button class="btn btn-primary" id="submit-all">{{ __('Submit all') }}</button>
+        <button class="btn btn-primary" id="submit-all">{{ translate('Submit all') }}</button>
     </div>
 
     <script>
@@ -59,7 +59,7 @@
 
         $(document).ready(function() {
             $('.select2').select2({
-                placeholder: '{{ __('Select a food') }}',
+                placeholder: '{{ translate('Select a food') }}',
                 allowClear: true,
                 closeOnSelect: false,
                 width: '100%',

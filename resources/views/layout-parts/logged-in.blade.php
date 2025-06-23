@@ -4,16 +4,16 @@
         <span class="d-none d-sm-inline mx-1">{{ Auth::user()->name }}</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-        <li><a class="dropdown-item" href="{{ route('user.favorite-recipes') }}">{{ __('Recipes') }}</a></li>
+        <li><a class="dropdown-item" href="{{ route('user.favorite-recipes') }}">{{ translate('Recipes') }}</a></li>
         <li>
             <hr class="dropdown-divider">
         </li>
-        <li><a class="dropdown-item" href="{{ route('user.settings') }}#fomap">{{ __('Fodmap settings') }}</a></li>
-        <li><a class="dropdown-item" href="{{ route('user.settings') }}#mailing">{{ __('Mailing') }}</a></li>
-        <li><a class="dropdown-item" href="{{ route('user.settings') }}#profile">{{ __('Profile') }}</a></li>
+        <li><a class="dropdown-item" href="{{ route('user.settings') }}#fomap">{{ translate('Fodmap settings') }}</a></li>
+        <li><a class="dropdown-item" href="{{ route('user.settings') }}#mailing">{{ translate('Mailing') }}</a></li>
+        <li><a class="dropdown-item" href="{{ route('user.settings') }}#profile">{{ translate('Profile') }}</a></li>
         <li>
             <hr class="dropdown-divider">
         </li>
-        <li><a class="dropdown-item" href="{{ route('logout') }}">{{ __('Logout') }}</a></li>
+        <li><a class="dropdown-item" href="{{ route('logout') }}">{{ translate('Logout') }}</a></li>
     </ul>
 </div>

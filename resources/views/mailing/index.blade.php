@@ -2,18 +2,18 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="{{ route('mailing.create') }}" class="btn btn-primary">{{ __('Add Mailing') }}</a>
+        <a href="{{ route('mailing.create') }}" class="btn btn-primary">{{ translate('Add Mailing') }}</a>
         {{ $mailings->links() }}
     </div>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>{{ __('Title') }}</th>
-                <th>{{ __('Mailing Group') }}</th>
-                <th>{{ __('Schedule') }}</th>
-                <th>{{ __('Sent') }}</th>
+                <th>{{ translate('Title') }}</th>
+                <th>{{ translate('Mailing Group') }}</th>
+                <th>{{ translate('Schedule') }}</th>
+                <th>{{ translate('Sent') }}</th>
                 @can('isAdmin')
-                    <th>{{ __('Actions') }}</th>
+                    <th>{{ translate('Actions') }}</th>
                 @endcan
             </tr>
         </thead>
@@ -45,7 +45,7 @@
         </tbody>
     </table>
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="{{ route('mailing.create') }}" class="btn btn-primary">{{ __('Add Mailing') }}</a>
+        <a href="{{ route('mailing.create') }}" class="btn btn-primary">{{ translate('Add Mailing') }}</a>
         {{ $mailings->links() }}
     </div>
 @endsection

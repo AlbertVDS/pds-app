@@ -36,7 +36,10 @@
             "Database\\Migrations\\Data\\": "database/migrations/data/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/Helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
