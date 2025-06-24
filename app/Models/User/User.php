@@ -28,7 +28,8 @@ class User extends Authenticatable
         'password',
         'role_id',
         'language_id',
-        'mailing_group_ids',
+
+
     ];
 
     /**
@@ -75,6 +76,15 @@ class User extends Authenticatable
     public function getRoleNameAttribute(): string
     {
         return $this->role->name;
+    }
+
+    /**
+     * User has set up a fodmap intolerance
+     * @return bool
+     */
+    public function intoleranceSet()
+    {
+        return $this->fodmap !== null;
     }
 
     /**

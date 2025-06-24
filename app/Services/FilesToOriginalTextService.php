@@ -26,7 +26,7 @@ class FilesToOriginalTextService
      *
      * @var string
      */
-    protected $regex = "/__\('([^'$]*?)'\)/";
+    protected $regex = "/translate\('([^'$]*?)'\)/";
 
 
     /**

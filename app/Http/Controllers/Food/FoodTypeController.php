@@ -4,64 +4,13 @@ namespace App\Http\Controllers\Food;
 
 use App\Http\Controllers\Controller;
 use App\Models\Food\FoodType;
+use App\Services\AutocompleteService;
 use Illuminate\Http\Request;
 
 class FoodTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function autocomplete(Request $request)
     {
-        $foodTypes = FoodType::all();
-        return view('food_types.index', ['foodTypes' => $foodTypes]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(FoodType $foodType)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(FoodType $foodType)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, FoodType $foodType)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(FoodType $foodType)
-    {
-        //
+        return (new AutocompleteService())->autocomplete(FoodType::class, $request);
     }
 }
