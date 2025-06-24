@@ -23,12 +23,12 @@
 
 @section('content')
         <p>
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-                aria-controls="collapseExample">
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#recipecollapse" role="button" aria-expanded="false"
+                aria-controls="recipecollapse">
                 {{ translate('Search and filters') }}
             </a>
         </p>
-        <div class="collapse" id="collapseExample">
+        <div class="collapse" id="recipecollapse">
             <form method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card card-body">
@@ -153,7 +153,6 @@
                     dataType: 'json',
                     delay: 250,
                     processResults: function (data) {
-                        console.log(data);
                         return {
                             results: $.map(data, function (item) {
                                 return {
