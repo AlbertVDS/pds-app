@@ -48,6 +48,14 @@ class Food extends Model
         'fructan'
     ];
 
+    /** Food types 
+     * 
+     */
+    public function foodType()
+    {
+        return $this->belongsTo(FoodType::class, 'type_id', 'id');
+    }
+
     /**
      * Get food associated with the food substitute
      * 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Food\FoodController;
+use App\Http\Controllers\Food\FoodTypeController;
 use App\Http\Controllers\Food\FoodSubstitutesController;
 use App\Http\Controllers\Mailing\MailingController;
 use App\Http\Controllers\Recipe\RecipeController;
@@ -55,16 +56,18 @@ Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::get('area-autocomplete', action: [RecipeAreaController::class, 'autocomplete'])->name('area-autocomplete');
 Route::get('category-autocomplete', action: [RecipeCategoryController::class, 'autocomplete'])->name('category-autocomplete');
 Route::get('food-autocomplete', action: [FoodController::class, 'autocomplete'])->name('food-autocomplete');
+Route::get('food-type-autocomplete', action: [FoodTypeController::class, 'autocomplete'])->name('food-type-autocomplete');
 Route::get('ingredient-autocomplete', action: [RecipeIngredientController::class, 'autocomplete'])->name('ingredient-autocomplete');
 Route::get('tag-autocomplete', action: [RecipeTagController::class, 'autocomplete'])->name('tag-autocomplete');
 
 // Food routes
-Route::resource('foods', FoodController::class)->except([
-    'create',
-    'edit',
-    'update',
-    'destroy'
-]);
+Route::match(['get', 'post'], 'foods', [FoodController::class, 'index'])->name('foods.index');
+// Route::resource('foods', FoodController::class)->except([
+//     'create',
+//     'edit',
+//     'update',
+//     'destroy'
+// ]);
 
 // Recipe routes
 Route::match(['get', 'post'], 'recipes', [RecipeController::class, 'index'])->name('recipes.index');
