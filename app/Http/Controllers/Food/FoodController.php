@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Food\Food;
 use Illuminate\Http\Request;
 use App\Services\FoodSubstituteService;
+use App\Services\FoodSearchService;
 
 class FoodController extends Controller
 {
@@ -24,12 +25,13 @@ class FoodController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $foods = Food::paginate(10);
         return view('foods.index', [
             'pageTitle' => translate('Food list'),
-            'foods' => $foods
+            'foodSearch' => (new FoodSearchService())->search($request),
+            'showTolerate' => auth()->user()->intoleranceSet(),
+            'filterTolerance' => $request->get('filter-tolerance'),
         ]);
     }
 
