@@ -5,12 +5,27 @@ namespace Tests\Feature\Api;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User\User;
 
 class ApiEndPointTest extends TestCase
 {
-    public function test_food_endpoint_shows_json(): void
+    use RefreshDatabase;
+
+    private $admin;
+    private $token;
+
+    public function setUp(): void
     {
-        $response = $this->get('/api/food');
+        parent::setUp();
+        $this->admin = User::where('role_id', 1)->first();
+        $this->token = $this->admin->tokens()->first()?->plainTextToken ?? $this->admin->createToken('api')->plainTextToken;
+    }
+
+    public function test_food_endpoint_shows_json_with_authentication(): void
+    {
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $this->token,
+        ])->getJson('/api/foods');
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
@@ -31,9 +46,22 @@ class ApiEndPointTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_single_food_endpoint_shows_json(): void
+    public function test_food_endpoint_not_shown_without_authentication(): void
     {
-        $response = $this->get('/api/food/1');
+        $response = $this->getJson('/api/foods');
+
+        $response->assertJson([
+            'message' => 'Unauthenticated.',
+        ]);
+        $response->assertStatus(401);
+    }
+
+    public function test_single_food_endpoint_shows_json_with_authentication(): void
+    {
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $this->token,
+        ])->getJson('/api/foods/1');
+
         $response->assertJsonStructure([
             'data' => [
                 'id',
@@ -67,9 +95,21 @@ class ApiEndPointTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_recipe_endpoint_shows_json(): void
+    public function test_single_food_endpoint_not_shown_without_authentication(): void
     {
-        $response = $this->get('/api/recipe');
+        $response = $this->getJson('/api/foods/1');
+
+        $response->assertJson([
+            'message' => 'Unauthenticated.',
+        ]);
+        $response->assertStatus(401);
+    }
+
+    public function test_recipe_endpoint_shows_json_with_authentication(): void
+    {
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $this->token,
+        ])->getJson('/api/recipes');
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
@@ -85,9 +125,21 @@ class ApiEndPointTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_single_recipe_endpoint_shows_json(): void
+    public function test_recipe_endpoint_not_shown_without_authentication(): void
     {
-        $response = $this->get('/api/recipe/1');
+        $response = $this->getJson('/api/recipes');
+
+        $response->assertJson([
+            'message' => 'Unauthenticated.',
+        ]);
+        $response->assertStatus(401);
+    }
+
+    public function test_single_recipe_endpoint_shows_json_with_authentication(): void
+    {
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $this->token,
+        ])->getJson('/api/recipes/1');
         $response->assertJsonStructure([
             'data' => [
                 'id',
@@ -107,5 +159,15 @@ class ApiEndPointTest extends TestCase
             ],
         ]);
         $response->assertStatus(200);
+    }
+
+    public function test_single_recipe_endpoint_not_shown_without_authentication(): void
+    {
+        $response = $this->getJson('/api/recipes/1');
+
+        $response->assertJson([
+            'message' => 'Unauthenticated.',
+        ]);
+        $response->assertStatus(401);
     }
 }

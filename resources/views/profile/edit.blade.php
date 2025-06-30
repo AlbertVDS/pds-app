@@ -29,7 +29,7 @@
         @csrf
         @method('PATCH')
         <div class="container">
-            <h3 class="mb-3">{{ translate('Profile') }}</h3>
+            <h3 class="mb-3" id="profile">{{ translate('Profile') }}</h3>
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="input-group mb-3">
@@ -55,7 +55,7 @@
             </div>
 
 
-            <h3 class="mb-3">{{ translate('FODMAP settings') }}</h3>
+            <h3 class="mb-3" id="fodmap">{{ translate('FODMAP settings') }}</h3>
 
                 {{ translate('Select FODMAPs you are sensitive to.') }}
                 <table class="table table-bordered">
@@ -99,7 +99,7 @@
                     </tbody>
                 </table>
 
-            <h3 class="mb-3">{{ translate('Mailing settings') }}</h3>
+            <h3 class="mb-3" id="mailing">{{ translate('Mailing settings') }}</h3>
             <p>{{ translate('You can choose to receive emails about new recipes, tips, and updates.') }}</p>
             <table class="table table-bordered">
                 <thead>
@@ -125,6 +125,29 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <h3 class="mb-3">{{ translate('API Token') }}</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>
+                            {{ translate('API Token') }}
+                        </td>
+                        <td width="70%">
+                            {{ $user->tokens()?->first()?->token }}
+                        </td>
+                        <td>
+                            <a href="{{ route('tokens.create', $user) }}" class="btn btn-primary">
+                                <i class="fa-solid fa-key"></i> {{ translate('Generate') }}
+                            </a>
+                            <a href="{{ route('tokens.delete', $user) }}" class="btn btn-warning">
+                                <i class="fa-solid fa-trash"></i> {{ translate('Revoke') }}
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
             <button class="btn btn-primary" type="submit">{{ translate('Apply changes') }}</button>
 
             <form action="{{ route('profiles.user.destroy', [$user]) }}" method="POST">
