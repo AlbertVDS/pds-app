@@ -70,4 +70,25 @@ class AuthController extends Controller
         Auth::login($user);
         return redirect('foods');
     }
+
+    /**
+     * Create API token for the user
+     * @param User $user
+     */
+    public function createToken(User $user)
+    {
+        auth()->user()->tokens()?->delete();
+        auth()->user()->createToken('api');
+        return redirect()->back()->with('success', translate('API token created successfully.'));
+    }
+
+    /**
+     * Delete API token for the user
+     * @param User $user
+     */
+    public function deleteToken(User $user)
+    {
+        auth()->user()->tokens()?->delete();
+        return redirect()->back()->with('success', translate('API token deleted successfully.'));
+    }
 }
