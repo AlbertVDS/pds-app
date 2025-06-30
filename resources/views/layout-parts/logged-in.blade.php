@@ -8,9 +8,9 @@
         <li>
             <hr class="dropdown-divider">
         </li>
+        <li><a class="dropdown-item" href="{{ route('user.settings') }}#profile">{{ translate('Profile') }}</a></li>
         <li><a class="dropdown-item" href="{{ route('user.settings') }}#fomap">{{ translate('Fodmap settings') }}</a></li>
         <li><a class="dropdown-item" href="{{ route('user.settings') }}#mailing">{{ translate('Mailing') }}</a></li>
-        <li><a class="dropdown-item" href="{{ route('user.settings') }}#profile">{{ translate('Profile') }}</a></li>
         <li>
             <hr class="dropdown-divider">
         </li>

@@ -10,30 +10,34 @@
         </li>
         
         <li>
-            <a href="/foods" class="nav-link px-0 align-middle">
+            <a href="{{ route('foods.index') }}" class="nav-link px-0 align-middle">
                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline"><i class="fa-solid fa-carrot"></i> {{ translate('Food list') }}</span></a>
         </li>
         
         <li>
-            <a href="/mailing" class="nav-link px-0 align-middle">
+            <a href="{{ route('mailings.index') }}" class="nav-link px-0 align-middle">
                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline"><i class="fa-solid fa-envelope"></i>
                     {{ translate('Mailing') }}</span></a>
         </li>
 
         <li>
-            <a href="/recipes" class="nav-link px-0 align-middle">
+            <a href="{{ route('recipes.index') }}" class="nav-link px-0 align-middle">
                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline"><i class="fa-solid fa-utensils"></i> {{ translate('Recipes') }}</span></a>
         </li>
 
         <li>
-            <a href="/recipe-ingredients" class="nav-link px-0 align-middle">
+            <a href="{{ route('recipe-ingredients.index') }}" class="nav-link px-0 align-middle">
                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline"><i class="fa-solid fa-list"></i> {{ translate('Recipe ingredients') }}</span></a>
         </li>
 
         <li>
-            <a href="/translations" class="nav-link px-0 align-middle">
-                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline"><i class="fa-solid fa-list"></i> {{ translate('Translations') }}
-                    </span></a>
+            <a href="{{ route('translations.index') }}" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline"><i class="fa-solid fa-list"></i> {{ translate('Translations') }}</span></a>
+        </li>
+        
+        <li>
+            <a href="{{ route('profiles.user.index') }}" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline"><i class="fa-solid fa-list"></i> {{ translate('Users') }}</span></a>
         </li>
         
     </ul>

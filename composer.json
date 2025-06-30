@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.10.1",
         "php-flasher/flasher-laravel": "^2.1",
         "php-flasher/flasher-noty-laravel": "^2.1",
-        "stichoza/google-translate-php": "^5.2"
+        "stichoza/google-translate-php": "^5.2",
+        "zircote/swagger-php": "^5.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -30,7 +30,7 @@ class FoodController extends Controller
         return view('foods.index', [
             'pageTitle' => translate('Food list'),
             'foodSearch' => (new FoodSearchService())->search($request),
-            'showTolerate' => auth()->user()->intoleranceSet(),
+            'showTolerate' => auth()->check() ? auth()->user()->intoleranceSet() : false,
             'filterTolerance' => $request->get('filter-tolerance'),
         ]);
     }
