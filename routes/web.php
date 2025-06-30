@@ -16,7 +16,8 @@ use App\Http\Controllers\User\RoleController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserFavRecipeController;
 use App\Http\Middleware\IsAdminMiddleware;
-use Illuminate\Support\Facades\Route;
+
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('home', [
@@ -45,6 +46,10 @@ Route::middleware([IsAdminMiddleware::class])->group(function () {
         'update' => 'profiles.user.update',
         'destroy' => 'profiles.user.destroy',
     ]);
+
+    // Create token route
+    Route::get('tokens/create/{user}', [AuthController::class, 'createToken'])->name('tokens.create');
+    Route::get('tokens/delete/{user}', [AuthController::class, 'deleteToken'])->name('tokens.delete');
 });
 
 // Auth routes
@@ -62,12 +67,6 @@ Route::get('tag-autocomplete', action: [RecipeTagController::class, 'autocomplet
 
 // Food routes
 Route::match(['get', 'post'], 'foods', [FoodController::class, 'index'])->name('foods.index');
-// Route::resource('foods', FoodController::class)->except([
-//     'create',
-//     'edit',
-//     'update',
-//     'destroy'
-// ]);
 
 // Recipe routes
 Route::match(['get', 'post'], 'recipes', [RecipeController::class, 'index'])->name('recipes.index');

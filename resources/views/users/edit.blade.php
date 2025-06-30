@@ -29,7 +29,7 @@
         @csrf
         @method('POST')
         <div class="container">
-            <h3 class="mb-3">{{ translate('Profile') }}</h3>
+            <h3 class="mb-3" id="profile">{{ translate('Profile') }}</h3>
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="input-group mb-3">
@@ -55,7 +55,7 @@
             </div>
 
 
-            <h3 class="mb-3">{{ translate('FODMAP settings') }}</h3>
+            <h3 class="mb-3" id="fodmap">{{ translate('FODMAP settings') }}</h3>
 
                 {{ translate('Select FODMAPs you are sensitive to.') }}
                 <table class="table table-bordered">
@@ -125,6 +125,22 @@
                     @endforeach
                 </tbody>
             </table>
+
+            @if($user->tokens()->first())
+            <h3 class="mb-3" id="mailing">{{ translate('API Token') }}</h3>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>
+                                {{ translate('API Token') }}
+                            </td>
+                            <td width="80%">
+                                {{ $user->tokens()?->first()?->token }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            @endif
             <button class="btn btn-primary" type="submit">{{ translate('Apply changes') }}</button>
         </div>
     </form>
