@@ -29,7 +29,6 @@ class Recipe extends Model
      * @var array
      */
     protected $casts = [
-        'tags' => 'array',
         'ingredients' => 'array',
         'measurements' => 'array',
     ];
@@ -46,7 +45,6 @@ class Recipe extends Model
         'area_id',
         'instructions',
         'thumbnail_url',
-        'tags',
         'youtube_url',
         'ingredients',
         'measurements',
@@ -82,7 +80,7 @@ class Recipe extends Model
 
     public function ingredientMeasurements(): HasMany
     {
-        return $this->hasMany(RecipeIngredientMeasurement::class, 'recipe_id', 'id');
+        return $this->hasMany(RecipeIngredientMeasurement::class, 'tmdb_id', 'tmdb_id');
     }
 
     /**
@@ -103,15 +101,17 @@ class Recipe extends Model
         return translate($this->hasOne(RecipeCategory::class, 'id', 'category_id')->first()->name ?? '');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(RecipeTag::class, 'recipe_tag_pivot', 'tmdb_id', 'tag_id', 'tmdb_id');
+    }
+
     /**
      * Get tag names
-     * @return string
      */
-    public function tagNames(): string
+    public function tagNames()
     {
-        return implode(', ', array_map(function ($tag) {
-            return translate(RecipeTag::find($tag)->name ?? null);
-        }, $this->tags));
+        return $this->tags()->pluck('name')->implode(', ');
     }
 
     /**

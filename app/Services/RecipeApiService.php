@@ -6,8 +6,13 @@ use Illuminate\Support\Facades\Http;
 
 class RecipeApiService
 {
-    private string $baseUrl = 'https://www.themealdb.com/api/json/v1/1/';
+    private string $baseUrl;
     private array $parameters = [];
+
+    public function __construct()
+    {
+        $this->baseUrl = config('services.recipe_api.base_url');
+    }
 
     /**
      * Search meal by name
