@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\OriginalText;
+use App\Models\Language\OriginalText;
 
 class OriginalTextService
 {
