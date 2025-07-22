@@ -35,4 +35,18 @@ return [
         ],
     ],
 
+    'translation' => [
+        'gemini' => [
+            'api_key' => env('GEMINI_API_KEY'),
+            'model_name' => env('GEMINI_MODEL_NAME'),
+            'sleep_time' => env('GEMINI_API_SLEEP'),
+            'translation_prompt' => env('GEMINI_TRANSLATION_PROMPT'),
+        ],
+    ],
+
+    'recipe_api' => [
+        'base_url' => env('RECIPE_API_BASE_URL'),
+        'chunk_size' => env('CHUNK_STRING_LENGTH'),
+    ],
+
 ];

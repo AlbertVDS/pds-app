@@ -1,13 +1,14 @@
-<!-- Button trigger login modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-    {{ translate('Login') }}
-</button>
+<div class="form-check-inline">
+    <!-- Button trigger login modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+        {{ translate('Login') }}
+    </button>
 
-<!-- Button trigger register modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
-    {{ translate('Register') }}
-</button>
-
+    <!-- Button trigger register modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
+        {{ translate('Register') }}
+    </button>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
