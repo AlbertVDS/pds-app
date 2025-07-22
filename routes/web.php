@@ -33,7 +33,9 @@ Route::middleware([IsAdminMiddleware::class])->group(function () {
     Route::resource('mailings', MailingController::class);
     Route::resource('roles', RoleController::class);
     Route::get('recipe-ingredients', [RecipeIngredientController::class, 'index'])->name('recipe-ingredients.index');
-    Route::resource('translations', TranslationController::class);
+    Route::resource('translations', TranslationController::class)->except(['edit', 'show']);
+    Route::get('translations/{language}', [TranslationController::class, 'show'])->name('translations.show');
+    Route::get('translations/{translation}/edit', [TranslationController::class, 'edit'])->name('translations.edit');
     Route::resource('users', UserController::class);
 
     // Admin CP profile routes
