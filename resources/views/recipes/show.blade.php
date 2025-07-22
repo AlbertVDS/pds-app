@@ -59,7 +59,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ translate('Directions') }}:</h5>
                     <p class="card-text">
-                        {{ translate($recipe->instructions->instruction) }}
+                        {{ translate($recipe->instructions->text) }}
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">

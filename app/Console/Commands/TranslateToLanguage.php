@@ -163,17 +163,5 @@ class TranslateToLanguage extends Command
             $this->error('Error: ' . print_r($responseArray, true));
             return;
         }
-
-        // foreach ($responseArray as $item) {
-        //     if (!isset($item->id) || !isset($item->text)) {
-        //         $this->error('Error: ' . print_r($responseArray, true));
-        //         return;
-        //     }
-        //     Translation::create([
-        //         'language_id' => $language->id,
-        //         'original_text_id' => $item->id,
-        //         'translation' => $item->text,
-        //     ]);
-        // }
     }
 }
