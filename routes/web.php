@@ -35,7 +35,7 @@ Route::middleware([IsAdminMiddleware::class])->group(function () {
     Route::get('recipe-ingredients', [RecipeIngredientController::class, 'index'])->name('recipe-ingredients.index');
     Route::resource('translations', TranslationController::class)->except(['edit', 'show']);
     Route::get('translations/{language}', [TranslationController::class, 'show'])->name('translations.show');
-    Route::get('translations/{translation}/edit', [TranslationController::class, 'edit'])->name('translations.edit');
+    Route::get('translations/{language}/edit', [TranslationController::class, 'edit'])->name('translations.edit');
     Route::resource('users', UserController::class);
 
     // Admin CP profile routes
@@ -51,7 +51,6 @@ Route::middleware([IsAdminMiddleware::class])->group(function () {
 
     // Create token route
     Route::get('tokens/create/{user}', [AuthController::class, 'createToken'])->name('tokens.create');
-    Route::get('tokens/delete/{user}', [AuthController::class, 'deleteToken'])->name('tokens.delete');
 });
 
 // Auth routes
