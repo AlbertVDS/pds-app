@@ -3,10 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Language;
+use App\Models\Language\Language;
 use Stichoza\GoogleTranslate\GoogleTranslate;
-use App\Models\OriginalText;
-use App\Models\Translation;
+use App\Models\Language\OriginalText;
+use App\Models\Language\Translation;
 use Gemini\Laravel\Facades\Gemini;
 
 class TranslateToLanguage extends Command
@@ -23,7 +23,7 @@ class TranslateToLanguage extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Translate texts to a specified language using Gemini API';
 
     /**
      * Array of untranslated texts
@@ -34,6 +34,35 @@ class TranslateToLanguage extends Command
      * Chunked array of untranslated texts
      */
     protected $untranslatedChunked = [];
+
+    /**
+     * Gemini model name
+     */
+    protected $modelName;
+
+    /**
+     * Sleep time between API calls
+     */
+    protected $sleepTime;
+
+    /**
+     * Translation prompt for Gemini
+     */
+    protected $translationPrompt;
+
+    /**
+     * Chunk length
+     */
+    protected $chunkLength;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->chunkLength = env('CHUNK_STRING_LENGTH');
+        $this->modelName = env('GEMINI_MODEL_NAME');
+        $this->sleepTime = env('GEMINI_API_SLEEP');
+        $this->translationPrompt = env('GEMINI_TRANSLATION_PROMPT');
+    }
 
     /**
      * Execute the console command.
@@ -62,8 +91,10 @@ class TranslateToLanguage extends Command
     {
         $this->info('Getting untranslated texts...');
 
-        $translatedIds = Translation::where('language_id', $language->id)->pluck('original_text_id')->all();
-        $this->untranslated = OriginalText::with('foreign')->whereNotIn('id', $translatedIds)
+        $this->untranslated = OriginalText::with('foreign')
+            ->whereDoesntHave('translations', function ($query) use ($language) {
+                $query->where('language_id', $language->id);
+            })
             ->get();
     }
 
@@ -78,7 +109,7 @@ class TranslateToLanguage extends Command
 
         foreach ($this->untranslated as $item) {
             $totalCharacters += strlen($item->related_value);
-            if ($totalCharacters > 2500) {
+            if ($totalCharacters > $this->chunkLength) {
                 $chunk++;
                 $totalCharacters = 0;
             }
@@ -97,16 +128,16 @@ class TranslateToLanguage extends Command
      */
     private function translateWithGemini($language): void
     {
-        $prompt = 'Provide the following information as list: Translate the following list to ' . $language->code . ' repsond with json and no text formatting. keep the keys the same, don\t add new ones.';
+        $prompt = str_replace('#country_code#', $language->code, $this->translationPrompt);
 
         foreach ($this->untranslatedChunked as $chunk) {
             $chunkText = json_encode($chunk);
 
-            $response = Gemini::generativeModel('gemini-2.0-flash')->generateContent($prompt . $chunkText);
+            $response = Gemini::generativeModel($this->modelName)->generateContent($prompt . $chunkText);
             $responseArray = json_decode(str_replace(['json', '```'], '', $response->text()));
 
             $this->saveTranslated($responseArray, $language);
-            sleep(10);
+            sleep($this->sleepTime);
         }
     }
 
@@ -118,16 +149,19 @@ class TranslateToLanguage extends Command
      */
     private function saveTranslated($responseArray, $language): void
     {
-        foreach ($responseArray as $item) {
-            if (!isset($item->id) || !isset($item->text)) {
-                $this->error('Error: ' . print_r($responseArray, true));
-                return;
-            }
-            Translation::firstOrCreate([
-                'language_id' => $language->id,
-                'original_text_id' => $item->id,
-                'translation' => $item->text,
-            ]);
+        try {
+            $responseCollection = collect($responseArray)->map(function ($item) use ($language) {
+                return [
+                    'language_id' => $language->id,
+                    'original_text_id' => $item->id,
+                    'translation' => $item->text,
+                ];
+            });
+
+            Translation::insert($responseCollection->toArray());
+        } catch (\Exception $e) {
+            $this->error('Error: ' . print_r($responseArray, true));
+            return;
         }
     }
 }

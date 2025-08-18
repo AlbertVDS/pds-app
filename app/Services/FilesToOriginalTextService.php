@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Models\ControllerText;
+use App\Models\Language\ControllerText;
 use App\Models\Language\OriginalText;
 
 class FilesToOriginalTextService
@@ -42,8 +42,8 @@ class FilesToOriginalTextService
     public function __construct()
     {
         $this->fileLocations = [
-            'App\Models\ControllerText' => app_path('Http/Controllers'),
-            'App\Models\ViewText' => resource_path('views'),
+            'App\Models\Language\ControllerText' => app_path('Http/Controllers'),
+            'App\Models\Language\ViewText' => resource_path('views'),
         ];
     }
 

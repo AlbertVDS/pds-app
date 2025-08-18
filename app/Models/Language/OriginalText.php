@@ -52,6 +52,14 @@ class OriginalText extends Model
         return Auth::check() ? $this->translationLoggedIn() : $this->translationGuest();
     }
 
+    /**
+     * Get all translations.
+     */
+    public function translations()
+    {
+        return $this->hasMany(Translation::class, 'original_text_id');
+    }
+
     private function translationLoggedIn()
     {
         return $this->hasOne(Translation::class, 'original_text_id')
