@@ -1,66 +1,91 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# pds-app
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+🍎 A supportive application for people with **IBS (Irritable Bowel Syndrome)** to easily look up foods they can and cannot eat, and to discover recipes with smart ingredient alternatives.  
+💌 Includes a mailing list for new recipes, suggested alternatives, and updates.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Overview](#overview)  
+- [Features](#features)  
+- [Requirements](#requirements)  
+- [Installation](#installation)  
+- [Configuration](#configuration)  
+- [License](#license)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Overview
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Living with IBS can make food choices stressful. **pds-app** helps users make safe, confident decisions about what to eat:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Quickly check if a food is safe, should be limited, or avoided.  
+- Browse recipes tailored to IBS-friendly diets.  
+- Get **ingredient alternatives** when a recipe contains a trigger food.  
+- Subscribe to a **mailing list** for updates, suggested recipes, and helpful tips.  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The app is designed to be simple, mobile-friendly, and empowering for everyday use.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Features
 
-### Premium Partners
+✅ Searchable database of foods with IBS-safety indicators  
+✅ Recipe suggestions with automatic substitutions for restricted foods  
+✅ Personalized profiles for saving safe/unsafe foods  
+✅ Mailing list subscription for recipes and updates  
+✅ Multi-language support (via logged in user settings)  
+✅ Responsive design for mobile and desktop use  
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## Requirements
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- PHP ≥ 8.1  
+- Composer  
+- Node.js ≥ 14 and npm / yarn  
+- Database (MySQL, PostgreSQL, or SQLite)
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Installation
 
-## Security Vulnerabilities
+Clone the repository and install dependencies:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+git clone https://github.com/AlbertVDS/pds-app.git
+cd pds-app
+cp .env.example .env
+composer install
+php artisan key:generate
+php artisan migrate
+```
+---
 
-## License
+## Configuration
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+Update your .env file with the correct settings:
+
+GEMINI_API_KEY=<gemini api key>
+
+CHUNK_STRING_LENGTH=2500
+GEMINI_TRANSLATION_PROMPT='Provide the following information as list: Translate the following list to #country_code# repsond with json and no text formatting. keep the keys the same, don\t add new ones.'
+GEMINI_MODEL_NAME=gemini-2.5-flash
+GEMINI_API_SLEEP=10
+GEMINI_REQUEST_TIMEOUT=60000
+
+RECIPE_API_BASE_URL=https://www.themealdb.com/api/json/v1/1/
+
+---
+
+## Lisence
+
+---
+
+Distributed under the MIT License.
+See the full text in the LICENSE file.
+
+---
