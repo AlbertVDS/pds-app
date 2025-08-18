@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Language;
-use App\Models\Translation;
+use App\Models\Language\Language;
+use App\Models\Language\Translation;
 
 class GenerateLanguageFilesService
 {
