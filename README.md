@@ -68,7 +68,7 @@ php artisan migrate
 ---
 
 Update your .env file with the correct settings:
-
+```
 GEMINI_API_KEY=<gemini api key>
 
 CHUNK_STRING_LENGTH=2500
@@ -78,7 +78,7 @@ GEMINI_API_SLEEP=10
 GEMINI_REQUEST_TIMEOUT=60000
 
 RECIPE_API_BASE_URL=https://www.themealdb.com/api/json/v1/1/
-
+```
 ---
 
 ## Lisence
