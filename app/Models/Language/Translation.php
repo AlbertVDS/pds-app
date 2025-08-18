@@ -44,4 +44,15 @@ class Translation extends Model
     {
         return $this->morphTo();
     }
+
+
+    public function originalText()
+    {
+        return $this->hasOne(OriginalText::class, 'id', 'original_text_id');
+    }
+
+    public function language()
+    {
+        return $this->hasOne(Language::class, 'id', 'language_id');
+    }
 }
