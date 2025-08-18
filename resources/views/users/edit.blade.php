@@ -39,7 +39,7 @@
                     <p><strong>Email:</strong> {{ $user->email }}</p>
                     <p>
                         <strong>Language:</strong>
-                        <select id="language-select" name="language" class="form-select">
+                        <select id="language-select" name="user[language_id]" class="form-select">
                             <option value="{{ $defaultLanguage->id }}"
                                 data-image="{{ 'https://' . request()->getHost() . '/img/flags/' . $defaultLanguage->code . '.png' }}" {{ $user->language_id === $defaultLanguage->id ? 'selected' : '' }}>
                                 {{ translate($defaultLanguage->name) . (translate($defaultLanguage->name) != $defaultLanguage->name ? ' - ' . $defaultLanguage->name : null) }}

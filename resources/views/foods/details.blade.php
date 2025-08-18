@@ -40,9 +40,9 @@
                         <div class="col text-start">
                             @foreach ($chunk as $sameTypeFood)
                                 <div class="form-check text-nowrap">
-                                    @if(Route::currentRouteAction() == 'App\Http\Controllers\FoodController@edit')
+                                    @if(Route::currentRouteAction() == 'App\Http\Controllers\Food\FoodController@edit')
                                         <input class="form-check-input"  type="checkbox" id="{{ $sameTypeFood->id }}" {{ in_array($sameTypeFood->id, $substituteIds) ? 'checked' : '' }}>
-                                               
+
                                     @endif
                                     <label class="form-check-label" for="check{{ $sameTypeFood->getName() }}">
                                         {{ $sameTypeFood->getName() }}

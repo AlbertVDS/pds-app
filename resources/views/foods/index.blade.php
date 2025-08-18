@@ -1,27 +1,32 @@
 @extends('layout-parts.main')
 
 @section('head')
-    <!-- Select2 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <style>
-        .select2-selection__rendered {
-            line-height: 31px !important;
-        }
+        <!-- Select2 CDN -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <style>
+            .select2-selection__rendered {
+                line-height: 31px !important;
+            }
 
-        .select2-container .select2-selection--single {
-            height: 35px !important;
-        }
+            .select2-container .select2-selection--single {
+                height: 35px !important;
+            }
 
-        .select2-search__field {
-            margin-top: 5px !important;
-            vertical-align: inherit !important;
-        }
+            .select2-search__field {
+                margin-top: 5px !important;
+                vertical-align: inherit !important;
+            }
 
-        .select2-selection__arrow {
-            height: 34px !important;
-        }
-    </style>
+            .select2-selection__arrow {
+                height: 34px !important;
+            }
+
+            .form-check-inline {
+                display: inline-block;
+                margin-right: 1rem;
+            }
+        </style>
 @endsection
 
 @section('content') 
@@ -36,7 +41,7 @@
                     @if($showTolerate)
                         <input class="form-check-input" type="checkbox" name="show-tolerate" value="1" id="show-tolerate" {{ $filterTolerance ? 'checked' : '' }}>
                         <label class="form-check-label" for="Fructose">
-                            {{ translate('Show foods you can tolerate') }}{{ !$showTolerate ?? ' '. translate('(set intolerance in your profile)') }}
+                            {{ translate('Show foods you can tolerate') }}{{ !$showTolerate ?? ' ' . translate('(set intolerance in your profile)') }}
                         </label>
                     @else
                         <input class="form-check-input" type="checkbox" id="fake-show-tolerate" disabled>
@@ -53,7 +58,7 @@
 
                         <div class="row g-3 align-items-center">
                             <div class="col-auto">
-                                <label for="recipeSearch" class="col-form-label">{{ translate('Recipe name') }}</label>
+                                <label for="recipeSearch" class="col-form-label">{{ translate('Food name') }}</label>
                             </div>
                             <div class="col-auto">
                                 <input type="text" id="recipeSearch" name="search" class="form-control"
@@ -75,42 +80,42 @@
                             </div>
                         </div>
 
-                        <div class="form-check">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="fodmaps[fructose]" value="1" id="Fructose" {{ isset($foodSearch->fodmaps['fructose']) ? 'checked' : '' }}>
                             <label class="form-check-label" for="Fructose">
                                 Fructose
                             </label>            
                         </div>
 
-                        <div class="form-check">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="fodmaps[lactose]" value="1" id="Lactose" {{ isset($foodSearch->fodmaps['lactose']) ? 'checked' : '' }}>
                             <label class="form-check-label" for="Lactose">
                                 Lactose
                             </label>            
                         </div>
 
-                        <div class="form-check">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="fodmaps[mannitol]" value="1" id="Mannitol" {{ isset($foodSearch->fodmaps['mannitol']) ? 'checked' : '' }}>
                             <label class="form-check-label" for="Mannitol">
                                 Mannitol
                             </label>
                         </div>
 
-                        <div class="form-check">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="fodmaps[sorbitol]" value="1" id="Sorbitol" {{ isset($foodSearch->fodmaps['sorbitol']) ? 'checked' : '' }}>
                             <label class="form-check-label" for="Sorbitol">
                                 Sorbitol
                             </label>
                         </div>
 
-                        <div class="form-check">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="fodmaps[GOS]" value="1" id="GOS" {{ isset($foodSearch->fodmaps['GOS']) ? 'checked' : '' }}>
                             <label class="form-check-label" for="GOS">
                                 GOS
                             </label>
                         </div>
 
-                        <div class="form-check">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="fodmaps[fructan]" value="1" id="Fructan" {{ isset($foodSearch->fodmaps['fructan']) ? 'checked' : '' }}>
                             <label class="form-check-label" for="Fructan">
                                 Fructan

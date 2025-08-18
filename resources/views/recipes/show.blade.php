@@ -29,8 +29,9 @@
                         <ul class="m-2">
                             @foreach($recipe->ingredientMeasurements as $ingredientMeasurement)
                                 <li><b>{{ translate($ingredientMeasurement->ingredientName()) }}:</b> <i>{{ translate($ingredientMeasurement->measurementName()) }}</i></li>
-
+                                  
                                 @foreach ($ingredientMeasurement->ingredient->foods as $food)
+                                    
                                     @if($food->hasSubstitutes())
                                         <a class="btn btn-link p-0" data-bs-toggle="collapse" href="#{{ $ingredientMeasurement->ingredientName() }}Collapse"
                                             role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -38,13 +39,12 @@
                                         </a>
                                         <div class="collapse" id="{{ $ingredientMeasurement->ingredientName() }}Collapse">
                                             <div class="card card-body">
-                                                    
                                                 @foreach($food->substitutes as $substitute)
 
                                                     {{ translate($substitute->name) }}<br>
 
                                                 @endforeach
-                                    
+
                                             </div>
                                         </div>
                                     @endif
@@ -59,7 +59,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ translate('Directions') }}:</h5>
                     <p class="card-text">
-                        {{ translate($recipe->instructions->instruction) }}
+                        {{ translate($recipe->instructions->text) }}
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">

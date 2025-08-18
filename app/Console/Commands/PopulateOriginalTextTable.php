@@ -58,9 +58,8 @@ class PopulateOriginalTextTable extends Command
         $foods = Food::all();
         foreach ($foods as $food) {
             OriginalText::firstOrCreate([
-                'text' => $food->name,
-                'target_id' => $food->id,
-                'type' => 1
+                'foreign_id' => $food->id,
+                'foreign_type' => Food::class
             ]);
         }
     }
@@ -70,9 +69,8 @@ class PopulateOriginalTextTable extends Command
         $foodTypes = FoodType::all();
         foreach ($foodTypes as $foodType) {
             OriginalText::firstOrCreate([
-                'text' => $foodType->name,
-                'target_id' => $foodType->id,
-                'type' => 2
+                'foreign_id' => $foodType->id,
+                'foreign_type' => FoodType::class
             ]);
         }
     }
@@ -82,9 +80,8 @@ class PopulateOriginalTextTable extends Command
         $languages = Language::all();
         foreach ($languages as $language) {
             OriginalText::firstOrCreate([
-                'text' => $language->name,
-                'target_id' => $language->id,
-                'type' => 3
+                'foreign_id' => $language->id,
+                'foreign_type' => Language::class
             ]);
         }
     }
@@ -94,9 +91,8 @@ class PopulateOriginalTextTable extends Command
         $mailingGroups = MailingGroup::all();
         foreach ($mailingGroups as $mailingGroup) {
             OriginalText::firstOrCreate([
-                'text' => $mailingGroup->name,
-                'target_id' => $mailingGroup->id,
-                'type' => 4
+                'foreign_id' => $mailingGroup->id,
+                'foreign_type' => MailingGroup::class
             ]);
         }
     }
@@ -106,15 +102,13 @@ class PopulateOriginalTextTable extends Command
         $recipes = Recipe::all();
         foreach ($recipes as $recipe) {
             OriginalText::firstOrCreate([
-                'text' => $recipe->name,
-                'target_id' => $recipe->id,
-                'type' => 5
+                'foreign_id' => $recipe->id,
+                'foreign_type' => Recipe::class
             ]);
 
             OriginalText::firstOrCreate([
-                'text' => $recipe->instructions,
-                'target_id' => $recipe->id,
-                'type' => 6
+                'foreign_id' => $recipe->id,
+                'foreign_type' => Recipe::class
             ]);
         }
     }
@@ -124,9 +118,8 @@ class PopulateOriginalTextTable extends Command
         $recipeAreas = RecipeArea::all();
         foreach ($recipeAreas as $recipeArea) {
             OriginalText::firstOrCreate([
-                'text' => $recipeArea->name,
-                'target_id' => $recipeArea->id,
-                'type' => 7
+                'foreign_id' => $recipeArea->id,
+                'foreign_type' => RecipeArea::class
             ]);
         }
     }
@@ -136,9 +129,8 @@ class PopulateOriginalTextTable extends Command
         $recipeCategories = RecipeCategory::all();
         foreach ($recipeCategories as $recipeCategory) {
             OriginalText::firstOrCreate([
-                'text' => $recipeCategory->name,
-                'target_id' => $recipeCategory->id,
-                'type' => 8
+                'foreign_id' => $recipeCategory->id,
+                'foreign_type' => RecipeCategory::class
             ]);
         }
     }
@@ -148,9 +140,8 @@ class PopulateOriginalTextTable extends Command
         $recipeIngredients = RecipeIngredient::all();
         foreach ($recipeIngredients as $recipeIngredient) {
             OriginalText::firstOrCreate([
-                'text' => $recipeIngredient->name,
-                'target_id' => $recipeIngredient->id,
-                'type' => 9
+                'foreign_id' => $recipeIngredient->id,
+                'foreign_type' => RecipeIngredient::class
             ]);
         }
     }
@@ -160,9 +151,8 @@ class PopulateOriginalTextTable extends Command
         $recipeMeasurements = RecipeMeasurement::all();
         foreach ($recipeMeasurements as $recipeMeasurement) {
             OriginalText::firstOrCreate([
-                'text' => $recipeMeasurement->name,
-                'target_id' => $recipeMeasurement->id,
-                'type' => 10
+                'foreign_id' => $recipeMeasurement->id,
+                'foreign_type' => RecipeMeasurement::class
             ]);
         }
     }
@@ -172,9 +162,8 @@ class PopulateOriginalTextTable extends Command
         $recipeTags = RecipeTag::all();
         foreach ($recipeTags as $recipeTag) {
             OriginalText::firstOrCreate([
-                'text' => $recipeTag->name,
-                'target_id' => $recipeTag->id,
-                'type' => 11
+                'foreign_id' => $recipeTag->id,
+                'foreign_type' => RecipeTag::class
             ]);
         }
     }
@@ -184,9 +173,8 @@ class PopulateOriginalTextTable extends Command
         $roles = Role::all();
         foreach ($roles as $role) {
             OriginalText::firstOrCreate([
-                'text' => $role->name,
-                'target_id' => $role->id,
-                'type' => 12
+                'foreign_id' => $role->id,
+                'foreign_type' => Role::class
             ]);
         }
     }

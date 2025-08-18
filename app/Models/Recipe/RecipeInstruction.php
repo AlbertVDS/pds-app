@@ -21,6 +21,7 @@ class RecipeInstruction extends Model
      */
     protected $fillable = [
         'id',
+        'tmdb_id',
         'instruction'
     ];
 }

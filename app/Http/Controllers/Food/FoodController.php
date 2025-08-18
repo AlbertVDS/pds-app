@@ -7,6 +7,7 @@ use App\Models\Food\Food;
 use Illuminate\Http\Request;
 use App\Services\FoodSubstituteService;
 use App\Services\FoodSearchService;
+use App\Models\Recipe\RecipeInstruction;
 
 class FoodController extends Controller
 {

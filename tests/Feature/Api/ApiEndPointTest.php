@@ -2,15 +2,12 @@
 
 namespace Tests\Feature\Api;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User\User;
 
 class ApiEndPointTest extends TestCase
 {
-    use RefreshDatabase;
-
     private $admin;
     private $token;
 
@@ -18,7 +15,7 @@ class ApiEndPointTest extends TestCase
     {
         parent::setUp();
         $this->admin = User::where('role_id', 1)->first();
-        $this->token = $this->admin->tokens()->first()?->plainTextToken ?? $this->admin->createToken('api')->plainTextToken;
+        $this->token = $this->admin->createToken('api')->plainTextToken;
     }
 
     public function test_food_endpoint_shows_json_with_authentication(): void
@@ -90,6 +87,11 @@ class ApiEndPointTest extends TestCase
                         "fructan",
                     ],
                 ],
+            ],
+        ]);
+        $response->assertJson([
+            'data' => [
+                // Optional: add expected structure inside 'data'
             ],
         ]);
         $response->assertStatus(200);

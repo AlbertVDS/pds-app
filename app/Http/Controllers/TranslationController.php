@@ -44,32 +44,28 @@ class TranslationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id, Request $request)
+    public function show(Language $language)
     {
-        $originalText = $this->originalTextService->getOriginalText();
-
-        foreach ($originalText as $translation) {
-            if ($translation->translation === null) {
-                echo $translation->translation;
-            }
-        }
-        $paginator = $this->translationPaginator->paginate($originalText, $request);
+        $translations = Translation::where('language_id', $language->id)
+            ->with('originalText')
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
 
         return view('translations.show', [
-            'pageTitle' => translate('Languages'),
-            'originalText' => $paginator,
-            'language' => Language::find($id),
+            'pageTitle' => translate($language->name),
+            'translations' => $translations,
+            'language' => $language
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Translation $translation)
     {
         return view('translations.edit', [
-            'pageTitle' => translate('Translations'),
-            'translation' => Translation::find($id),
+            'pageTitle' => translate('Translations') . ': ' . translate($translation->language->name),
+            'translation' => $translation,
         ]);
     }
 

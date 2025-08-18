@@ -78,17 +78,8 @@ class AuthController extends Controller
     public function createToken(User $user)
     {
         auth()->user()->tokens()?->delete();
-        auth()->user()->createToken('api');
-        return redirect()->back()->with('success', translate('API token created successfully.'));
-    }
-
-    /**
-     * Delete API token for the user
-     * @param User $user
-     */
-    public function deleteToken(User $user)
-    {
-        auth()->user()->tokens()?->delete();
-        return redirect()->back()->with('success', translate('API token deleted successfully.'));
+        return response()->json([
+            'token' => auth()->user()->createToken('api')->plainTextToken,
+        ]);
     }
 }
