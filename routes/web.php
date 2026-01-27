@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Food\FoodController;
 use App\Http\Controllers\Food\FoodTypeController;
-use App\Http\Controllers\Food\FoodSubstitutesController;
+use App\Http\Controllers\Food\FoodSubstituteController;
 use App\Http\Controllers\Mailing\MailingController;
 use App\Http\Controllers\Recipe\RecipeController;
 use App\Http\Controllers\Recipe\RecipeAreaController;
@@ -19,27 +19,21 @@ use App\Http\Middleware\IsAdminMiddleware;
 
 use Illuminate\Http\Request;
 
-Route::get('/', function () {
-    return view('home', [
-        'pageTitle' => 'Homepage',
-    ]);
-});
-
+// API Routes - Admin Management Routes
 Route::middleware([IsAdminMiddleware::class])->group(function () {
-    Route::resource('foods', FoodController::class);
-    Route::resource('mailing', MailingController::class);
+    Route::apiResource('foods', FoodController::class);
+    Route::apiResource('mailing', MailingController::class);
     Route::post('save-linked-foods', [RecipeIngredientController::class, 'saveLinkedFoods'])->name('save-linked-foods');
-    Route::post('save-substitute', [FoodSubstitutesController::class, 'update'])->name('save-substitute');
-    Route::resource('mailings', MailingController::class);
-    Route::resource('roles', RoleController::class);
+    Route::post('save-substitute', [FoodSubstituteController::class, 'update'])->name('save-substitute');
+    Route::apiResource('mailings', MailingController::class);
+    Route::apiResource('roles', RoleController::class);
     Route::get('recipe-ingredients', [RecipeIngredientController::class, 'index'])->name('recipe-ingredients.index');
-    Route::resource('translations', TranslationController::class)->except(['edit', 'show']);
+    Route::apiResource('translations', TranslationController::class)->except(['edit', 'show']);
     Route::get('translations/{language}', [TranslationController::class, 'show'])->name('translations.show');
-    Route::get('translations/{language}/edit', [TranslationController::class, 'edit'])->name('translations.edit');
-    Route::resource('users', UserController::class);
+    Route::apiResource('users', UserController::class);
 
-    // Admin CP profile routes
-    Route::resource('profiles/user', ProfileController::class)->names([
+    // Admin profile routes
+    Route::apiResource('profiles/user', ProfileController::class)->names([
         'index' => 'profiles.user.index',
         'create' => 'profiles.user.create',
         'store' => 'profiles.user.store',
@@ -53,45 +47,37 @@ Route::middleware([IsAdminMiddleware::class])->group(function () {
     Route::get('tokens/create/{user}', [AuthController::class, 'createToken'])->name('tokens.create');
 });
 
-// Auth routes
-Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-Route::post('register', [AuthController::class, 'register'])->name('register');
+// API Routes - Authentication
+Route::post('api/login', [AuthController::class, 'login'])->name('api.login');
+Route::post('api/logout', [AuthController::class, 'logout'])->middleware('auth')->name('api.logout');
+Route::post('api/register', [AuthController::class, 'register'])->name('api.register');
+Route::get('api/user', [UserController::class, 'show'])->middleware('auth')->name('api.user');
 
-// Autocomplete routes
-Route::get('area-autocomplete', action: [RecipeAreaController::class, 'autocomplete'])->name('area-autocomplete');
-Route::get('category-autocomplete', action: [RecipeCategoryController::class, 'autocomplete'])->name('category-autocomplete');
-Route::get('food-autocomplete', action: [FoodController::class, 'autocomplete'])->name('food-autocomplete');
-Route::get('food-type-autocomplete', action: [FoodTypeController::class, 'autocomplete'])->name('food-type-autocomplete');
-Route::get('ingredient-autocomplete', action: [RecipeIngredientController::class, 'autocomplete'])->name('ingredient-autocomplete');
-Route::get('tag-autocomplete', action: [RecipeTagController::class, 'autocomplete'])->name('tag-autocomplete');
+// API Routes - Autocomplete
+Route::get('api/area-autocomplete', [RecipeAreaController::class, 'autocomplete'])->name('area-autocomplete');
+Route::get('api/category-autocomplete', [RecipeCategoryController::class, 'autocomplete'])->name('category-autocomplete');
+Route::get('api/food-autocomplete', [FoodController::class, 'autocomplete'])->name('food-autocomplete');
+Route::get('api/food-type-autocomplete', [FoodTypeController::class, 'autocomplete'])->name('food-type-autocomplete');
+Route::get('api/ingredient-autocomplete', [RecipeIngredientController::class, 'autocomplete'])->name('ingredient-autocomplete');
+Route::get('api/tag-autocomplete', [RecipeTagController::class, 'autocomplete'])->name('tag-autocomplete');
 
-// Food routes
-Route::match(['get', 'post'], 'foods', [FoodController::class, 'index'])->name('foods.index');
+// API Routes - Foods
+Route::get('api/foods', [FoodController::class, 'index'])->name('api.foods.index');
+Route::get('api/foods/{food}', [FoodController::class, 'show'])->name('api.foods.show');
 
-// Recipe routes
-Route::match(['get', 'post'], 'recipes', [RecipeController::class, 'index'])->name('recipes.index');
-Route::get('recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
+// API Routes - Recipes
+Route::get('api/recipes', [RecipeController::class, 'index'])->name('api.recipes.index');
+Route::get('api/recipes/{recipe}', [RecipeController::class, 'show'])->name('api.recipes.show');
 
-// Auth user setting routes
+// API Routes - User specific
 Route::middleware(['auth'])->group(function () {
-    Route::get('user/settings', [UserController::class, 'edit'])->name('user.settings');
-    Route::post('user/settings/update', [UserController::class, 'update'])->name('user.settings.update');
-    Route::get('user/favorite-recipes', [UserFavRecipeController::class, 'index'])->name('user.favorite-recipes');
-    Route::post('user/favorite-recipes', [UserFavRecipeController::class, 'store'])->name('user.favorite-recipe.store');
-    Route::delete('user/favorite-recipes/{recipe}', [UserFavRecipeController::class, 'destroy'])->name('user.favorite-recipe.destroy');
+    Route::post('api/user/settings', [UserController::class, 'update'])->name('api.user.settings.update');
+    Route::get('api/user/favorite-recipes', [UserFavRecipeController::class, 'index'])->name('api.user.favorite-recipes');
+    Route::post('api/user/favorite-recipes', [UserFavRecipeController::class, 'store'])->name('api.user.favorite-recipe.store');
+    Route::delete('api/user/favorite-recipes/{recipe}', [UserFavRecipeController::class, 'destroy'])->name('api.user.favorite-recipe.destroy');
 });
 
-
-Route::get('/login', function () {
-    return view('home', [
-        'pageTitle' => 'homepage',
-    ]);
-})
-    ->middleware('guest')
-    ->name('login');
-
-// Vue SPA Fallback - Must be last
+// Vue SPA - All routes fall through to Vue Router
 Route::get('/{any?}', function () {
     return view('app');
 })->where('any', '.*')->name('spa');
