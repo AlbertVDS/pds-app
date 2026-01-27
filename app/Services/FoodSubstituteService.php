@@ -15,17 +15,29 @@ class FoodSubstituteService
      */
     public function getSubstitutes(Food $food)
     {
-        $sameTypeFoods = Food::where('type_id', $food->type_id);
-        $sameTypeFoods->where('id', '!=', $food->id);
+        $query = Food::where('type_id', $food->type_id)->where('id', '!=', $food->id);
 
-        $food->fructose ? $sameTypeFoods->where('fructose', '=', 0) : null;
-        $food->lactose ? $sameTypeFoods->where('lactose', '=', 0) : null;
-        $food->mannitol ? $sameTypeFoods->where('mannitol', '=', 0) : null;
-        $food->sorbitol ? $sameTypeFoods->where('sorbitol', '=', 0) : null;
-        $food->GOS ? $sameTypeFoods->where('GOS', '=', 0) : null;
-        $food->fructan ? $sameTypeFoods->where('fructan', '=', 0) : null;
+        // Filter out foods with FODMAPs that the current food has
+        if ($food->fructose) {
+            $query->where('fructose', '=', 0);
+        }
+        if ($food->lactose) {
+            $query->where('lactose', '=', 0);
+        }
+        if ($food->mannitol) {
+            $query->where('mannitol', '=', 0);
+        }
+        if ($food->sorbitol) {
+            $query->where('sorbitol', '=', 0);
+        }
+        if ($food->GOS) {
+            $query->where('GOS', '=', 0);
+        }
+        if ($food->fructan) {
+            $query->where('fructan', '=', 0);
+        }
 
-        $result = $sameTypeFoods->orderBy('name')->get();
+        $result = $query->orderBy('name')->get();
         return $result->chunk(ceil(count($result) / 3));
     }
 
@@ -35,6 +47,7 @@ class FoodSubstituteService
      * @param bool $checked
      * @param Food $food
      * @param Food $substitute
+     * @return void
      */
     public function toggleSubstitute(bool $checked, Food $food, Food $substitute): void
     {
@@ -45,37 +58,32 @@ class FoodSubstituteService
         }
     }
 
-    /** 
+    /**
      * Enable a substitute for a food item.
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @param Food $food
+     * @param Food $substitute
+     * @return void
      */
-    private function enableSubstitute($food, $substitute): \Illuminate\Http\JsonResponse
+    private function enableSubstitute(Food $food, Food $substitute): void
     {
         FoodSubstitute::withTrashed()->updateOrCreate(
             ['food_id' => $food->id, 'substitute_id' => $substitute->id],
             ['food_id' => $food->id, 'substitute_id' => $substitute->id, 'deleted_at' => null]
         );
-
-        return response()->json([
-            'success' => true,
-            'message' => translate('Substitute added successfully.'),
-        ]);
     }
 
     /**
      * Disable a substitute for a food item.
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @param Food $food
+     * @param Food $substitute
+     * @return void
      */
-    private function disableSubstitute($food, $substitute): \Illuminate\Http\JsonResponse
+    private function disableSubstitute(Food $food, Food $substitute): void
     {
         FoodSubstitute::where('food_id', $food->id)
             ->where('substitute_id', $substitute->id)
             ->delete();
-        return response()->json([
-            'success' => true,
-            'message' => translate('Substitute removed successfully.'),
-        ]);
     }
 }

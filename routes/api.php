@@ -10,7 +10,36 @@ use App\Models\Recipe\Recipe;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\RecipeController;
 
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
+|
+| Authentication: All routes require Sanctum authentication (auth:sanctum).
+|
+*/
+
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('foods', FoodController::class)->only(['index', 'show']);
-    Route::resource('recipes', RecipeController::class)->only(['index', 'show']);
+    // Food endpoints
+    Route::get('/foods', [FoodController::class, 'index'])->name('foods.index');
+    Route::get('/foods/{food}', [FoodController::class, 'show'])->name('foods.show');
+    
+    // Recipe endpoints
+    Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
+    Route::get('/recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Public Health Check
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/health', function () {
+    return response()->json(['status' => 'ok'], 200);
+})->withoutMiddleware('api');
+

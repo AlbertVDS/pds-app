@@ -90,3 +90,8 @@ Route::get('/login', function () {
 })
     ->middleware('guest')
     ->name('login');
+
+// Vue SPA Fallback - Must be last
+Route::get('/{any?}', function () {
+    return view('app');
+})->where('any', '.*')->name('spa');
