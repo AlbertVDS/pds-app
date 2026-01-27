@@ -10,18 +10,28 @@
             </RouterLink>
           </div>
           <div class="hidden md:flex items-center space-x-8">
-            <RouterLink to="/foods" class="text-gray-700 hover:text-green-600 transition">
-              Foods
-            </RouterLink>
-            <RouterLink to="/recipes" class="text-gray-700 hover:text-green-600 transition">
-              Recipes
-            </RouterLink>
-            <RouterLink to="/profile" class="text-gray-700 hover:text-green-600 transition">
-              Profile
-            </RouterLink>
-            <button @click="logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition">
-              Logout
-            </button>
+            <template v-if="authStore.isAuthenticated">
+              <RouterLink to="/foods" class="text-gray-700 hover:text-green-600 transition">
+                Foods
+              </RouterLink>
+              <RouterLink to="/recipes" class="text-gray-700 hover:text-green-600 transition">
+                Recipes
+              </RouterLink>
+              <RouterLink to="/profile" class="text-gray-700 hover:text-green-600 transition">
+                Profile
+              </RouterLink>
+              <button @click="logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition">
+                Logout
+              </button>
+            </template>
+            <template v-else>
+              <RouterLink to="/login" class="text-gray-700 hover:text-green-600 transition">
+                Login
+              </RouterLink>
+              <RouterLink to="/register" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition">
+                Register
+              </RouterLink>
+            </template>
           </div>
         </div>
       </div>
