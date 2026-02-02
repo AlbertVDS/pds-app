@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Food\Food;
 use App\Models\Food\FoodType;
 
@@ -16,68 +17,91 @@ class FoodSearchService
     public function search(Request $request)
     {
         $this->foods = Food::query()->with('foodType');
-        $request->filled('search') ? $this->foods->where('name', 'LIKE', "%{$request->search}%") : null;
+        
+        if ($request->filled('search')) {
+            $this->foods->where('name', 'LIKE', "%{$request->input('search')}%");
+        }
+        
         $this->filterFoodTypes($request);
         $this->filterFodmaps($request);
         $this->filterTolerate($request);
         $this->getSelectedOptions($request);
 
         $this->foods = $this->foods->paginate(20)->appends(
-            request()->query()
+            $request->query()
         );
         return $this;
     }
 
     /**
      * Get selected options
-     * @param mixed $request
+     * @param Request $request
      * @return void
      */
     private function getSelectedOptions($request)
     {
-        $this->fodmaps = $request->get('fodmaps') ?? [];
-        $this->foodTypes = $request->filled('food-types') ? FoodType::whereIn('id', $request->get('food-types'))->get() : [];
-        $this->showTolerate = $request->get('show-tolerate') ?? null;
+        $this->fodmaps = $request->input('fodmaps', []);
+        $this->foodTypes = $request->filled('food-types') 
+            ? FoodType::whereIn('id', $request->input('food-types', []))->get() 
+            : [];
+        $this->showTolerate = $request->input('show-tolerate');
     }
 
-    /** Filter food types 
+    /**
+     * Filter food types 
      * @param Request $request
      * @return void
      */
     private function filterFoodTypes($request)
     {
         if ($request->filled('food-types')) {
-            $this->foods
-                ->whereHas('foodType', function ($query) use ($request) {
-                    $query->whereIn('food_types.id', $request->get('food-types'));
-                });
+            $this->foods->whereHas('foodType', function ($query) use ($request) {
+                $query->whereIn('food_types.id', $request->input('food-types', []));
+            });
         }
     }
 
-    /** Filter fodmaps 
+    /**
+     * Filter fodmaps 
      * @param Request $request
      * @return void
      */
     private function filterFodmaps($request)
     {
-        foreach ($request->get('fodmaps') ?? [] as $fodmap => $value) {
+        $fodmaps = $request->input('fodmaps', []);
+        foreach ($fodmaps as $fodmap => $value) {
             $this->foods->where($fodmap, $value);
         }
     }
 
-    /** Filter tolerate 
+    /**
+     * Filter tolerate 
      * @param Request $request
      * @return void
      */
     private function filterTolerate($request)
     {
-        if ($request->filled('filter-tolerance') && auth()->user()->intoleranceSet()) {
-            auth()->user()->fodmap->fructose ? $this->foods->where('fructose', '!=', 1) : null;
-            auth()->user()->fodmap->lactose ? $this->foods->where('lactose', '!=', 1) : null;
-            auth()->user()->fodmap->mannitol ? $this->foods->where('mannitol', '!=', 1) : null;
-            auth()->user()->fodmap->sorbitol ? $this->foods->where('sorbitol', '!=', 1) : null;
-            auth()->user()->fodmap->GOS ? $this->foods->where('GOS', '!=', 1) : null;
-            auth()->user()->fodmap->fructan ? $this->foods->where('fructan', '!=', 1) : null;
+        if ($request->filled('filter-tolerance') && Auth::check() && Auth::user()->intoleranceSet()) {
+            $userFodmap = Auth::user()->fodmap;
+            
+            if ($userFodmap->fructose) {
+                $this->foods->where('fructose', '!=', 1);
+            }
+            if ($userFodmap->lactose) {
+                $this->foods->where('lactose', '!=', 1);
+            }
+            if ($userFodmap->mannitol) {
+                $this->foods->where('mannitol', '!=', 1);
+            }
+            if ($userFodmap->sorbitol) {
+                $this->foods->where('sorbitol', '!=', 1);
+            }
+            if ($userFodmap->GOS) {
+                $this->foods->where('GOS', '!=', 1);
+            }
+            if ($userFodmap->fructan) {
+                $this->foods->where('fructan', '!=', 1);
+            }
         }
     }
 }

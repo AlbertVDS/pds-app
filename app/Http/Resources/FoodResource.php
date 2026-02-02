@@ -17,7 +17,7 @@ class FoodResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'type' => $this->getTypeName(),
+            'type' => $this->foodType?->name ?? 'Unknown',
             'level' => $this->level,
             'weight' => $this->weight,
             'fructose' => $this->fructose,
@@ -26,11 +26,12 @@ class FoodResource extends JsonResource
             'sorbitol' => $this->sorbitol,
             'GOS' => $this->GOS,
             'fructan' => $this->fructan,
+            'foodType' => $this->foodType,
             'substitutes' => $this->substitutes->map(function ($substitute) {
                 return [
                     'id' => $substitute->id,
                     'name' => $substitute->name,
-                    'type' => $substitute->getTypeName(),
+                    'type' => $substitute->foodType?->name ?? 'Unknown',
                     'level' => $substitute->level,
                     'weight' => $substitute->weight,
                     'fructose' => $substitute->fructose,
