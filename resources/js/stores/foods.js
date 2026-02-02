@@ -12,12 +12,16 @@ export const useFoodsStore = defineStore('foods', () => {
     loading.value = true
     error.value = null
     try {
-      const response = await api.get('/api/foods', { params })
-      foods.value = response.data.data || response.data
+      const response = await api.get('/foods', { params })
+      console.log('API Response:', response.data)
+      // Handle paginated response from Laravel
+      foods.value = Array.isArray(response.data) ? response.data : (response.data.data || [])
+      console.log('Foods after assignment:', foods.value)
       return true
     } catch (err) {
       error.value = err.message
       console.error('Failed to fetch foods:', err)
+      foods.value = []
       return false
     } finally {
       loading.value = false
@@ -28,7 +32,7 @@ export const useFoodsStore = defineStore('foods', () => {
     loading.value = true
     error.value = null
     try {
-      const response = await api.get(`/api/foods/${id}`)
+      const response = await api.get(`/foods/${id}`)
       currentFood.value = response.data.data || response.data
       return true
     } catch (err) {

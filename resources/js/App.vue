@@ -58,8 +58,8 @@ import { useAuthStore } from './stores/auth'
 const router = useRouter()
 const authStore = useAuthStore()
 
-const logout = () => {
-  authStore.logout()
+const logout = async () => {
+  await authStore.logout()
   router.push('/login')
 }
 </script>

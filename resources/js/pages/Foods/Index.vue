@@ -63,16 +63,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useFoodsStore } from '../../stores/foods'
+import { ref } from 'vue'
 
 const foodsStore = useFoodsStore()
 const searchQuery = ref('')
 
-const foods = ref(foodsStore.foods)
-const loading = ref(foodsStore.loading)
-const error = ref(foodsStore.error)
+const foods = computed(() => foodsStore.foods)
+const loading = computed(() => foodsStore.loading)
+const error = computed(() => foodsStore.error)
 
 onMounted(() => {
   foodsStore.fetchFoods()
