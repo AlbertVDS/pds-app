@@ -24,7 +24,7 @@ class FoodController extends Controller
     public function index(Request $request)
     {
         $foods = (new FoodSearchService())->search($request)->foods;
-        return FoodResourceCollection::collection($foods);
+        return FoodResource::collection($foods);
     }
 
     /**

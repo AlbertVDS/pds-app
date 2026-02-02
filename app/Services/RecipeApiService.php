@@ -3,36 +3,43 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class RecipeApiService
 {
     private string $baseUrl;
     private array $parameters = [];
+    private const REQUEST_TIMEOUT = 10;
 
     public function __construct()
     {
-        $this->baseUrl = config('services.recipe_api.base_url');
+        $this->baseUrl = config('services.recipe_api.base_url', '');
+        
+        if (empty($this->baseUrl)) {
+            Log::warning('Recipe API base URL not configured');
+        }
     }
 
     /**
      * Search meal by name
      * @param string $search
-     * @return void
+     * @return self
      */
-    public function search($search): void
+    public function search($search): self
     {
-        $this->parameters[] = 's=' . $search;
+        $this->parameters[] = 's=' . urlencode($search);
+        return $this;
     }
-
 
     /**
      * List all meals by first letter
      * @param string $letter
-     * @return void
+     * @return self
      */
-    public function letter($letter): void
+    public function letter($letter): self
     {
-        $this->parameters[] = 'f=' . $letter;
+        $this->parameters[] = 'f=' . urlencode($letter);
+        return $this;
     }
 
     /**
@@ -43,12 +50,30 @@ class RecipeApiService
      */
     public function getByIngredients($ingredients): array
     {
-        $response = Http::get($this->baseUrl . 'filter.php?i=' . implode(',', $ingredients));
-        if ($response->successful()) {
-            return $response->json();
+        if (empty($ingredients)) {
+            return [];
         }
 
-        return [];
+        try {
+            $response = Http::timeout(self::REQUEST_TIMEOUT)
+                ->get($this->baseUrl . 'filter.php?i=' . urlencode(implode(',', $ingredients)));
+            
+            if ($response->successful()) {
+                return $response->json() ?? [];
+            }
+            
+            Log::warning('Recipe API error', [
+                'status' => $response->status(),
+                'endpoint' => 'filter.php'
+            ]);
+            return [];
+        } catch (\Exception $e) {
+            Log::error('Recipe API request failed', [
+                'error' => $e->getMessage(),
+                'endpoint' => 'filter.php'
+            ]);
+            return [];
+        }
     }
 
     /**
@@ -57,13 +82,30 @@ class RecipeApiService
      */
     public function get(): array
     {
-        $response = Http::get($this->baseUrl . 'search.php?' . implode('&', $this->parameters));
-
-        if ($response->successful()) {
-            return $response->json();
+        if (empty($this->baseUrl) || empty($this->parameters)) {
+            return [];
         }
 
-        return [];
+        try {
+            $response = Http::timeout(self::REQUEST_TIMEOUT)
+                ->get($this->baseUrl . 'search.php?' . implode('&', $this->parameters));
+            
+            if ($response->successful()) {
+                return $response->json() ?? [];
+            }
+            
+            Log::warning('Recipe API error', [
+                'status' => $response->status(),
+                'endpoint' => 'search.php'
+            ]);
+            return [];
+        } catch (\Exception $e) {
+            Log::error('Recipe API request failed', [
+                'error' => $e->getMessage(),
+                'endpoint' => 'search.php'
+            ]);
+            return [];
+        }
     }
 
     /**
@@ -73,12 +115,29 @@ class RecipeApiService
      */
     public function getById($id): array
     {
-        $response = Http::get($this->baseUrl . 'lookup.php?i=' . $id);
-
-        if ($response->successful()) {
-            return $response->json();
+        if (empty($this->baseUrl) || empty($id)) {
+            return [];
         }
 
-        return [];
+        try {
+            $response = Http::timeout(self::REQUEST_TIMEOUT)
+                ->get($this->baseUrl . 'lookup.php?i=' . urlencode($id));
+            
+            if ($response->successful()) {
+                return $response->json() ?? [];
+            }
+            
+            Log::warning('Recipe API error', [
+                'status' => $response->status(),
+                'endpoint' => 'lookup.php'
+            ]);
+            return [];
+        } catch (\Exception $e) {
+            Log::error('Recipe API request failed', [
+                'error' => $e->getMessage(),
+                'endpoint' => 'lookup.php'
+            ]);
+            return [];
+        }
     }
 }

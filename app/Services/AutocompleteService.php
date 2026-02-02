@@ -10,25 +10,27 @@ class AutocompleteService
 {
     /**
      * Get results based on the search term.
+     * @param string $modelClass
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function autocomplete($modelClass, Request $request)
     {
+        $searchTerm = $request->input('q', '');
+        
         $query = $modelClass::withoutTrashed();
         $query->with('originalText.translation');
+        
         if (Gate::allows('isUser')) {
-            $query->whereHas('originalText.translation', function ($q) use ($request) {
-                $q->where('translation', 'LIKE', '%' . $request->get('q') . '%')
+            $query->whereHas('originalText.translation', function ($q) use ($searchTerm) {
+                $q->where('translation', 'LIKE', '%' . $searchTerm . '%')
                     ->where('language_id', Auth::user()->language_id);
             });
         } else {
-            $query->where('name', 'LIKE', '%' . $request->get('q') . '%');
+            $query->where('name', 'LIKE', '%' . $searchTerm . '%');
         }
 
-        $query->orderBy('name');
-        $query->take(20);
-        $data = $query->get();
+        $data = $query->orderBy('name')->limit(20)->get();
         $data = $this->translate($data);
 
         return response()->json($data);
@@ -37,12 +39,12 @@ class AutocompleteService
     /**
      * Translate the ingredient names if the user is authenticated.
      *
-     * @param \Illuminate\Database\Eloquent\Collection $data
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param \Illuminate\Support\Collection $data
+     * @return \Illuminate\Support\Collection
      */
     private function translate($data)
     {
-        if (Auth::user()) {
+        if (Auth::check()) {
             foreach ($data as $item) {
                 $item->name = translate($item->name);
             }
