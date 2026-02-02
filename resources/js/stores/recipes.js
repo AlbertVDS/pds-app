@@ -12,12 +12,13 @@ export const useRecipesStore = defineStore('recipes', () => {
     loading.value = true
     error.value = null
     try {
-      const response = await api.get('/api/recipes', { params })
-      recipes.value = response.data.data || response.data
+      const response = await api.get('/recipes', { params })
+      recipes.value = Array.isArray(response.data) ? response.data : (response.data.data || [])
       return true
     } catch (err) {
       error.value = err.message
       console.error('Failed to fetch recipes:', err)
+      recipes.value = []
       return false
     } finally {
       loading.value = false
@@ -28,7 +29,7 @@ export const useRecipesStore = defineStore('recipes', () => {
     loading.value = true
     error.value = null
     try {
-      const response = await api.get(`/api/recipes/${id}`)
+      const response = await api.get(`/recipes/${id}`)
       currentRecipe.value = response.data.data || response.data
       return true
     } catch (err) {

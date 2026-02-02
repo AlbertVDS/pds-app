@@ -24,7 +24,9 @@ export const useAuthStore = defineStore('auth', () => {
 
   const register = async (name, email, password) => {
     try {
-      const response = await api.post('/register', { name, email, password })
+      // include password_confirmation to satisfy backend validation expecting 'confirmed'
+      const payload = { name, email, password, password_confirmation: password }
+      const response = await api.post('/register', payload)
       token.value = response.data.token
       user.value = response.data.user
       localStorage.setItem('auth_token', token.value)
@@ -36,11 +38,19 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const logout = () => {
-    user.value = null
-    token.value = null
-    localStorage.removeItem('auth_token')
-    delete api.defaults.headers.common['Authorization']
+  const logout = async () => {
+    try {
+      // Attempt to notify backend to invalidate token/session
+      await api.post('/logout')
+    } catch (error) {
+      // Ignore errors — still clear local state
+      console.warn('API logout failed, clearing local session anyway.', error)
+    } finally {
+      user.value = null
+      token.value = null
+      localStorage.removeItem('auth_token')
+      delete api.defaults.headers.common['Authorization']
+    }
   }
 
   const fetchUser = async () => {

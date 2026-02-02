@@ -51,16 +51,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useRecipesStore } from '../../stores/recipes'
 
 const recipesStore = useRecipesStore()
 const searchQuery = ref('')
 
-const recipes = ref(recipesStore.recipes)
-const loading = ref(recipesStore.loading)
-const error = ref(recipesStore.error)
+const recipes = computed(() => recipesStore.recipes)
+const loading = computed(() => recipesStore.loading)
+const error = computed(() => recipesStore.error)
 
 onMounted(() => {
   recipesStore.fetchRecipes()

@@ -25,6 +25,31 @@ class UserSettingsService
         $this->upsertUserMailingGroups($request->get('mailing_groups') ?? [], $user->id);
     }
 
+    /**
+     * Update user FODMAP settings
+     *
+     * @param User $user
+     * @param array $fodmaps
+     * @return void
+     */
+    public function updateFodmaps(User $user, array $fodmaps)
+    {
+        $this->upsertUserFodmaps($fodmaps, $user->id);
+    }
+
+    /**
+     * Update user mailing groups
+     *
+     * @param User $user
+     * @param array $mailingGroups
+     * @return void
+     */
+    public function updateMailingGroups(User $user, array $mailingGroups)
+    {
+        $this->deleteUnlinkedMailingGroups($mailingGroups, $user->id);
+        $this->upsertUserMailingGroups($mailingGroups, $user->id);
+    }
+
     private function updateUser(array $userData, $user)
     {
         $user->fill($userData)->save();

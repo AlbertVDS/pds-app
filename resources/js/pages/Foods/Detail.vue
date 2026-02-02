@@ -82,7 +82,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { RouterLink } from 'vue-router'
 import { useFoodsStore } from '../../stores/foods'
@@ -90,9 +90,9 @@ import { useFoodsStore } from '../../stores/foods'
 const route = useRoute()
 const foodsStore = useFoodsStore()
 
-const food = ref(foodsStore.currentFood)
-const loading = ref(foodsStore.loading)
-const error = ref(foodsStore.error)
+const food = computed(() => foodsStore.currentFood)
+const loading = computed(() => foodsStore.loading)
+const error = computed(() => foodsStore.error)
 
 const hasFodmaps = computed(() => {
   if (!food.value) return false

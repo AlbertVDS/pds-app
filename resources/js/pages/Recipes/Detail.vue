@@ -12,47 +12,49 @@
       {{ error }}
     </div>
 
-    <div v-else-if="recipe" class="bg-white rounded-lg shadow-lg p-8">
-      <h1 class="text-4xl font-bold text-gray-900 mb-2">{{ recipe.name }}</h1>
+    <div v-else-if="recipe" class="bg-white rounded-lg shadow-lg">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4 p-8 pb-0">{{ recipe.name }}</h1>
       
-      <div class="flex gap-6 text-gray-600 mb-8">
-        <span v-if="recipe.servings">👥 Servings: {{ recipe.servings }}</span>
-        <span v-if="recipe.preparation_time">⏱️ Prep: {{ recipe.preparation_time }} mins</span>
-        <span v-if="recipe.cooking_time">🍳 Cook: {{ recipe.cooking_time }} mins</span>
-      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
+        <div>
+          <img v-if="recipe.thumbnail_url" :src="recipe.thumbnail_url" :alt="recipe.name" class="w-full rounded-lg shadow-md" />
+        </div>
 
-      <p v-if="recipe.description" class="text-gray-700 mb-8">{{ recipe.description }}</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <h3 class="text-2xl font-semibold text-gray-900 mb-4">Ingredients</h3>
           <ul v-if="recipe.ingredients && recipe.ingredients.length > 0" class="space-y-2">
-            <li v-for="ingredient in recipe.ingredients" :key="ingredient.id" class="flex items-center text-gray-700">
-              <span class="mr-3">✓</span>
-              <span>{{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.name }}</span>
+            <li v-for="ingredient in recipe.ingredients" :key="ingredient.id" class="text-gray-700 border-b pb-2">
+              <span class="font-medium">{{ ingredient.name }}:</span>
+              <span class="ml-2 italic">{{ ingredient.measurement }}</span>
             </li>
           </ul>
-          <p v-else class="text-gray-600">No ingredients listed.</p>
-        </div>
-
-        <div>
-          <h3 class="text-2xl font-semibold text-gray-900 mb-4">Instructions</h3>
-          <ol v-if="recipe.instructions" class="space-y-3 list-decimal list-inside">
-            <li v-for="(instruction, index) in recipe.instructions.split('\n')" :key="index" class="text-gray-700">
-              {{ instruction.trim() }}
-            </li>
-          </ol>
-          <p v-else class="text-gray-600">No instructions available.</p>
+          <div v-else class="p-4 bg-yellow-50 text-yellow-800 rounded">
+            <p class="mb-2">No ingredients listed for this recipe.</p>
+            <p class="text-sm">The recipe data appears to be incomplete in the database.</p>
+          </div>
         </div>
       </div>
 
-      <div v-if="recipe.areas && recipe.areas.length > 0" class="mt-8 p-4 bg-blue-50 rounded-lg">
-        <h3 class="text-lg font-semibold text-blue-900 mb-2">Cuisine Type</h3>
-        <div class="flex flex-wrap gap-2">
-          <span v-for="area in recipe.areas" :key="area.id" class="inline-block bg-blue-200 text-blue-900 px-3 py-1 rounded-full text-sm">
-            {{ area.name }}
-          </span>
+      <div class="px-8 py-4">
+        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Directions</h3>
+        <p v-if="recipe.instructions && recipe.instructions.trim()" class="text-gray-700 whitespace-pre-wrap leading-relaxed">
+          {{ recipe.instructions }}
+        </p>
+        <div v-else class="p-4 bg-yellow-50 text-yellow-800 rounded">
+          <p class="mb-2">No instructions available for this recipe.</p>
+          <p class="text-sm">The recipe data appears to be incomplete in the database.</p>
         </div>
+      </div>
+
+      <ul class="list-group list-group-flush px-8 py-4 space-y-2 border-t">
+        <li class="text-gray-700"><i class="fa-solid fa-layer-group mr-2"></i> <span class="font-medium">Category:</span> {{ recipe.category || 'N/A' }}</li>
+        <li class="text-gray-700"><i class="fa-solid fa-location-dot mr-2"></i> <span class="font-medium">Area:</span> {{ recipe.area || 'N/A' }}</li>
+      </ul>
+
+      <div v-if="recipe.youtube_url" class="px-8 py-4">
+        <a :href="recipe.youtube_url" target="_blank" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition">
+          Watch on YouTube
+        </a>
       </div>
     </div>
 
@@ -63,7 +65,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { RouterLink } from 'vue-router'
 import { useRecipesStore } from '../../stores/recipes'
@@ -71,9 +73,9 @@ import { useRecipesStore } from '../../stores/recipes'
 const route = useRoute()
 const recipesStore = useRecipesStore()
 
-const recipe = ref(recipesStore.currentRecipe)
-const loading = ref(recipesStore.loading)
-const error = ref(recipesStore.error)
+const recipe = computed(() => recipesStore.currentRecipe)
+const loading = computed(() => recipesStore.loading)
+const error = computed(() => recipesStore.error)
 
 onMounted(() => {
   recipesStore.getRecipeById(route.params.id)

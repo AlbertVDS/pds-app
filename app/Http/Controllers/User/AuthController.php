@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User\User;
@@ -17,7 +18,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function login(Request $request): RedirectResponse
+    public function login(Request $request): RedirectResponse|JsonResponse
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
@@ -26,7 +27,24 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            // If request expects JSON, return token + user for API clients
+            if ($request->wantsJson() || $request->expectsJson()) {
+                $user = Auth::user();
+                $token = $user->createToken('api')->plainTextToken;
+                return response()->json([
+                    'token' => $token,
+                    'user' => $user,
+                ]);
+            }
+
             return redirect('foods');
+        }
+
+        if ($request->wantsJson() || $request->expectsJson()) {
+            return response()->json([
+                'message' => translate('The provided credentials do not match our records.'),
+            ], 401);
         }
 
         return back()->withErrors([
@@ -51,9 +69,9 @@ class AuthController extends Controller
     /**
      * Handle user registration
      * @param Request $request
-     * @return RedirectResponse
+     * @return RedirectResponse|JsonResponse
      */
-    public function register(Request $request): RedirectResponse
+    public function register(Request $request): RedirectResponse|JsonResponse
     {
         $validate = $request->validate([
             'name' => 'required|string|max:255',
@@ -68,6 +86,15 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
+        // If the client expects JSON (API call), return token + user
+        if ($request->wantsJson() || $request->expectsJson()) {
+            $token = $user->createToken('api')->plainTextToken;
+            return response()->json([
+                'token' => $token,
+                'user' => $user,
+            ]);
+        }
+
         return redirect('foods');
     }
 

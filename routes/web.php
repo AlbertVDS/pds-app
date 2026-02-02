@@ -3,6 +3,8 @@
 use App\Http\Controllers\Food\FoodController;
 use App\Http\Controllers\Food\FoodTypeController;
 use App\Http\Controllers\Food\FoodSubstituteController;
+use App\Http\Controllers\Api\FoodController as ApiFoodController;
+use App\Http\Controllers\Api\RecipeController as ApiRecipeController;
 use App\Http\Controllers\Mailing\MailingController;
 use App\Http\Controllers\Recipe\RecipeController;
 use App\Http\Controllers\Recipe\RecipeAreaController;
@@ -48,10 +50,7 @@ Route::middleware([IsAdminMiddleware::class])->group(function () {
 });
 
 // API Routes - Authentication
-Route::post('api/login', [AuthController::class, 'login'])->name('api.login');
-Route::post('api/logout', [AuthController::class, 'logout'])->middleware('auth')->name('api.logout');
-Route::post('api/register', [AuthController::class, 'register'])->name('api.register');
-Route::get('api/user', [UserController::class, 'show'])->middleware('auth')->name('api.user');
+// MOVED to routes/api.php for proper CSRF exemption
 
 // API Routes - Autocomplete
 Route::get('api/area-autocomplete', [RecipeAreaController::class, 'autocomplete'])->name('area-autocomplete');
@@ -62,12 +61,12 @@ Route::get('api/ingredient-autocomplete', [RecipeIngredientController::class, 'a
 Route::get('api/tag-autocomplete', [RecipeTagController::class, 'autocomplete'])->name('tag-autocomplete');
 
 // API Routes - Foods
-Route::get('api/foods', [FoodController::class, 'index'])->name('api.foods.index');
-Route::get('api/foods/{food}', [FoodController::class, 'show'])->name('api.foods.show');
+Route::get('api/foods', [ApiFoodController::class, 'index'])->name('api.foods.index');
+Route::get('api/foods/{food}', [ApiFoodController::class, 'show'])->name('api.foods.show');
 
 // API Routes - Recipes
-Route::get('api/recipes', [RecipeController::class, 'index'])->name('api.recipes.index');
-Route::get('api/recipes/{recipe}', [RecipeController::class, 'show'])->name('api.recipes.show');
+Route::get('api/recipes', [ApiRecipeController::class, 'index'])->name('api.recipes.index');
+Route::get('api/recipes/{recipe}', [ApiRecipeController::class, 'show'])->name('api.recipes.show');
 
 // API Routes - User specific
 Route::middleware(['auth'])->group(function () {
@@ -80,4 +79,4 @@ Route::middleware(['auth'])->group(function () {
 // Vue SPA - All routes fall through to Vue Router
 Route::get('/{any?}', function () {
     return view('app');
-})->where('any', '.*')->name('spa');
+})->where('any', '^(?!api).*')->name('spa');
